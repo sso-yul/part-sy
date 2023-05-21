@@ -2,6 +2,7 @@ package com.ottt.ottt.controller.mypage.pageVar;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -11,5 +12,10 @@ public class MessageWindowController {
 	@GetMapping(value = "/open")
 	public String open() {
 		return "/mypage/myprofile/messagewindow";
+	}
+	
+	@PostMapping(value = "/open")
+	public String writeMsg() {
+		return null;
 	}
 }

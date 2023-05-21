@@ -12,6 +12,19 @@
 		WHERE message_no = #{message_no}
  	</select>
  	
+ 	<!-- 수발신구분 할 수 있는 셀렉트문 -->
+ 	<select id="selectRecbSend">
+		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn,
+		    CASE
+		        WHEN send_user_no = #{user_no} THEN 'Send'
+		        ELSE 'Receive'
+		    END AS direction
+		FROM tb_message
+		WHERE send_user_no = #{user_no} OR receive_user_no = #{user_no}
+		ORDER BY message_no DESC
+ 	</select>
+ 	
+ 	
  	<!-- 받은 메시지 리스트 불러오기 -->
  	<select id="selectRecv" parameterType="Integer" resultType="MessageDTO">
 		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn
@@ -23,7 +36,7 @@
  	<!-- 보낸 메시지 리스트 불러오기 -->
  	<select id="selectSend" parameterType="Integer" resultType="MessageDTO">
 		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn
-		FROM tb_message a
+		FROM tb_message
 		WHERE send_user_no = #{send_user_no}
 		ORDER BY message_no DESC
  	</select>

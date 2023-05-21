@@ -11,6 +11,7 @@
     <title>쪽지알림</title>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script src="${path}/resources/js/mypage/message.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="${path}/resources/css/mypage/message.css" >
@@ -63,24 +64,29 @@
       <div class="sec01">
         
         <div class="sec-left">
-            <table>
-                <tr>
-                    <th class="msg-img">프로필</th>
-                    <th class="msg-name">이름</th>
-                    <th class="msg-time">시간</th>
-                    <th class="msg-del">삭제</th>
-                </tr>
-                
-<%-- 	            <c:forEach var="messageDTO"> --%>
-<!-- 	              <tr> -->
-<!-- 	                <td class="msg-img">픞</td> -->
-<!-- 	                <td class="msg-name">이름</td> -->
-<%-- 	                <td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yyyy-MM-dd HH24:MI" type="date" /></td> --%>
-<!-- 	                <td class="msg-del">X</td> -->
-<!-- 	              </tr> -->
-<%-- 	            </c:forEach> --%>
-            
-            </table>
+        	<div class="left-top">
+	            <table>
+	                <tr>
+	                    <th class="msg-img">프로필</th>
+	                    <th class="msg-name">이름</th>
+	                    <th class="msg-time">시간</th>
+	                    <th class="msg-del">삭제</th>
+	                </tr>
+	            </table>
+            </div>
+            <div class="left-bottom">
+	            <table>        
+<%-- 		            <c:forEach var="messageDTO" items="${list }"> --%>
+		              <tr class="title-line">
+		                <td class="msg-img">픞</td>
+		                <td class="msg-name">${messageDTO.send_user_no }</td>
+		                <td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yyyy-MM-dd HH24:MI" type="date" /></td>
+		                <td class="msg-del"><button class="delBtn" style="border: none; color: red;"><i class="fas fa-times"></i></button></td>
+		              </tr>
+<%-- 		            </c:forEach>             --%>
+				</table>
+		    </div>
+			
         </div>
 
         <div class="sec-right">

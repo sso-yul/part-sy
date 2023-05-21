@@ -254,8 +254,10 @@ button {
     display: flex;
     box-sizing: border-box;
 }
-.sec-left {
-/*     border: 1px solid pink; */
+
+.left-bottom {
+/*     border: 1px solid blue; */
+    height: 548px;
     overflow: auto;
 }
 
@@ -325,16 +327,16 @@ th, td {
     background: transparent;
 }
 
-.sec-left::-webkit-scrollbar {
+.left-bottom::-webkit-scrollbar {
     width: 5px;
 }
 
-.sec-left::-webkit-scrollbar-thumb {
+.left-bottom::-webkit-scrollbar-thumb {
     height: 30%;
     background: #8f8f8f;
     border-radius: 10px;
 }
 
-.sec-left::-webkit-scrollbar-track {
+.left-bottom::-webkit-scrollbar-track {
     background: transparent;
 }
