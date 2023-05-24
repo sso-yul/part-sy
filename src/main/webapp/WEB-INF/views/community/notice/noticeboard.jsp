@@ -14,6 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <link rel="stylesheet" href="${path}/resources/css/community/notice/noticeboard.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript" src="${path}/resources/js/community/main.js"></script>
     <style type="text/css">
@@ -183,9 +184,10 @@
 				
 				if(isReadonly=='readonly'){
 					$("input[name=article_title]").attr('readonly', false)
-					$("input[name=article_content]").attr('readonly', false)
+					$("textarea").attr('readonly', false)
 					$("#modi").html("등록")
 					$("#del").html("취소")
+					$("#del").attr('data-bs-target', false)
 					return
 				}
 				
@@ -214,18 +216,31 @@
 				form.submit()
 			})
 			
+			$("#listBtn").on("click", function() {
+				location.href="<c:url value='/community/notice${searchItem.queryString}' />"
+			})
+			
+			$("#writeBtn").on("click", function() {
+				let form = $("#form")
+				form.attr("action", "<c:url value='/community/notice/write' />")
+				form.attr("method", "post")
+				if(formCheck()){form.submit()}
+			})
+			
 			let formCheck = function() {
 				let form = document.getElementById("form")
 				
 				if(form.article_title.value==""){
-					alert("제목을 입력해 주세요.")
-					form.title.focus()
+					$(".body").html("제목을 입력해 주세요.")
+		   	    	$('#Modal').modal('show');
+					form.article_title.focus()
 					return false
 				}
 				
 				if(form.article_content.value==""){
-					alert("내용을 입력해 주세요.")
-					form.content.focus()
+					$(".body").html("내용을 입력해 주세요.")
+		   	    	$('#Modal').modal('show');
+					form.article_content.focus()
 					return false
 				}
 				return true
@@ -244,6 +259,10 @@
 	   	        $(".body").html("수정 실패했습니다. 다시 시도해주세요.");
 	   	     	$('#Modal').modal('show');
 	   	    }
+	   	 	if(msg == 'WRT_ERR') {
+	   	        $(".body").html("글이 등록되지 않았습니다. 다시 시도해주세요.");
+	   	     	$('#Modal').modal('show');
+	   	    }
 	   	});
    	</script>
        	
@@ -251,9 +270,8 @@
       <div class="qa-main">
       
       <form action="" id="form" class="frm" method="post">
-			<c:if test="${userDTO.admin.toString() == 'Y' }">
-				<div class="modi-del">
-	
+      <div class="modi-del">
+			<c:if test="${userDTO.admin.toString() == 'Y'}">
 	          <!-- Button trigger modal -->
 	        <button type="button" class="btn btn-secondary" id="modi" data-bs-toggle="modal" data-bs-target="#exampleModal">
 	          수정
@@ -267,7 +285,7 @@
 	                <h1 class="modal-title fs-5" id="exampleModalLabel">알림</h1>
 	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	              </div>
-	              <div class="modal-body">
+	              <div class="modal-body" id="modal-bady1">
 	                수정하시겠습니까?
 	              </div>
 	              <div class="modal-footer">
@@ -300,31 +318,57 @@
 	              </div>
 	            </div>
 	          </div>
+	        </div> 
+       	</c:if>
+       <c:if test="${mode == 'new'}">
+	          <!-- Button trigger modal -->
+	        <button type="button" class="btn btn-secondary" id="modi" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	          등록
+	        </button>
+	 
+	        <!-- Modal -->
+	        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	          <div class="modal-dialog modal-dialog-centered">
+	            <div class="modal-content">
+	              <div class="modal-header">
+	                <h1 class="modal-title fs-5" id="exampleModalLabel">알림</h1>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	              </div>
+	              <div class="modal-body" id="modal-bady1">
+	                등록하시겠습니까?
+	              </div>
+	              <div class="modal-footer">
+	                <button type="button" class="btn" data-bs-dismiss="modal" id="writeBtn">Yes</button>
+	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+	              </div>
+	            </div>
+	          </div>
 	        </div>
-	
-	
-	      </div>
        	</c:if>
       
+      	<div>
+	       <button type="button" class="btn btn-outline-success" id="listBtn"><i class="fa-solid fa-list" style="background-color: #202020; margin: 3px;"></i>목록</button> 
+	    </div>
+	    </div>
         <!-- 글목록 배너-->
         <div class="title-region">
           <div class="title-mainline">
             <input type="hidden" name="article_no" value="${articleDTO.article_no}"/>
-            <input type="text" name="article_title" value="${articleDTO.article_title}" ${mode=="new" ? "" : "readonly='readonly'" } />
+            <div style="display: flex; justify-content: space-between;">
+            	<div><input type="text" name="article_title" value="${articleDTO.article_title}" ${mode=="new" ? "" : "readonly='readonly'" } /></div>
+            	<div style="font-size: 20px;"><fmt:formatDate value="${articleDTO.article_create_dt}" pattern="yyyy-MM-dd" type="date"/></div>
+            </div>
+            
           </div>
-
+		 
           <div class="title-line">
-            <input type="text" name="article_content" value="${articleDTO.article_content}" ${mode=="new" ? "" : "readonly='readonly'" } />
+            <textarea name="article_content" ${mode=="new" ? "" : "readonly='readonly'" } style="background-color: #202020; width: 100%; height: 100%; color: #fff; border: none; outline: none;">${articleDTO.article_content}</textarea>
           </div>
           
         </div>
         </form>
+        
       </div>
-
-
-
-
-      
     </div>
     
     

@@ -19,7 +19,7 @@ public class ArticleDTO {
 	private	Integer	article_no;
 	private int		user_no;
 	private char	article_index_no;
-	private String		article_content;
+	private String	article_content;
 	private String	article_title;
 	private Date	article_create_dt;
 	private Date	article_mod_dt;
@@ -151,11 +151,4 @@ public class ArticleDTO {
 				+ ", article_like_count=" + article_like_count + ", report_cnt=" + report_cnt + "]";
 	}
 	
-	
-	
-	
-	
-	
-	
-
 }

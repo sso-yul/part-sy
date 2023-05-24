@@ -14,11 +14,11 @@ public class LoginUserDaoImpl implements LoginUserDao {
 	private static String namespace = "com.ottt.ottt.dao.login.LoginMapper.";
 	
 	@Override
-	public UserDTO select(String user_id) {
+	public UserDTO select(String id) {
 		// TODO Auto-generated method stub
-		return session.selectOne(namespace+"select", user_id);
+		return session.selectOne(namespace+"select", id);
 	}
-	
+
 	@Override
 	public int insert(UserDTO user) {
 		// TODO Auto-generated method stub

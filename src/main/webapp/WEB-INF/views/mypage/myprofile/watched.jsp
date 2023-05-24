@@ -82,7 +82,7 @@
                 <img class="mimg" src="${path}/resources/images/img/drama.png" alt="드라마">
                 <a href="./watched-1drama.html">드라마</a>
               </li>
-              <li style="color: #33ff33;">
+              <li>
                 <img class="mimg" src="${path}/resources/images/img/vrt.png" alt="예능">
                 <a href="./watched-1vrt.html">예능</a>
               </li>

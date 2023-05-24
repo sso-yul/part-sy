@@ -13,7 +13,7 @@
  	</select>
  	
  	<!-- 수발신구분 할 수 있는 셀렉트문 -->
- 	<select id="selectRecbSend">
+ 	<select id="selectRecvSend" parameterType="Integer" resultType="MessageDTO">
 		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn,
 		    CASE
 		        WHEN send_user_no = #{user_no} THEN 'Send'

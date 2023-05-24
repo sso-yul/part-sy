@@ -5,12 +5,8 @@
   
   <mapper namespace="com.ottt.ottt.dao.login.LoginMapper">
   
-  	<select id="select" parameterType="string" resultType="UserDTO" >
-  		select * from tb_user where user_id = #{user_id}
-  	</select>
-  	
-  	<select id="selectNickname" parameterType="string" resultType="UserDTO" >
-  		select * from tb_user where user_nicknm = #{user_nicknm}
+  	<select id="select" parameterType="String" resultType="UserDTO" >
+  		select * from tb_user where user_id = #{id}
   	</select>
   	
   	<insert id="insert" parameterType="UserDTO" >

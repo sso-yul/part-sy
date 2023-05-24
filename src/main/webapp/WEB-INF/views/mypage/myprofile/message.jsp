@@ -21,7 +21,7 @@
   <body>
      
     <div class="warp">
-        <header >
+        <header>
         <div class="logo">
 			<a href="<c:url value="/" />">
 				  <img src="${path}/resources/images/logo/OTTT.png" alt="로고">
@@ -75,15 +75,15 @@
 	            </table>
             </div>
             <div class="left-bottom">
-	            <table>        
-<%-- 		            <c:forEach var="messageDTO" items="${list }"> --%>
+	            <table>
+		            <c:forEach var="messageDTO" items="${list }">
 		              <tr class="title-line">
 		                <td class="msg-img">픞</td>
-		                <td class="msg-name">${messageDTO.send_user_no }</td>
+		                <td class="msg-name">${messageDTO.receive_user_no }</td>
 		                <td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yyyy-MM-dd HH24:MI" type="date" /></td>
 		                <td class="msg-del"><button class="delBtn" style="border: none; color: red;"><i class="fas fa-times"></i></button></td>
 		              </tr>
-<%-- 		            </c:forEach>             --%>
+		            </c:forEach>
 				</table>
 		    </div>
 			
