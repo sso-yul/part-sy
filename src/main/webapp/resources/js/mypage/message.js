@@ -42,15 +42,30 @@ $(document).ready(function() {
   });
   
 //쪽지 리스트 불러오기(받은 / 보낸)
+  $("#btn-recv").click(function() {
+  	$.ajax({
+  		type: 'GET',
+  		url: '/ottt/mypage/message/recv/' + '?message_no=' + message_no,
+  		success: function(result) {
+  			
+  			
+  		},
+  		error: function() {alert("error")} 		
+  		
+  	});  
+  });
   
+
   
   
 //답장 팝업창
-  $('#msg-write').click(function() {
+  $("#msg-write").click(function() {
   	var url = "../messagewindow/open";
 	window.open(url, 'SEND-MSG', 'width=520, height=750, scrollbars=no');
   });
   
+  
+ 
   
   
 
