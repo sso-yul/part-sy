@@ -2,14 +2,10 @@ package com.ottt.ottt.controller.mypage.pageVar;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ottt.ottt.dao.user.UserDao;
 import com.ottt.ottt.dto.MessageDTO;
-import com.ottt.ottt.service.message.MessageService;
 import com.ottt.ottt.service.message.MessageServiceImpl;
 
 @Controller
@@ -32,13 +27,7 @@ public class MessageController {
 	
 	//쪽지함 메인(동시에 받은 쪽지목록)
 	@GetMapping(value = "/message")
-	public String message(Model m, HttpServletRequest request, Integer message_no) {
-		try {
-			List<MessageDTO> list = messageServiceImpl.loadRecvList(message_no);
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public String message() {
 		return "/mypage/myprofile/message";
 	}
 	
@@ -71,7 +60,6 @@ public class MessageController {
 	
 	
 	//쪽지 삭제(해당 쪽지)
-	@DeleteMapping
 	@PostMapping("/message/remove")
 	public String removeMsg() {
 		
