@@ -1,8 +1,10 @@
 package com.ottt.ottt.dao.message;
 
+import com.ottt.ottt.domain.MessageSearchItem;
 import com.ottt.ottt.dto.MessageDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MessageDao {
 
@@ -23,5 +25,22 @@ public interface MessageDao {
 	
 	//메시지 전체 삭제
 	int deleteAll() throws Exception;
+	
+	
+	
+	
+	
+	//페이지별 게시글 목록 불러오기
+	List<MessageDTO> selectPage(Map map) throws Exception;
+	
+	//전체 게시글 수 불러오기
+	int count() throws Exception;
+	
+	//검색 조건에 해당하는 게시글 수 불러오기(네비게이션 바 사용하기 위해)
+	int searchResultCnt(MessageSearchItem msc) throws Exception;
+	
+	//검색 조건에 해당하는 페이지별 게시글 목록 불러오기
+	List<MessageDTO> searchSelectPage(MessageSearchItem msc) throws Exception;
+	
 	
 }
