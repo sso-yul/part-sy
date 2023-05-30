@@ -26,21 +26,19 @@ public interface MessageDao {
 	//메시지 전체 삭제
 	int deleteAll() throws Exception;
 	
-	
-	
-	
-	
 	//페이지별 게시글 목록 불러오기
 	List<MessageDTO> selectPage(Map map) throws Exception;
 	
-	//전체 게시글 수 불러오기
-	int count() throws Exception;
+	//받은 메시지 수 불러오기
+	int recvCount() throws Exception;
+	
+	//보낸 메시지 수 불러오기
+	int sendCount() throws Exception;
 	
 	//검색 조건에 해당하는 게시글 수 불러오기(네비게이션 바 사용하기 위해)
 	int searchResultCnt(MessageSearchItem msc) throws Exception;
 	
 	//검색 조건에 해당하는 페이지별 게시글 목록 불러오기
-	List<MessageDTO> searchSelectPage(MessageSearchItem msc) throws Exception;
-	
+	List<MessageDTO> selectPage(MessageSearchItem msc) throws Exception;
 	
 }

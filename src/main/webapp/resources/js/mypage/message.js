@@ -44,7 +44,7 @@ $(document).ready(function() {
 //쪽지 리스트 불러오기(받은 / 보낸)
   $('#btn-recv').click(function() {
     $.ajax({
-      url: '/ottt/mypage//message/recv', // 받은 쪽지 목록을 가져오는 API 경로
+      url: '/ottt/mypage/myprofile/message/recv', // 받은 쪽지 목록을 가져오는 API 경로
       type: 'GET',
       success: function(data) {
         // 받은 쪽지 목록을 테이블에 추가하는 로직 작성
@@ -58,7 +58,7 @@ $(document).ready(function() {
 
   $('#btn-send').click(function() {
     $.ajax({
-      url: '/ottt/mypage/message/send', // 보낸 쪽지 목록을 가져오는 API 경로
+      url: '/ottt/mypage/myprofile/message/send', // 보낸 쪽지 목록을 가져오는 API 경로
       type: 'GET',
       success: function(data) {
         // 보낸 쪽지 목록을 테이블에 추가하는 로직 작성

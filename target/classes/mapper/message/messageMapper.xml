@@ -5,56 +5,68 @@
  
  <mapper namespace="com.ottt.ottt.dao.message.MessageMapper">
  	
- 	<!-- 받은 메시지 개수 세기 -->
- 	<select id="selectRecvCnt" parameterType="MessageSearchItem" resultType="int">
- 	select count(*)
-	from tb_message
-	where receive_user_no = #{user_no}
- 	</select>
- 	
- 	<!-- 보낸 메시지 개수 세기 -->
- 	<select id="selectSendCnt" parameterType="MessageSearchItem" resultType="int">
-	 	select count(*)
-		from tb_message
-		where send_user_no = #{user_no}
- 	</select>
- 	
- 	<!-- 페이지 개수 제한해서 출력하기 -->
- 	<select id="selectPage" parameterType="map" resultType="MessageDTO">
+ 	<sql id="selectFromMessage">
  		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn
 		FROM tb_message
+ 	</sql>
+	
+	<!-- 검색 조건 - 유저 이름(N), 메시지 내용(C) -->
+ 	<sql id="searchCondition">
+ 		<choose>
+ 			<when test='option=="N"'>
+ 				AND user_no LIKE concat('%', #{keyword}, '%')
+ 			</when>
+ 			<otherwise>
+ 				AND content LIKE concat('%', #{keyword}, '%')
+ 			</otherwise>
+ 		</choose>	
+ 	</sql>
+ 	
+ 	<!-- 메시지 개수 세기 -->
+ 	<select id="count" resultType="int">
+	 	SELECT count(*)
+		FROM tb_message
+ 	</select>
+
+ 	<!-- 페이지 개수 제한해서 출력하기 -->
+ 	<select id="selectPage" parameterType="map" resultType="MessageDTO">
+ 		<include refid="selectFromMessage" />
 		ORDER BY send_date DESC, message_no DESC
 		LIMIT #{pageSize} OFFSET #{offset}
  	</select>
  	
+ 	<!-- 네비바 사용을 위한 검색에 해당되는 개수 세기 -->
+ 	<select id="searchResultCnt" parameterType="MessageSearchItem" resultType="int">
+ 		SELECT count(*) FROM tb_message
+ 		WHERE true
+ 		<include refid="searchCondition" />
+ 	</select>
  	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
+ 	<!-- 검색어가 있을 때는 이쪽 사용 -->
+ 	<select id="searchSelectPage" parameterType="MessageSearchItem" resultType="MessageDTO">
+ 		<include refid="selectFromMessage" />
+		WHERE true
+		<include refid="searchCondition" />
+		ORDER BY send_date DESC, message_no DESC
+		LIMIT #{pageSize} OFFSET #{offset}
+ 	</select>
+
  	<!-- 메시지 내용 불러오기 -->
  	<select id="selectMsg" parameterType="Integer" resultType="MessageDTO">
-		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn
-		FROM tb_message
+		<include refid="selectFromMessage" />
 		WHERE message_no = #{message_no}
  	</select>
  	
  	<!-- 받은 메시지 리스트 불러오기 -->
  	<select id="selectRecv" parameterType="Integer" resultType="MessageDTO">
-		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn
-		FROM tb_message
+		<include refid="selectFromMessage" />
 		WHERE receive_user_no = #{user_no}
 		ORDER BY message_no DESC
  	</select>
  	
  	<!-- 보낸 메시지 리스트 불러오기 -->
  	<select id="selectSend" parameterType="Integer" resultType="MessageDTO">
-		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn
-		FROM tb_message
+		<include refid="selectFromMessage" />
 		WHERE send_user_no = #{user_no}
 		ORDER BY message_no DESC
  	</select>

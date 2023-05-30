@@ -2,6 +2,7 @@ package com.ottt.ottt.service.message;
 
 import java.util.List;
 
+import com.ottt.ottt.domain.MessageSearchItem;
 import com.ottt.ottt.dto.MessageDTO;
 
 /*
@@ -26,5 +27,9 @@ public interface MessageService {
 	int removeMsg(Integer message_no, String user_no) throws Exception;
 	
 	int removeMsgAll(String user_no) throws Exception;
+	
+	int getSearchResultCnt(MessageSearchItem msc) throws Exception;
+	
+	List<MessageDTO> getSelectPage(MessageSearchItem msc) throws Exception;
 
 }

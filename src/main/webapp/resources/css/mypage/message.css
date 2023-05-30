@@ -254,8 +254,9 @@ button {
     display: flex;
     box-sizing: border-box;
 }
-.sec-left {
+.left-bottom {
 /*     border: 1px solid pink; */
+	height: 490px;
     overflow: auto;
 }
 
@@ -325,16 +326,16 @@ th, td {
     background: transparent;
 }
 
-.sec-left::-webkit-scrollbar {
+.left-bottom::-webkit-scrollbar {
     width: 5px;
 }
 
-.sec-left::-webkit-scrollbar-thumb {
+.left-bottom::-webkit-scrollbar-thumb {
     height: 30%;
     background: #8f8f8f;
     border-radius: 10px;
 }
 
-.sec-left::-webkit-scrollbar-track {
+.left-bottom::-webkit-scrollbar-track {
     background: transparent;
 }

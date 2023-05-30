@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ottt.ottt.dao.message.MessageDao;
+import com.ottt.ottt.domain.MessageSearchItem;
 import com.ottt.ottt.dto.MessageDTO;
 
 @Service
@@ -37,13 +38,22 @@ public class MessageServiceImpl implements MessageService{
 	//하나 삭제랑 전체 삭제랑 뭘..멀 다르게..
 	@Override
 	public int removeMsg(Integer message_no, String user_no) throws Exception {
-		return 0;
+		return messageDao.delete(message_no, user_no);
 	}
 
 	@Override
 	public int removeMsgAll(String user_no) throws Exception {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int getSearchResultCnt(MessageSearchItem msc) throws Exception {
+		return messageDao.searchResultCnt(msc);
+	}
+
+	@Override
+	public List<MessageDTO> getSelectPage(MessageSearchItem msc) throws Exception {
+		return messageDao.selectPage(msc);
 	}
 
 }

@@ -60,32 +60,32 @@ public class MessageDaoImpl implements MessageDao {
 		return session.delete(namespace + "deleteAll");
 	}
 
-
+	//sql id 맞춰서 수정 
 	@Override
 	public List<MessageDTO> selectPage(Map map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectList(namespace + "selectPage", map);
 	}
 
+	
+	@Override
+	public int recvCount() throws Exception {
+		return session.selectOne(namespace + "recvCnt");
+	}
 
 	@Override
-	public int count() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int sendCount() throws Exception {
+		return session.selectOne(namespace + "sendCnt");
 	}
-
 
 	@Override
 	public int searchResultCnt(MessageSearchItem msc) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.selectOne(namespace + "searchResultCnt", msc);
 	}
 
 
 	@Override
-	public List<MessageDTO> searchSelectPage(MessageSearchItem msc) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MessageDTO> selectPage(MessageSearchItem msc) throws Exception {
+		return session.selectList(namespace + "selectPage", msc);
 	}
 
 

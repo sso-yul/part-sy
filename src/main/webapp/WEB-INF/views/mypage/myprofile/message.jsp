@@ -80,7 +80,7 @@
 		              <tr class="title-line">
 		                <td class="msg-img">픞</td>
 		                <td class="msg-name">${messageDTO.receive_user_no }</td>
-		                <td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yyyy-MM-dd HH24:MI" type="date" /></td>
+		                <td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yy-MM-dd HH:mm" type="date" /></td>
 		                <td class="msg-del"><button class="delBtn" style="border: none; color: red;"><i class="fas fa-times"></i></button></td>
 		              </tr>
 		            </c:forEach>
