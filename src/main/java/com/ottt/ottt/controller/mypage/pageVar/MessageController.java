@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ottt.ottt.dao.login.LoginUserDao;
+import com.ottt.ottt.dao.user.UserDao;
 import com.ottt.ottt.domain.MessagePageResolver;
 import com.ottt.ottt.domain.MessageSearchItem;
 import com.ottt.ottt.dto.MessageDTO;

@@ -64,11 +64,12 @@
       <div class="sec01">
         
         <div class="sec-left">
-        	<div class="left-top">
+        	<div class="left-top" style="padding-right: 10px;">
 	            <table>
 	                <tr>
 	                    <th class="msg-img">프로필</th>
-	                    <th class="msg-name">이름</th>
+	                    <th class="msg-name" style="width: 188px; padding-right: 20px;">이름</th>
+	                    <th class="msg-content">내용</th>
 	                    <th class="msg-time">시간</th>
 	                    <th class="msg-del">삭제</th>
 	                </tr>
@@ -77,10 +78,11 @@
             <div class="left-bottom">
 	            <table>
 		            <c:forEach var="messageDTO" items="${list }">
-		              <tr class="title-line">
+		              <tr class="title-line" style="font-weight: 300">
 		                <td class="msg-img">픞</td>
-		                <td class="msg-name">${messageDTO.receive_user_no }</td>
-		                <td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yy-MM-dd HH:mm" type="date" /></td>
+		                <td class="msg-name">${messageDTO.send_user_no }</td>
+		                <td class="msg-content">${messageDTO.content }</td>
+		                <td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yyyy-MM-dd HH:mm" type="date" /></td>
 		                <td class="msg-del"><button class="delBtn" style="border: none; color: red;"><i class="fas fa-times"></i></button></td>
 		              </tr>
 		            </c:forEach>

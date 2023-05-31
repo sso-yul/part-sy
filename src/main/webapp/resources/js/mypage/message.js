@@ -4,88 +4,100 @@ $(document).ready(function() {
 
 //버튼 색, 기본 버튼 받은 쪽지함 설정
   let currentButton = null; // 선택한 버튼을 저장하는 변수
-  const recvButton = document.getElementById('btn-recv'); // 받은 쪽지 버튼 요소
-  const sendButton = document.getElementById('btn-send'); // 보낸 쪽지 버튼 요소
+  const recvButton = document.getElementById("btn-recv") // 받은 쪽지 버튼 요소
+  const sendButton = document.getElementById("btn-send") // 보낸 쪽지 버튼 요소
 
   // recvButton을 초기 선택 상태로 설정
-  recvButton.style.backgroundColor = '#33FF33';
-  recvButton.style.color = 'black';
-  recvButton.style.fontWeight = '600';
-  currentButton = recvButton;
+  recvButton.style.backgroundColor = '#33FF33'
+  recvButton.style.color = 'black'
+  recvButton.style.fontWeight = '600'
+  currentButton = recvButton
 
-  recvButton.addEventListener('click', () => {
+  recvButton.addEventListener("click", () => {
     if (currentButton !== recvButton) { // 이전에 선택한 버튼이 받은 쪽지 버튼이 아닐 경우
       if (currentButton) { // 이전에 선택한 버튼이 존재
-        currentButton.style.backgroundColor = ''; // 이전에 선택한 버튼의 색상 원래대로
-        currentButton.style.color = '';
-        currentButton.style.fontWeight = '';
+        currentButton.style.backgroundColor = '' // 이전에 선택한 버튼의 색상 원래대로
+        currentButton.style.color = ''
+        currentButton.style.fontWeight = ''
       }
-      recvButton.style.backgroundColor = '#33FF33'; // 현재 선택한 버튼의 색상을 변경
-      recvButton.style.color = 'black'; 
-      recvButton.style.fontWeight = '600';
+      recvButton.style.backgroundColor = '#33FF33' // 현재 선택한 버튼의 색상을 변경
+      recvButton.style.color = 'black';
+      recvButton.style.fontWeight = '600'
       currentButton = recvButton; // 현재 선택한 버튼 저장
     }
-  });
+  })
 
-  sendButton.addEventListener('click', () => {
+  sendButton.addEventListener("click", () => {
     if (currentButton !== sendButton) { // 이전에 선택한 버튼이 보낸 쪽지 버튼이 아닐 경우
       if (currentButton) { // 이전에 선택한 버튼이 존재
-        currentButton.style.backgroundColor = '';// 이전에 선택한 버튼의 색상 원래대로
-        currentButton.style.color = '';
-        currentButton.style.fontWeight = '';
+        currentButton.style.backgroundColor = ''// 이전에 선택한 버튼의 색상 원래대로
+        currentButton.style.color = ''
+        currentButton.style.fontWeight = ''
       }
-      sendButton.style.backgroundColor = '#33FF33'; // 현재 선택한 버튼의 색상을 변경.
-      sendButton.style.color = 'black';
-      sendButton.style.fontWeight = '600';
+      sendButton.style.backgroundColor = '#33FF33' // 현재 선택한 버튼의 색상을 변경.
+      sendButton.style.color = 'black'
+      sendButton.style.fontWeight = '600'
       currentButton = sendButton; // 현재 선택한 버튼 저장
     }
-  });
+  })
   
-//쪽지 리스트 불러오기(받은 / 보낸)
-  $('#btn-recv').click(function() {
-    $.ajax({
-      url: '/ottt/mypage/myprofile/message/recv', // 받은 쪽지 목록을 가져오는 API 경로
-      type: 'GET',
-      success: function(data) {
-        // 받은 쪽지 목록을 테이블에 추가하는 로직 작성
-        // data 변수에 받은 쪽지 목록 데이터가 포함됩니다.
-      },
-      error: function() {
-        console.log('Error: Failed to retrieve received messages');
-      }
-    });
-  });
+	//쪽지 리스트 불러오기(받은 / 보낸)
+	$(document).ready(function() {
+	  $("#btn-recv").click(function() {
+	    // 받은 쪽지 목록을 불러오는 AJAX 요청
+	    $.ajax({
+	      url: '/ottt/mypage/myprofile/message/recv', // 받은 쪽지 목록을 가져오는 API 경로
+	      type: 'GET',
+	      success: function(data) {
+	        // 받은 쪽지 목록을 테이블에 추가하는 로직 작성
+	        // data 변수에 받은 쪽지 목록 데이터가 포함됩니다.
+	      },
+	      error: function() {
+	        console.log('Error: Failed to retrieve received messages')
+	      }
+	    })
+	  })
+	
+	$("#btn-send").click(function() {
+		// 보낸 쪽지 목록을 불러오는 AJAX 요청
+		$.ajax({
+			url: '/ottt/mypage/myprofile/message/send', // 보낸 쪽지 목록을 가져오는 API 경로
+			type: 'GET',
+			success: function(data) {
+				// 보낸 쪽지 목록을 테이블에 추가하는 로직 작성
+				// data 변수에 보낸 쪽지 목록 데이터가 포함됩니다.
+			},
+			error: function() {
+				console.log('Error: Failed to retrieve sent messages')
+				}
+			})
+		})
+	})
 
-  $('#btn-send').click(function() {
-    $.ajax({
-      url: '/ottt/mypage/myprofile/message/send', // 보낸 쪽지 목록을 가져오는 API 경로
-      type: 'GET',
-      success: function(data) {
-        // 보낸 쪽지 목록을 테이블에 추가하는 로직 작성
-        // data 변수에 보낸 쪽지 목록 데이터가 포함됩니다.
-      },
-      error: function() {
-        console.log('Error: Failed to retrieve sent messages');
-      }
-    });
-  });
-  
 
-  
-  
-//답장 팝업창
-  $("#msg-write").click(function() {
-  	var url = "../messagewindow/open";
-	window.open(url, 'SEND-MSG', 'width=520, height=750, scrollbars=no');
-  });
-  
-  
- 
-  
-  
 
+	// msg-content 클릭 이벤트 리스너 추가
+	var msgNameElements = document.querySelectorAll(".msg-content")
+	
+	msgNameElements.forEach(function(element) {
+		element.addEventListener("click", function() {var content = this.textContent
+			var msgViewContent = document.querySelector(".msg-view-content")
+			msgViewContent.textContent = content
+		})
+	})
+	
+	
+	  
+	//답장 새창
+	$("#msg-write").click(function() {
+		var url = "../messagewindow/open";
+		window.open(url, 'SEND-MSG', 'width=520, height=750, scrollbars=no')
+	})
+  
+  
   
   
   
 
-});
+
+})

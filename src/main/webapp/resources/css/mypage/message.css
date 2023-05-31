@@ -280,6 +280,10 @@ th, td {
     width: 310px;
     text-align: center;
     padding: 12px 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 240px;
 }
 
 .msg-img {width: 90px;}
