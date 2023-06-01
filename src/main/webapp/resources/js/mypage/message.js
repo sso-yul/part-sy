@@ -44,13 +44,11 @@ $(document).ready(function() {
 	//쪽지 리스트 불러오기(받은 / 보낸)
 	$(document).ready(function() {
 	  $("#btn-recv").click(function() {
-	    // 받은 쪽지 목록을 불러오는 AJAX 요청
 	    $.ajax({
-	      url: '/ottt/mypage/myprofile/message/recv', // 받은 쪽지 목록을 가져오는 API 경로
+	      url: '/ottt/mypage/message/recv', // 받은 쪽지 목록을 가져오는 API 경로
 	      type: 'GET',
 	      success: function(data) {
 	        // 받은 쪽지 목록을 테이블에 추가하는 로직 작성
-	        // data 변수에 받은 쪽지 목록 데이터가 포함됩니다.
 	      },
 	      error: function() {
 	        console.log('Error: Failed to retrieve received messages')
@@ -59,13 +57,11 @@ $(document).ready(function() {
 	  })
 	
 	$("#btn-send").click(function() {
-		// 보낸 쪽지 목록을 불러오는 AJAX 요청
 		$.ajax({
-			url: '/ottt/mypage/myprofile/message/send', // 보낸 쪽지 목록을 가져오는 API 경로
+			url: '/ottt/mypage/message/send', // 보낸 쪽지 목록을 가져오는 API 경로
 			type: 'GET',
 			success: function(data) {
-				// 보낸 쪽지 목록을 테이블에 추가하는 로직 작성
-				// data 변수에 보낸 쪽지 목록 데이터가 포함됩니다.
+				// 보낸 쪽지 목록을 테이블에 추가하는 로직 작성.
 			},
 			error: function() {
 				console.log('Error: Failed to retrieve sent messages')
@@ -75,22 +71,42 @@ $(document).ready(function() {
 	})
 
 
-
-	// msg-content 클릭 이벤트 리스너 추가
-	var msgNameElements = document.querySelectorAll(".msg-content")
+	//현재 머물러 있는 페이지 숫자
+	  const pageElements = $(".page")
 	
-	msgNameElements.forEach(function(element) {
-		element.addEventListener("click", function() {var content = this.textContent
-			var msgViewContent = document.querySelector(".msg-view-content")
-			msgViewContent.textContent = content
-		})
+	  pageElements.on("click", function() {
+	    $(".page.active").removeClass("active")
+	
+	    $(this).addClass("active")
+	  })
+
+
+
+	//
+	$("#msg-write").hide();
+	
+	//쪽지 내용, 상대 닉네임 불러오기, 내용 있을 시 답장 버튼 불러옴
+	$(".msg-content").click(function() {
+		var content = $(this).text()
+		$(".msg-view-content").text(content)
+
+		if (content !== "") {
+		  $(".msg-write-btn").show();
+		} else {
+		  $(".msg-write-btn").hide();
+		}
+
+	    var sendUserNo = $(this).siblings(".msg-name").text()
+	    $("#msgNick").text(sendUserNo)
+	    
 	})
 	
 	
 	  
 	//답장 새창
 	$("#msg-write").click(function() {
-		var url = "../messagewindow/open";
+		var sendUserNo = $(this).siblings(".msg-nick").text()
+		var url = "../messagewindow/open?send_user_no=" + encodeURIComponent(sendUserNo)
 		window.open(url, 'SEND-MSG', 'width=520, height=750, scrollbars=no')
 	})
   

@@ -21,13 +21,13 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public List<MessageDTO> loadRecvList(Integer receive_user_no) throws Exception {
-		return messageDao.selectRecv(receive_user_no);
+	public List<MessageDTO> loadRecvList(MessageSearchItem msc) throws Exception {
+		return messageDao.selectRecv(msc);
 	}
 
 	@Override
-	public List<MessageDTO> loadSendList(Integer send_user_no) throws Exception {
-		return messageDao.selectSend(send_user_no);
+	public List<MessageDTO> loadSendList(MessageSearchItem msc) throws Exception {
+		return messageDao.selectSend(msc);
 	}
 
 	@Override

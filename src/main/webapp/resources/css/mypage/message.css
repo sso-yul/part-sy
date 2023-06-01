@@ -258,6 +258,7 @@ button {
 /*     border: 1px solid pink; */
 	height: 490px;
     overflow: auto;
+    margin-bottom: 2px;
 }
 
 .sec-right {
@@ -283,7 +284,7 @@ th, td {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 240px;
+    max-width: 200px;
 }
 
 .msg-img {width: 90px;}
@@ -342,4 +343,23 @@ th, td {
 
 .left-bottom::-webkit-scrollbar-track {
     background: transparent;
+}
+
+.paging-container {
+  display: flex;
+  justify-content: center;
+}
+
+.paging {
+  display: flex;
+  flex-direction: row;
+  font-weight: 200;
+}
+
+.page {
+  margin-right: 20px;
+}
+
+.page.active {
+  color: #33ff33;
 }

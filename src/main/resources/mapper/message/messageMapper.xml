@@ -6,20 +6,9 @@
  <mapper namespace="com.ottt.ottt.dao.message.MessageMapper">
  	
  	<sql id="selectFromMessage">
- 		SELECT message_no, send_user_no, receive_user_no, content, send_date, read_yn
-		FROM tb_message
- 	</sql>
-	
-	<!-- 검색 조건 - 유저 이름(N), 메시지 내용(C) -->
- 	<sql id="searchCondition">
- 		<choose>
- 			<when test='option=="N"'>
- 				AND user_no LIKE concat('%', #{keyword}, '%')
- 			</when>
- 			<otherwise>
- 				AND content LIKE concat('%', #{keyword}, '%')
- 			</otherwise>
- 		</choose>	
+ 		SELECT a.message_no, a.send_user_no, a.receive_user_no, a.content, a.send_date, read_yn, b.user_nicknm
+		FROM tb_message a
+		join tb_user b on a.send_user_no = b.user_no 
  	</sql>
  	
  	<!-- 메시지 개수 세기 -->
@@ -39,14 +28,12 @@
  	<select id="searchResultCnt" parameterType="MessageSearchItem" resultType="int">
  		SELECT count(*) FROM tb_message
  		WHERE true
- 		<include refid="searchCondition" />
  	</select>
  	
  	<!-- 검색어가 있을 때는 이쪽 사용 -->
  	<select id="searchSelectPage" parameterType="MessageSearchItem" resultType="MessageDTO">
  		<include refid="selectFromMessage" />
 		WHERE true
-		<include refid="searchCondition" />
 		ORDER BY send_date DESC, message_no DESC
 		LIMIT #{pageSize} OFFSET #{offset}
  	</select>
@@ -58,17 +45,19 @@
  	</select>
  	
  	<!-- 받은 메시지 리스트 불러오기 -->
- 	<select id="selectRecv" parameterType="Integer" resultType="MessageDTO">
+ 	<select id="selectRecv" parameterType="map" resultType="MessageDTO">
 		<include refid="selectFromMessage" />
 		WHERE receive_user_no = #{user_no}
-		ORDER BY message_no DESC
+		ORDER BY send_date DESC, message_no DESC
+		LIMIT #{pageSize} OFFSET #{offset}
  	</select>
  	
  	<!-- 보낸 메시지 리스트 불러오기 -->
- 	<select id="selectSend" parameterType="Integer" resultType="MessageDTO">
+ 	<select id="selectSend" parameterType="map" resultType="MessageDTO">
 		<include refid="selectFromMessage" />
 		WHERE send_user_no = #{user_no}
-		ORDER BY message_no DESC
+		ORDER BY send_date DESC, message_no DESC
+		LIMIT #{pageSize} OFFSET #{offset}
  	</select>
  	
  	<!-- 메시지 보내기 -->

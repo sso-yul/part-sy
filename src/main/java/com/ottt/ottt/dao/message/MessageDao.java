@@ -12,10 +12,10 @@ public interface MessageDao {
 	MessageDTO selectMsg(Integer message_no) throws Exception;
 	
 	//받은 메시지 리스트 불러오기(받은 쪽지함)
-	List<MessageDTO> selectRecv(Integer receive_user_no) throws Exception;
+	List<MessageDTO> selectRecv(MessageSearchItem msc) throws Exception;
 	
 	//보낸 메시지 리스트 불러오기(보낸 쪽지함)
-	List<MessageDTO> selectSend(Integer send_user_no) throws Exception;
+	List<MessageDTO> selectSend(MessageSearchItem msc) throws Exception;
 	
 	//메시지 추가(보내기)
 	int insert(MessageDTO messageDTO) throws Exception;

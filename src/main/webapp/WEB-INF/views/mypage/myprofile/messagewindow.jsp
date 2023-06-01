@@ -24,7 +24,7 @@
       <a href="#">
         <div class="proimg"><img src="${path}/resources/images/img/profile.png"></div>
       </a>
-      <div class="nickname">피카츄 님</div>
+      <div class="nickname">피카츄</div>
     </div>
 
     <div class="sec02">

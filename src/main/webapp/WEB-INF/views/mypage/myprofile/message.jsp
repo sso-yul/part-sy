@@ -64,7 +64,8 @@
       <div class="sec01">
         
         <div class="sec-left">
-        	<div class="left-top" style="padding-right: 10px;">
+        	
+        	<div class="left-top">
 	            <table>
 	                <tr>
 	                    <th class="msg-img">프로필</th>
@@ -77,22 +78,43 @@
             </div>
             <div class="left-bottom">
 	            <table>
+					<c:if test="${totalCnt == null || totalCnt == 0}">
+						<div style="display: flex; margin-top: 20px; justify-content: center; color: #8f8f8f;">보관된 쪽지가 없습니다.</div>
+					</c:if>
 		            <c:forEach var="messageDTO" items="${list }">
-		              <tr class="title-line" style="font-weight: 300">
+		              <tr class="title-line" style="font-weight: 200">
 		                <td class="msg-img">픞</td>
-		                <td class="msg-name">${messageDTO.send_user_no }</td>
-		                <td class="msg-content">${messageDTO.content }</td>
+		                <td class="msg-nicknm">${messageDTO.user_nicknm }</td>
+		                <td class="msg-name" style="display: none; ">${messageDTO.send_user_no }</td>
+		                <td class="msg-content" style="cursor: pointer;">${messageDTO.content }</td>
 		                <td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yyyy-MM-dd HH:mm" type="date" /></td>
 		                <td class="msg-del"><button class="delBtn" style="border: none; color: red;"><i class="fas fa-times"></i></button></td>
 		              </tr>
 		            </c:forEach>
 				</table>
 		    </div>
-			
+			<br />
+			<div class="paging-container">
+				<div class="paging">
+				
+					<c:if test="${totalCnt != null || totalCnt != 0 }">
+						<c:if test="${mpr.showPrev }">
+							<a class="page" href="<c:url value="/mypage/message${mpr.msc.getQueryString(mpr.beginPage-1) }" />">&lt;</a>
+						</c:if>
+						<c:forEach var="i" begin="${mpr.beginPage }" end="${mpr.endPage }">
+							<a class="page" href="<c:url value="/mypage/message${mpr.msc.getQueryString(i) }" />">${i }</a>
+						</c:forEach>
+						<c:if test="${mpr.showNext }">
+							<a class="page" href="<c:url value="/mypage/message${mpr.msc.getQueryString(mpr.endPage+1) }" />">&gt;</a>
+						</c:if>
+					</c:if>
+				</div>
+			</div>
+
         </div>
 
         <div class="sec-right">
-            <div class="msg-nick">닉네임</div>
+            <div class="msg-nick" id="msgNick"></div>
 	        <div class="msg-view-content">${messageDTO.content }</div>
 	        <button type="button" id="msg-write" class="msg-write-btn" >답장</button>
         </div>

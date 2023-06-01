@@ -10,4 +10,16 @@ $(document).ready(function() {
 	  }
 	});
 
+	var sendUserNo = getParameterByName("send_user_no") + " 님"
+	$(".nickname").text(sendUserNo)
+
 });
+
+function getParameterByName(name) {
+  name = name.replace(/[\[\]]/g, "\\$&")
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)")
+  var results = regex.exec(window.location.href)
+  if (!results) return null
+  if (!results[2]) return ''
+  return decodeURIComponent(results[2].replace(/\+/g, " "))
+}

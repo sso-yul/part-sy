@@ -12,26 +12,25 @@ public class MessageSearchItem {
 	//기본, 최소, 최대 게시물 개수
 	public static final int DEFAULT_PAGE_SIZE = 20;
 	public static final int MIN_PAGE_SIZE = 5;
-	public static final int MAX_PAGE_SIZE = 30;
+	public static final int MAX_PAGE_SIZE = 100;
 	
 	//키워드나 옵션이 없을 경우 전체 게시물 긁어옴
 	private Integer page = 1;
 	private Integer pageSize = DEFAULT_PAGE_SIZE;
-	private String keyword = "";
-	private String option = "";
+	private Integer user_no;	
 	
 	public MessageSearchItem() {};
 
-	public MessageSearchItem(Integer page, Integer pageSize, String option, String keyword) {
+	public MessageSearchItem(Integer page, Integer pageSize, Integer user_no) {
 		this.page = page;
 		this.pageSize = pageSize;
-		this.option = option;
-		this.keyword = keyword;
+		this.user_no = user_no;
+
 	}
 
 	//page와 pageSize는 늘 존재해야 하고, keyword와 option은 없는 것이 기본
 	public MessageSearchItem(Integer page, Integer pageSize) {
-		this(page, pageSize, "", "");
+		this(page, pageSize, 0);
 	}
 
 	public Integer getPage() {
@@ -65,27 +64,17 @@ public class MessageSearchItem {
 		return UriComponentsBuilder.newInstance()
 				.queryParam("page", page)
 				.queryParam("pageSize", pageSize)
-				.queryParam("option", option)
-				.queryParam("keyword", keyword)
 				.build().toString();
 	}
-	
-	public String getKeyword() {
-		return keyword;
+		
+	public Integer getUser_no() {
+		return user_no;
 	}
 
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+	public void setUser_no(Integer user_no) {
+		this.user_no = user_no;
 	}
 
-	public String getOption() {
-		return option;
-	}
-
-	public void setOption(String option) {
-		this.option = option;
-	}
-	
 	public Integer getOffset() {
 		int result = (page - 1) * pageSize;
 		if(result < 0) {

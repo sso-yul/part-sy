@@ -18,9 +18,9 @@ public interface MessageService {
 
 	MessageDTO read(Integer message_no) throws Exception;
 	
-	List<MessageDTO> loadRecvList(Integer receive_user_no) throws Exception;
+	List<MessageDTO> loadRecvList(MessageSearchItem msc) throws Exception;
 	
-	List<MessageDTO> loadSendList(Integer send_user_no) throws Exception;
+	List<MessageDTO> loadSendList(MessageSearchItem msc) throws Exception;
 	
 	int writeMsg(MessageDTO messageDTO) throws Exception;
 	

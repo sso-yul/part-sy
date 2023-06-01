@@ -29,14 +29,14 @@ public class MessageDaoImpl implements MessageDao {
 	
 	//받은 메세지 목록 불러오기
 	@Override
-	public List<MessageDTO> selectRecv(Integer receive_user_no) throws Exception {
-		return session.selectList(namespace + "selectRecv", receive_user_no);
+	public List<MessageDTO> selectRecv(MessageSearchItem msc) throws Exception {
+		return session.selectList(namespace + "selectRecv", msc);
 	}
 
 	//보낸 메세지 목록 불러오기
 	@Override
-	public List<MessageDTO> selectSend(Integer send_user_no) throws Exception {
-		return session.selectList(namespace + "selectSend", send_user_no);
+	public List<MessageDTO> selectSend(MessageSearchItem msc) throws Exception {
+		return session.selectList(namespace + "selectSend", msc);
 	}
 
 	//메세지 보내기(메세지 생성)
