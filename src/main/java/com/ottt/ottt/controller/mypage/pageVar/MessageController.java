@@ -31,35 +31,35 @@ public class MessageController {
 	
 	@GetMapping(value = "/message")
 	public String message(MessageSearchItem msc, Model m, HttpSession session) {
-		try {
-			
-			UserDTO userDTO = loginUserDao.select((String) session.getAttribute("id"));
-			m.addAttribute("userDTO", userDTO);
-			msc.setUser_no(userDTO.getUser_no());
-			
-			int totalCnt = messageService.getSearchResultCnt(msc);
-			
-			m.addAttribute("totalCnt", totalCnt);
-			MessagePageResolver msgPageResolver = new MessagePageResolver(totalCnt, msc);
-			
-			List<MessageDTO> list = messageService.loadRecvList(msc);
-			
-			m.addAttribute("list", list);
-			m.addAttribute("mpr", msgPageResolver);
-
-		} 
-		catch (Exception e) {e.printStackTrace();}
+		
+//		try {
+//			
+//			UserDTO userDTO = loginUserDao.select((String) session.getAttribute("id"));
+//			m.addAttribute("userDTO", userDTO);
+//			msc.setUser_no(userDTO.getUser_no());
+//			
+//			int totalCnt = messageService.getSearchResultCnt(msc);
+//			
+//			m.addAttribute("totalCnt", totalCnt);
+//			MessagePageResolver msgPageResolver = new MessagePageResolver(totalCnt, msc);
+//			
+//			List<MessageDTO> list = messageService.getSelectPage(msc);
+//			
+//			m.addAttribute("list", list);
+//			m.addAttribute("mpr", msgPageResolver);
+//
+//		} catch (Exception e) {e.printStackTrace();}
 		return "/mypage/myprofile/message";
 	}
 	
 	@GetMapping(value = "/message/recv")
-	public String sendMessage(MessageSearchItem msc, Model m, HttpSession session) {
-		
+	public String recvMessage(MessageSearchItem msc, Model m, HttpSession session) {
 		try {
-						
+			
 			UserDTO userDTO = loginUserDao.select((String) session.getAttribute("id"));
 			m.addAttribute("userDTO", userDTO);
 			msc.setUser_no(userDTO.getUser_no());
+			
 			int totalCnt = messageService.getSearchResultCnt(msc);
 			
 			m.addAttribute("totalCnt", totalCnt);
@@ -69,14 +69,31 @@ public class MessageController {
 			
 			m.addAttribute("list", list);
 			m.addAttribute("mpr", msgPageResolver);
-			
 
+		} catch (Exception e) {e.printStackTrace();}
+		return "/mypage/myprofile/message";
+	}
+	
+	@GetMapping(value = "/message/send")
+	public String sendMessage(MessageSearchItem msc, Model m, HttpSession session) {
+		try {
+			UserDTO userDTO = loginUserDao.select((String)session.getAttribute("id"));
+			m.addAttribute("userDTO", userDTO);
+			msc.setUser_no(userDTO.getUser_no());
+			
+			int totalCnt = messageService.getSearchResultCnt(msc);
+			
+			m.addAttribute("totalCnt", totalCnt);
+			MessagePageResolver msgPageResolver = new MessagePageResolver(totalCnt, msc);
+			
+			List<MessageDTO> list = messageService.loadSendList(msc);
+			
+			m.addAttribute("list", list);
+			m.addAttribute("mpr", msgPageResolver);
 			
 		} catch (Exception e) {e.printStackTrace();}
 		return "/mypage/myprofile/message";
-		
 	}
-	
 	
 	
 	

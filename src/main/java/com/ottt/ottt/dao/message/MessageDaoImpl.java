@@ -69,12 +69,12 @@ public class MessageDaoImpl implements MessageDao {
 	
 	@Override
 	public int recvCount() throws Exception {
-		return session.selectOne(namespace + "recvCnt");
+		return session.selectOne(namespace + "recvCount");
 	}
 
 	@Override
 	public int sendCount() throws Exception {
-		return session.selectOne(namespace + "sendCnt");
+		return session.selectOne(namespace + "sendCount");
 	}
 
 	@Override

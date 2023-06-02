@@ -85,7 +85,9 @@
 		              <tr class="title-line" style="font-weight: 200">
 		                <td class="msg-img">픞</td>
 		                <td class="msg-nicknm">${messageDTO.user_nicknm }</td>
+		                <!-- c:if문 추가 보낸/받은 구분 -->
 		                <td class="msg-name" style="display: none; ">${messageDTO.send_user_no }</td>
+		                
 		                <td class="msg-content" style="cursor: pointer;">${messageDTO.content }</td>
 		                <td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yyyy-MM-dd HH:mm" type="date" /></td>
 		                <td class="msg-del"><button class="delBtn" style="border: none; color: red;"><i class="fas fa-times"></i></button></td>
@@ -96,7 +98,9 @@
 			<br />
 			<div class="paging-container">
 				<div class="paging">
-				
+					
+					<!-- c:if문으로.... 여기도........이거맞나 -->
+					
 					<c:if test="${totalCnt != null || totalCnt != 0 }">
 						<c:if test="${mpr.showPrev }">
 							<a class="page" href="<c:url value="/mypage/message${mpr.msc.getQueryString(mpr.beginPage-1) }" />">&lt;</a>
@@ -108,6 +112,7 @@
 							<a class="page" href="<c:url value="/mypage/message${mpr.msc.getQueryString(mpr.endPage+1) }" />">&gt;</a>
 						</c:if>
 					</c:if>
+					
 				</div>
 			</div>
 

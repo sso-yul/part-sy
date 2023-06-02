@@ -14,7 +14,7 @@ public class MessageSearchItem {
 	public static final int MIN_PAGE_SIZE = 5;
 	public static final int MAX_PAGE_SIZE = 100;
 	
-	//키워드나 옵션이 없을 경우 전체 게시물 긁어옴
+	//전체 게시물 긁어옴
 	private Integer page = 1;
 	private Integer pageSize = DEFAULT_PAGE_SIZE;
 	private Integer user_no;	
@@ -28,7 +28,7 @@ public class MessageSearchItem {
 
 	}
 
-	//page와 pageSize는 늘 존재해야 하고, keyword와 option은 없는 것이 기본
+	//page와 pageSize는 늘 존재
 	public MessageSearchItem(Integer page, Integer pageSize) {
 		this(page, pageSize, 0);
 	}
@@ -58,7 +58,7 @@ public class MessageSearchItem {
 		return getQueryString(page);
 	}
 	
-	//?page=n&pageSize=nn&option=옵션&keyword=작성자/내용
+	//?page=n&pageSize=nn
 	public String getQueryString(Integer page) {
 		//쿼리스트링 정보 생성해서 넘기기
 		return UriComponentsBuilder.newInstance()
@@ -66,7 +66,25 @@ public class MessageSearchItem {
 				.queryParam("pageSize", pageSize)
 				.build().toString();
 	}
-		
+	
+	//받은 쪽지 네비바
+	public String getQueryStringRecv(Integer page) {
+		return UriComponentsBuilder.newInstance()
+				.path("/mypage/message/recv")
+				.queryParam("page", page)
+				.queryParam("pageSize", pageSize)
+				.build().toString();
+	}
+	
+	//보낸 쪽지 네비바
+	public String getQueryStringSend(Integer page) {
+		return UriComponentsBuilder.newInstance()
+				.path("/mypage/message/send")
+				.queryParam("page", page)
+				.queryParam("pageSize", pageSize)
+				.build().toString();
+	}
+	
 	public Integer getUser_no() {
 		return user_no;
 	}
