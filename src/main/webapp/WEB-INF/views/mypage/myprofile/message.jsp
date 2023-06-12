@@ -19,30 +19,73 @@
   </head>
 
   <body>
+<!-- 	<script type="text/javascript">
+     	$(document).ready(function() {
+     		var message_no = $(this).closest("tr").find("input[name='message_no']").val()
+     		
+     		$(".delrecvBtn").on("click", function() {
+     			if(!confirm("쪽지가 삭제됩니다."))
+     				return;
+     				
+     			let form = ("#form")
+     			form.attr("action", "<c:url value='/mypage/message/remove${messageSearchItem.queryString}' />")
+     			form.attr("method", "post")
+     			form.submit()
+     		})
+     		
+     		$(".delsendBtn").on("click", function() {
+     			if(!confirm("쪽지가 삭제됩니다."))
+     				return;
+     				
+     			let form = ("#form")
+     			form.attr("action", "<c:url value='/mypage/message/send/remove' />")
+     			form.attr("method", "post")
+     			form.submit()
+     		})
+		})
+     </script> -->
      
+<script type="text/javascript">
+$(document).ready(function() {
+	$('button[name="deleteBtn"]').on('click', function(event) {
+		  
+		  if(!confirm("쪽지가 삭제됩니다.")) return;
+	    	deletemsg(event);
+	  });
+	  
+	  function deletemsg(event) {
+		//버튼 테이블에 있는 메세지 넘버 받아오기
+	    var messageNo = $(event.target).closest("tr").find("input[name='message_no']").val();
+	    
+	    //폼태그 생성하기
+	    let form = document.createElement('form');
+	    //인풋태그 생성하기
+	    let input = document.createElement('input');
+	    //인풋 속성
+	    input.setAttribute('type', 'hidden');
+	    input.setAttribute('name', 'message_no');
+	    input.setAttribute('value', messageNo);
+	    form.appendChild(input);
+	    
+	    if($('button[name="deleteBtn"]').attr("class") == 'delrecvBtn')
+	    	form.setAttribute("action", '/ottt/mypage/message/remove');
+	    if($('button[name="deleteBtn"]').attr("class") == 'delsendBtn')
+	    	form.setAttribute("action", '/ottt/mypage/message/send/remove');
+	    
+	    form.setAttribute("method", "post");
+	    
+	    document.body.appendChild(form);
+	    form.submit();
+	  }
+	  
+	});
+     
+     
+	     
+     
+     </script>
     <div class="warp">
-        <header>
-        <div class="logo">
-			<a href="<c:url value="/" />">
-				  <img src="${path}/resources/images/logo/OTTT.png" alt="로고">
-				</a>
-		</div>
-		<nav class="gnb">
-			<ul>
-                <li><a href="<c:url value="/genre/movie" />">영화</a></li>
-                <li><a href="<c:url value="/genre/drama" />">드라마</a></li>
-                <li><a href="<c:url value="/genre/interest" />">예능</a></li>
-                <li><a href="<c:url value="/genre/animation" />">애니</a></li>
-                <li><a href="<c:url value="/community" />">게시판</a></li>
-          </ul>
-        </nav>
-        <div class="h-icon">
-          <ul>
-            <li><a href="<c:url value='/search' />"></a></li>
-            <li><a href="<c:url value='/mypage' />"></a></li>
-          </ul>
-        </div>
-      </header>
+	<%@ include file="../../fix/header.jsp" %>
 
       <nav class="mnb">
         <ul>
@@ -77,50 +120,49 @@
 	            </table>
             </div>
             <div class="left-bottom">
-	            <table>
-					<c:if test="${totalCnt == null || totalCnt == 0}">
-						<div style="display: flex; margin-top: 20px; justify-content: center; color: #8f8f8f;">보관된 쪽지가 없습니다.</div>
-					</c:if>
-		            <c:forEach var="messageDTO" items="${list }">
-		              <tr class="title-line" style="font-weight: 200">
-		                <td class="msg-img">픞</td>
-		                <td class="msg-nicknm">${messageDTO.user_nicknm }</td>
-		                <!-- c:if문 추가 보낸/받은 구분 -->
-		                <td class="msg-name" style="display: none; ">${messageDTO.send_user_no }</td>
-		                
-		                <td class="msg-content" style="cursor: pointer;">${messageDTO.content }</td>
-		                <td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yyyy-MM-dd HH:mm" type="date" /></td>
-		                <td class="msg-del"><button class="delBtn" style="border: none; color: red;"><i class="fas fa-times"></i></button></td>
-		              </tr>
-		            </c:forEach>
-				</table>
-		    </div>
+
+		            <table>
+						<c:if test="${totalCnt == null || totalCnt == 0}">
+							<div style="display: flex; margin-top: 20px; justify-content: center; color: #8f8f8f;">보관된 쪽지가 없습니다.</div>
+						</c:if>
+			            <c:forEach var="messageDTO" items="${list }">
+			            <!-- 폼태그를 사용하명 아이디를 쓰든 클래스를 사용하든 맨 위에 잇는 애만 된다 버튼 눌를 때 폼태그 생강 -->
+							<tr class="title-line" style="font-weight: 200">
+								<td class="msg-no" style="display: none; ">${messageDTO.message_no}</td>
+								<input name="message_no" type="hidden" value="${messageDTO.message_no}" />
+								<td class="msg-img">픞</td>
+								<td class="msg-nicknm">${messageDTO.user_nicknm }</td>
+								<td class="msg-name" style="display: none; ">${messageDTO.send_user_no }</td>
+								<td class="msg-content" style="cursor: pointer;"><c:out value="${messageDTO.content }"></c:out></td>
+								<td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yyyy-MM-dd HH:mm" type="date" /></td>
+								<td class="msg-del"><button class="delBtn" name="deleteBtn" style="border: none; color: red;"><i class="fas fa-times"></i></button></td>
+							</tr>			            
+			            </c:forEach>			           
+					</table>
+				</div>
 			<br />
 			<div class="paging-container">
 				<div class="paging">
-					
-					<!-- c:if문으로.... 여기도........이거맞나 -->
-					
-					<c:if test="${totalCnt != null || totalCnt != 0 }">
-						<c:if test="${mpr.showPrev }">
-							<a class="page" href="<c:url value="/mypage/message${mpr.msc.getQueryString(mpr.beginPage-1) }" />">&lt;</a>
+						<c:if test="${totalCnt != null || totalCnt != 0 }">
+							<c:if test="${mpr.showPrev }">
+								<a class="page" href="<c:url value="${mpr.msc.getQueryString(mpr.beginPage-1) }" />">&lt;</a>
+							</c:if>
+							<c:forEach var="i" begin="${mpr.beginPage }" end="${mpr.endPage }">
+								<a class="page" href="<c:url value="${mpr.msc.getQueryString(i) }" />">${i }</a>
+							</c:forEach>
+							<c:if test="${mpr.showNext }">
+								<a class="page" href="<c:url value="${mpr.msc.getQueryString(mpr.endPage+1) }" />">&gt;</a>
+							</c:if>
 						</c:if>
-						<c:forEach var="i" begin="${mpr.beginPage }" end="${mpr.endPage }">
-							<a class="page" href="<c:url value="/mypage/message${mpr.msc.getQueryString(i) }" />">${i }</a>
-						</c:forEach>
-						<c:if test="${mpr.showNext }">
-							<a class="page" href="<c:url value="/mypage/message${mpr.msc.getQueryString(mpr.endPage+1) }" />">&gt;</a>
-						</c:if>
-					</c:if>
-					
 				</div>
 			</div>
-
         </div>
 
         <div class="sec-right">
-            <div class="msg-nick" id="msgNick"></div>
-	        <div class="msg-view-content">${messageDTO.content }</div>
+        	<input name="msgno" type="hidden" value="" />
+        	<input name="sendno" type="hidden" value="${messageDTO.send_user_no}" />
+            <div class="msg-nick" id="msgNick">${messageDTO.user_nicknm }</div>
+	        <div class="msg-view-content" style="white-space: pre-wrap;">${messageDTO.content }</div>
 	        <button type="button" id="msg-write" class="msg-write-btn" >답장</button>
         </div>
 

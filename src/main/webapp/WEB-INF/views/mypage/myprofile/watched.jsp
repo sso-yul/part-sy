@@ -39,7 +39,7 @@
               <a href="<c:url value="/genre/animation" />">애니</a>
             </li>
             <li>
-              <a href="<c:url value="/community" />">게시판</a>
+              <a href="<c:url value="/community/freecommunity" />">게시판</a>
             </li>
           </ul>
         </nav>
@@ -82,7 +82,7 @@
                 <img class="mimg" src="${path}/resources/images/img/drama.png" alt="드라마">
                 <a href="./watched-1drama.html">드라마</a>
               </li>
-              <li>
+              <li style="color: #33ff33;">
                 <img class="mimg" src="${path}/resources/images/img/vrt.png" alt="예능">
                 <a href="./watched-1vrt.html">예능</a>
               </li>

@@ -237,6 +237,12 @@ button {
     padding: 5px 12px;
 }
 
+button.active {
+  background-color: #33FF33;
+  color: black;
+  font-weight: 600;
+}
+
 .sec00 {
     /* border: 1px solid red; */
     width: 1200px;

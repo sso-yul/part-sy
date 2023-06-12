@@ -1,48 +1,45 @@
 $(document).ready(function() {
-
-	//버튼 색, 기본 버튼 받은 쪽지함 설정 - 보낸 쪽지 색상 설정 안 먹음 에라이
-	let currentButton = null; // 선택한 버튼을 저장하는 변수
-	const recvButton = document.getElementById("btn-recv") // 받은 쪽지 버튼 요소
-	const sendButton = document.getElementById("btn-send") // 보낸 쪽지 버튼 요소
+	//기본: 답장 버튼 숨기기
+	$("#msg-write").hide();
 	
-	// recvButton을 초기 선택 상태로 설정
-	recvButton.style.backgroundColor = '#33FF33'
-	recvButton.style.color = 'black'
-	recvButton.style.fontWeight = '600'
-	currentButton = recvButton
+	// 버튼 색 설정
+	const recvButton = $("#btn-recv")
+	const sendButton = $("#btn-send")
+	const delButton = $('button[name="deleteBtn"]')
 	
-	recvButton.addEventListener("click", () => {
-	  if (currentButton !== recvButton) { // 이전에 선택한 버튼이 받은 쪽지 버튼이 아닐 경우
-	  	if (currentButton) { // 이전에 선택한 버튼이 존재
-	    	currentButton.style.backgroundColor = '' // 이전에 선택한 버튼의 색상 원래대로
-		    currentButton.style.color = ''
-	    	currentButton.style.fontWeight = ''
-	    }
-	    recvButton.style.backgroundColor = '#33FF33' // 현재 선택한 버튼의 색상을 변경
-	    recvButton.style.color = 'black';
-	    recvButton.style.fontWeight = '600'
-	    currentButton = recvButton; // 현재 선택한 버튼 저장
+	recvButton.click(function() {
+	  if (!recvButton.hasClass("active")) {
+	    $(".sec00 button").removeClass("active")
+	    recvButton.addClass("active")
+	    delButton.attr("class", "delrecvBtn");
+	    localStorage.setItem("selectedButton", "recv") // 선택한 버튼 정보를 로컬 스토리지에 저장
 	  }
 	})
 	
-	sendButton.addEventListener("click", () => {
-	  if (currentButton !== sendButton) { // 이전에 선택한 버튼이 보낸 쪽지 버튼이 아닐 경우
-		if (currentButton) { // 이전에 선택한 버튼이 존재
-	    	currentButton.style.backgroundColor = ''// 이전에 선택한 버튼의 색상 원래대로
-	    	currentButton.style.color = ''
-	    	currentButton.style.fontWeight = ''
-	    }
-	    sendButton.style.backgroundColor = '#33FF33' // 현재 선택한 버튼의 색상을 변경
-	    sendButton.style.color = 'black'
-	    sendButton.style.fontWeight = '600'
-	    currentButton = sendButton; // 현재 선택한 버튼 저장
+	sendButton.click(function() {
+	  if (!sendButton.hasClass("active")) {
+	    $(".sec00 button").removeClass("active")
+	    sendButton.addClass("active")
+	    delButton.attr("class", "delsendBtn");
+	    localStorage.setItem("selectedButton", "send") // 선택한 버튼 정보를 로컬 스토리지에 저장
 	  }
 	})
-  
+	
+	// 페이지 로딩 시 초기 선택 상태 설정
+	const selectedButton = localStorage.getItem("selectedButton")
+	if (selectedButton === "recv") {
+	  recvButton.addClass("active")
+	  delButton.attr("class", "delrecvBtn");
+	  
+	} else if (selectedButton === "send") {
+	  sendButton.addClass("active")
+	  	  delButton.attr("class", "delsendBtn");
+	}	
+	
 	//쪽지 리스트 불러오기(받은 / 보낸)
 	  $("#btn-recv").click(function() {
 	    $.ajax({
-	      url: '/ottt/mypage/message/recv',
+	      url: '/ottt/mypage/message',
 	      type: 'GET',
 	      success: function(data) {
 	        console.log("받은 쪽지 목록을 가져옴")
@@ -66,10 +63,11 @@ $(document).ready(function() {
 	        	})
 	        	$(".left-bottom table").append(rows)
 	        }
-	        location.href="/ottt/mypage/message/recv"
+	        location.href="/ottt/mypage/message"
 	      },
 	      error: function() {
 	        alert("error")
+	        sendButton.click();
 	      }
 	    })
 	  })
@@ -101,59 +99,54 @@ $(document).ready(function() {
                 $(".left-bottom table").append(rows)
             }
             location.href="/ottt/mypage/message/send"
-          },
+		    },
           error: function() {
             alert("error")
+            recvButton.click();
           }
         })
       })
       
-      
-
-
-
-	//현재 머물러 있는 페이지 숫자-수정해야함
-	  const pageElements = $(".page")
+	//해결
+	$("li a").click(function() {
+	  if ($(this).attr("href") === "/ottt/mypage/message") {
+	    $("#btn-recv").addClass("active")
+	    $("#btn-send").removeClass("active")
+	    localStorage.setItem("selectedButton", "recv")
+	  }
+	})
 	
-	  pageElements.on("click", function() {
-	    $(".page.active").removeClass("active")
 	
-	    $(this).addClass("active")
-	  })
-
-
-
-	//기본: 답장 버튼 숨기기
-	$("#msg-write").hide();
 	//쪽지 내용, 상대 닉네임 불러오기, 내용 있을 시 답장 버튼 불러옴
 	$(".msg-content").click(function() {
-		var content = $(this).text()
-		$(".msg-view-content").text(content)
-
-			if (content !== "") {
-			  $(".msg-write-btn").show();
-			} else {
-			  $(".msg-write-btn").hide();
-			}
-
+	    var content = $(this).text()
+	    $(".msg-view-content").text(content)
+	
+	    if (content !== "") {
+	        $(".msg-write-btn").show()
+	    } else {
+	        $(".msg-write-btn").hide()
+	    }
+		
+		//선택한 쪽지의 번호와 보낸 유저의 번호를 답장 창 url로 넘기기
+	    var msgNo = $(this).siblings(".msg-no").text()
 	    var sendUserNo = $(this).siblings(".msg-name").text()
-	    $("#msgNick").text(sendUserNo)
+	    $('input[name=msgno]').val(msgNo)
+	    $('input[name=sendno]').val(sendUserNo)
 	    
-	})
+	    var url = "/ottt/messagewindow/open?message_no=" + encodeURIComponent(msgNo) + "&send_user_no=" + encodeURIComponent(sendUserNo)
+	    $("#msg-write").attr("data-url", url) // 답장 버튼에 URL을 저장
 	
-	
-	  
-	//답장 새창 안 됨 또 아오
-	$("#msg-write").click(function() {
-		var sendUserNo = $(this).siblings(".msg-nick").text()
-		var url = "../messagewindow/open?send_user_no=" + encodeURIComponent(sendUserNo)
-		window.open(url, 'SEND-MSG', 'width=520, height=750, scrollbars=no')
+	    var sendUserNk = $(this).siblings(".msg-nicknm").text()
+	    $("#msg-number").text(msgNo)
+	    $("#msgNick").text(sendUserNk)
 	})
-  
-  
-  
-  
-  
 
+
+	//답장 새창
+	$("#msg-write").click(function() {
+	   var url = $(this).attr("data-url")
+	   window.open(url, 'SEND-MSG', 'width=520, height=750, scrollbars=no')
+	})
 
 })

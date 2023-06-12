@@ -24,12 +24,22 @@ public interface MessageService {
 	
 	int writeMsg(MessageDTO messageDTO) throws Exception;
 	
-	int removeMsg(Integer message_no, String user_no) throws Exception;
+	int removeMsg(Integer message_no) throws Exception;
 	
-	int removeMsgAll(String user_no) throws Exception;
+//	int removeMsgAll(String user_no) throws Exception;
 	
-	int getSearchResultCnt(MessageSearchItem msc) throws Exception;
+	int getSendResultCnt(MessageSearchItem msc) throws Exception;
+	
+	int getRecvResultCnt(MessageSearchItem msc) throws Exception;
 	
 	List<MessageDTO> getSelectPage(MessageSearchItem msc) throws Exception;
+	
+	MessageDTO pickOneRecv(Integer message_no) throws Exception;
+	
+	MessageDTO pickOneSend(Integer message_no) throws Exception;
+	
+	int removeByReceiver(MessageDTO messageDTO) throws Exception;
+	
+	int removeBySender(MessageDTO messageDTO) throws Exception;
 
 }
