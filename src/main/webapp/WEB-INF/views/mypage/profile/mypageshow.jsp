@@ -8,12 +8,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>남이 보는 내 페이지</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <link rel="stylesheet" href="${path}/resources/css/mypage/mypageshow.css" >
     <script type="text/javascript" src="js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
   </head>
   <body style="background-color: #202020;">
+     <script type="text/javascript">
+     	$(document).ready(function() {
+     		
+     		
+			$("#item-msg").click(function() {
+				
+				
+				
+				var url = "/ottt/messagewindow/open?user_no="
+				window.open(url, 'SEND-MSG', 'width=520, height=750, scrollbars=no')
+			})
+			
+			
+		})
+     </script>
+     
      
     <div class="wrap">
       <header>
@@ -24,21 +41,11 @@
         </div>
         <nav class="gnb">
           <ul>
-            <li>
-              <a href="<c:url value="/genre/movie" />">영화</a>
-            </li>
-            <li>
-              <a href="<c:url value="/genre/drama" />">드라마</a>
-            </li>
-            <li>
-              <a href="<c:url value="/genre/interest" />">예능</a>
-            </li>
-            <li>
-              <a href="<c:url value="/genre/animation" />">애니</a>
-            </li>
-            <li>
-              <a href="<c:url value="/community/freecommunity" />">게시판</a>
-            </li>
+            <li><a href="<c:url value="/genre/movie" />">영화</a></li>
+            <li><a href="<c:url value="/genre/drama" />">드라마</a></li>
+            <li><a href="<c:url value="/genre/interest" />">예능</a></li>
+            <li><a href="<c:url value="/genre/animation" />">애니</a></li>
+            <li><a href="<c:url value="/community/freecommunity" />">게시판</a></li>
           </ul>
         </nav>
         <div class="h-icon">
@@ -79,7 +86,7 @@
                 <img src="${path}/resources/images/img/more.png" style="width: 40px;" alt="more">
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">쪽지 보내기</a></li>
+              <li class="dropdown-item" id="item-msg">쪽지 보내기</li>
               <li class="dropdown-item">신고하기</li>
                 <ul>
                   <li class="report"><button class="report">욕설/비방</button></li>
@@ -87,7 +94,7 @@
                   <li class="report"><button class="report">악의적인 스포</button></li>
                   <li class="report"><button class="report">선정성</button></li>
                 </ul>
-              <li><a class="dropdown-item" href="#">차단</a></li>
+              <li class="dropdown-item">차단</li>
             </ul>
         </div>
         <div class="btn_check_div" style="margin-top: 20px;">

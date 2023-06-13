@@ -286,11 +286,17 @@ table {
 th, td {
     width: 310px;
     text-align: center;
-    padding: 12px 10px;
+    padding: 7px 10px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     max-width: 200px;
+}
+
+.user-image {
+	width: 43px;
+	height: 43px;
+	border-radius: 10px;
 }
 
 .msg-img {width: 90px;}

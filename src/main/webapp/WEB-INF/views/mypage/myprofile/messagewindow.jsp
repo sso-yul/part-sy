@@ -10,7 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>쪽지창</title>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-    <script src="${path}/resources/js/mypage/messagewindow.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="${path}/resources/css/mypage/messagewindow.css" >
@@ -20,18 +19,7 @@
 <body>
 <script type="text/javascript">
 	$(document).ready(function() {
-// 		let formCheck = function() {
-// 			let form = document.getElementById("form")
-			
-// 			if(form.content.value == "") {
-// 				console.log("내용 미입력")
-// 				alert("내용을 입력하세요.")
-// 				form.content.focus()
-// 				return false
-// 			}
-// 			return true
-// 		}
-		
+		//쪽지 전송
 		$("#writeBtn").on("click", function() {
 			//url에서 send_user_no 추출
 	        let url = new URL(window.location.href)
@@ -42,7 +30,7 @@
 			
 			$.ajax({
 				type: "POST",
-				url: "/ottt/messagewindow/open",
+				url: "/ottt/messagewindow/send",
 				data: {
 					sendUserNo: sendUserNo,
 					content: content
@@ -60,8 +48,20 @@
 				}
 			})
 		})
+		
+		//글자수제한
+		$(".write textarea").keyup(function(){
+			var content = $(this).val()
+			$(".write .count span").html(content.length)
+			if (content.length > 500){
+				alert("최대 500자까지 입력 가능합니다.")
+				$(this).val(content.substring(0, 500))
+				$(".write .count span").html(500)
+			}
+		})
+		
 	})
-  </script>
+</script>
   
 
 	
@@ -69,9 +69,9 @@
   	<form action="" id="form" class="frm" method="post">
 	    <div class="sec01">
 	      <a href="#">
-	        <div class="proimg"><img src="${path}/resources/images/img/profile.png"></div>
+	        <div class="proimg"><img src="${messageDTO.image }" /></div>
 	      </a>
-	      <div class="nickname"></div>
+	      <div class="nickname">${messgeDTO.user_nicknm }</div>
 	    </div>
 	
 	    <div class="sec02">

@@ -43,5 +43,10 @@ public class MypageController {
 		// 2. 세션에 id가 있는지 확인, 있으면 true를 반환 
 		return session != null && session.getAttribute("id")!=null;
 	}
+	
+	@GetMapping(value = "/otherpage")
+	public String urpage() {
+		return "/mypage/profile/mypageshow";
+	}
 
 }
