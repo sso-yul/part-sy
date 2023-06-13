@@ -16,75 +16,67 @@
     
   </head>
 
-<body>
-<script type="text/javascript">
-	$(document).ready(function() {
-		//쪽지 전송
-		$("#writeBtn").on("click", function() {
-			//url에서 send_user_no 추출
-	        let url = new URL(window.location.href)
-	        let searchParams = new URLSearchParams(url.search)
-	        let sendUserNo = searchParams.get("send_user_no")
-	        
-	        var content = $("#messageContent").val()
+	<body>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//쪽지 전송
+			$("#writeBtn").on("click", function() {
+				//url에서 send_user_no 추출
+		        let url = new URL(window.location.href)
+		        let searchParams = new URLSearchParams(url.search)
+		        let sendUserNo = searchParams.get("send_user_no")
+		        let userNo = searchParams.get("user_no")
+		        
+		        var content = $("#messageContent").val()
+				
+				$.ajax({
+					type: "POST",
+					url: (sendUserNo != null) ? "/ottt/messagewindow/send" : "/ottt/messagewindow/send2",
+					data: (sendUserNo != null) ? {sendUserNo: sendUserNo, content: content }: {userNo:userNo, content: content },
+					success: function(response) {
+						console.log("전송 성공");
+				        alert("쪽지가 전송되었습니다.");
+				        window.close();
+					},
+					error: function() {
+						console.log("전송 실패")
+						alert("쪽지 전송에 실패했습니다. 다시 시도해 주세요.")
+					}
+				})
+			})
 			
-			$.ajax({
-				type: "POST",
-				url: "/ottt/messagewindow/send",
-				data: {
-					sendUserNo: sendUserNo,
-					content: content
-				},
-				success: function(response) {
-
-					console.log("전송 성공");
-			        alert("쪽지가 전송되었습니다.");
-			        window.close();
-
-				},
-				error: function() {
-					console.log("전송 실패")
-					alert("쪽지 전송에 실패했습니다. 다시 시도해 주세요.")
+			//글자수제한
+			$(".write textarea").keyup(function(){
+				var content = $(this).val()
+				$(".write .count span").html(content.length)
+				if (content.length > 500){
+					alert("최대 500자까지 입력 가능합니다.")
+					$(this).val(content.substring(0, 500))
+					$(".write .count span").html(500)
 				}
 			})
+			
 		})
+	</script>
+	
+	  <div class="wrap">
+	  	<form action="" id="form" class="frm" method="post">
+		    <div class="sec01">
+		      <div class="proimg"><img src="${userDTO.image }" /></div>
+		      <div class="nickname">${userDTO.user_nicknm }</div>
+		    </div>
 		
-		//글자수제한
-		$(".write textarea").keyup(function(){
-			var content = $(this).val()
-			$(".write .count span").html(content.length)
-			if (content.length > 500){
-				alert("최대 500자까지 입력 가능합니다.")
-				$(this).val(content.substring(0, 500))
-				$(".write .count span").html(500)
-			}
-		})
+		    <div class="sec02">
+		      <div class="write">
+		        <textarea id="messageContent" name="content" placeholder="내용을 입력하세요."></textarea>      
+		      	<div class="count"><span>0</span>/500</div>
+		      </div>
+		    </div>
 		
-	})
-</script>
-  
-
-	
-  <div class="wrap">
-  	<form action="" id="form" class="frm" method="post">
-	    <div class="sec01">
-	      <a href="#">
-	        <div class="proimg"><img src="${messageDTO.image }" /></div>
-	      </a>
-	      <div class="nickname">${messgeDTO.user_nicknm }</div>
-	    </div>
-	
-	    <div class="sec02">
-	      <div class="write">
-	        <textarea id="messageContent" name="content" placeholder="내용을 입력하세요."></textarea>      
-	      	<div class="count"><span>0</span>/500</div>
-	      </div>
-	    </div>
-	
-	    <div class="sec03">
-	        <button type="button" id="writeBtn" class="btn btn-write">보내기</button>
-	    </div>
-	</form>
-  </div>
-</body>
+		    <div class="sec03">
+		        <button type="button" id="writeBtn" class="btn btn-write">보내기</button>
+		    </div>
+		</form>
+	  </div>
+	</body>
 </html>

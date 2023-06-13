@@ -51,7 +51,36 @@
 		    form.submit();
 		  }
 		  
-		});
+		})
+		
+		function goProfile(user_no, user_nicknm) {
+			let form = document.createElement('form');				
+			
+			let data = {
+					user_no : user_no,
+					toURL : path
+		    };
+			
+			for (let key in data) {
+		        if (data.hasOwnProperty(key)) {
+		            let obj = document.createElement('input');
+		            obj.setAttribute('type', 'hidden');
+		            obj.setAttribute('name', key);
+		            obj.setAttribute('value', data[key]);
+		            form.appendChild(obj);
+		        }
+		    }
+			
+			form.setAttribute('method','post')
+			form.setAttribute('action','/ottt/profile?user=' +user_nicknm)
+							
+			document.body.appendChild(form)
+			form.submit()
+		}
+		
+		
+		
+		
 	</script>
     <div class="warp">
 	<%@ include file="../../fix/header.jsp" %>
@@ -99,9 +128,22 @@
 							<tr class="title-line" style="font-weight: 200">
 								<td class="msg-no" style="display: none; ">${messageDTO.message_no}</td>
 								<input name="message_no" type="hidden" value="${messageDTO.message_no}" />
-								<td class="msg-img"><img src="${messageDTO.image }" class="user-image" alt="프로필사진" /></td>
+								
+								
+								
+								<td class="msg-img">
+								<a href="javascript:goProfile('${(messageDTO.send_user_no != sessionScope.user_no) ? messageDTO.send_user_no : messageDTO.receive_user_no}', '${messageDTO.user_nicknm}')"><img src="${messageDTO.image }" class="user-image" alt="프로필사진" />
+								</a></td>
+
 								<td class="msg-nicknm">${messageDTO.user_nicknm }</td>
-								<td class="msg-name" style="display: none; ">${messageDTO.send_user_no }</td>
+								
+								
+								
+								
+								<td class="msg-name" style="display: none; ">${(messageDTO.send_user_no != sessionScope.user_no) ? messageDTO.send_user_no : messageDTO.receive_user_no}</td>
+								
+								
+								
 								<td class="msg-content" style="cursor: pointer;"><c:out value="${messageDTO.content }"></c:out></td>
 								<td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yyyy-MM-dd HH:mm" type="date" /></td>
 								<td class="msg-del"><button class="delBtn" name="deleteBtn" style="border: none; color: red;"><i class="fas fa-times"></i></button></td>
@@ -132,7 +174,9 @@
         	<input name="sendno" type="hidden" value="${messageDTO.send_user_no}" />
             <div class="msg-nick" id="msgNick">${messageDTO.user_nicknm }</div>
 	        <div class="msg-view-content" style="white-space: pre-wrap;">${messageDTO.content }</div>
-	        <button type="button" id="msg-write" class="msg-write-btn" >답장</button>
+	        <c:if test="${messageDTO.send_user_no != sessionScope.user_no }">
+	        	<button type="button" id="msg-write" class="msg-write-btn" >답장</button>
+        	</c:if>
         </div>
 
       </div>
