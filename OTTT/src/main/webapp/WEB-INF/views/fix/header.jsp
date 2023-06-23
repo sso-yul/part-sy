@@ -21,28 +21,14 @@
 <body>
 	<script type="text/javascript">
 		let path = window.location.href;
-	
-		/*function goLogin() {
-		  let toURL = path;
-		  let form = document.createElement('form');
-	
-		  form.setAttribute('method', 'get');
-		  form.setAttribute('action', '/ottt/mypage?toURL='+toURL);
-		  
-		  document.body.appendChild(form);
-		  
-		  form.submit();
-		  
-		} */
-	
-	function goLogin() {
-		let toURL = path;
-		console.log(toURL)
-		location.href = "/ottt/mypage?toURL=" + toURL;
-	}
-	
+		
+		function goLogin() {
+			let toURL = path;
+			console.log(toURL)
+			location.href = "/ottt/mypage?toURL=" + toURL;
+		}
 	</script>
-   <header>
+	<header>
       <div class="logo">
          <a href="<c:url value="/" />">
             <img src="${path}/resources/images/logo/OTTT.png" alt="로고">
@@ -67,7 +53,7 @@
                </li>
             </ul>
         </nav>
-           <div class="h-icon">
+      <div class="h-icon">
               <ul>
                  <li>
                     <a href="<c:url value='/search' />" class="searchnav"></a>
@@ -81,7 +67,32 @@
                   </a>
                </li>
             </ul>
-         </div>
-      </header>
+      </div>
+	</header>
+      
+	<script type="text/javascript">
+		var socket = null;
+		connect();
+		
+		function connect() {
+			console.log("*************")
+			var ws = new WebSocket("ws://localhost:/ottt/replyEcho");	//포트 번호 확인
+			socket = ws;
+			
+			ws.onopen = function () {
+				console.log('Info: connection opened.');
+			};
+			ws.onmessage = function (event) {
+				console.log("받은 메시지: " + event.data + '\n');
+			};
+	
+			ws.onclose = function (event) {
+				console.log('Info: connection closed.');
+				//setTimeout( function(){ connect(); }, 1000); // retry connection!!
+			};
+			
+			ws.onerror = function (err) { console.log('Info: connection error.', err); };		
+		}
+	</script>
 </body>
 </html>
