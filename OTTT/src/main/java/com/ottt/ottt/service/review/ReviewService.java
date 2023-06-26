@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ottt.ottt.domain.SearchItem;
 import com.ottt.ottt.dto.CommentDTO;
+import com.ottt.ottt.dto.ReportDTO;
 import com.ottt.ottt.dto.ReviewDTO;
 import com.ottt.ottt.dto.ReviewLikeDTO;
 
@@ -15,7 +16,7 @@ public interface ReviewService {
     double getRatingAvg(Integer content_no)throws Exception; 
     int getCount(int content_no)throws Exception;
     int getDuplication(Integer content_no, int user_no) throws Exception; 
-    
+    int reviewReport(ReportDTO reportDTO) throws Exception;
     ReviewDTO getReviewNo(Integer content_no,Integer user_no ) throws Exception; 
     
     List<ReviewDTO> getReview(int content_no) throws Exception;
@@ -36,6 +37,7 @@ public interface ReviewService {
     int removeReplyReview(Integer review_no, Integer user_no) throws Exception;
     int modifyReplyReview(ReviewDTO reviewDTO)throws Exception;
     int modifyReply(CommentDTO CommentDTO) throws Exception;
+    int replyReport(ReportDTO reportDTO) throws Exception;
     
     //나의 리뷰
     List<ReviewDTO> getMyReview(SearchItem sc) throws Exception;

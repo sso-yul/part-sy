@@ -102,7 +102,7 @@
                 <a href="<c:url value="/mycommynity/postcommu" />">내가 쓴 게시글</a>
                 </li>
               <li class="mylike">
-                <img class="mimg" src="${path}/resources/images/img/free-icon-heart-6063477%202.png" alt="좋아요">
+                <img class="mimg" src="${path}/resources/images/img/heart_on.png" alt="좋아요">
                 <a href="<c:url value="/mycommynity/likecommunity" />">좋아요 누른 게시글</a>  
               </li>
               <li class="mycomment">

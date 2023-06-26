@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ottt.ottt.dao.login.LoginUserDao;
 import com.ottt.ottt.dto.UserDTO;
@@ -58,11 +59,19 @@ public class LoginController {
 		session.setAttribute("user_no", userDTO.getUser_no());
 		session.setAttribute("user_nicknm", userDTO.getUser_nicknm());
 		session.setAttribute("user_img", userDTO.getImage());
+		
+		System.out.println("==========login post=============== toURL : " + toURL);
 
-
-		toURL = toURL == null || toURL.equals("") ? "/" : toURL;
+		toURL = (toURL == null || toURL.equals("")) ? "/" : toURL;
 				
-		return "redirect:" +toURL;
+		String encodedURL = URLEncoder.encode(toURL, "UTF-8")
+				.replace("%2F", "/")
+				.replace("%3A", ":")
+				.replace("%3F", "?")
+		        .replace("%3D", "=");
+		
+		System.out.println("==========encode=============== toURL : " + toURL);
+		return "redirect:" + encodedURL;
 	}
 	
 	private boolean loginCheck(String id, String pwd) {

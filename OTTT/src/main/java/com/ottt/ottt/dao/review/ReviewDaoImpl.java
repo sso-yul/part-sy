@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ottt.ottt.domain.SearchItem;
 import com.ottt.ottt.dto.CommentDTO;
+import com.ottt.ottt.dto.ReportDTO;
 import com.ottt.ottt.dto.ReviewDTO;
 import com.ottt.ottt.dto.ReviewLikeDTO;
 
@@ -42,6 +43,11 @@ public class ReviewDaoImpl implements ReviewDao {
 	public int count(int content_no) throws Exception {
 		
 		return session.selectOne(namespace+"count",content_no);
+	}
+	@Override
+	public int reviewReport(ReportDTO reportDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return session.insert(namespace + "reviewReport", reportDTO);
 	}
 	@Override
 	public List<ReviewDTO> selectAll(int content_no) throws Exception {
@@ -164,6 +170,11 @@ public class ReviewDaoImpl implements ReviewDao {
 	public int updateReply(CommentDTO CommentDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return session.update(namespace + "updateReply", CommentDTO);
+	}
+	@Override
+	public int replyReport(ReportDTO reportDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return session.insert(namespace + "replyReport", reportDTO);
 	}
 
 }

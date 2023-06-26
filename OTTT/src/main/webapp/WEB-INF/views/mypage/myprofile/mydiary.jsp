@@ -18,25 +18,7 @@
 		<%@ include file="../../fix/header.jsp" %>
 
 		<section class="sec01">
-			<nav class="mnb">
-				<ul>
-					<li>
-						<a href="<c:url value="/mypage/myreview" />" class="mreview">기록</a>
-					</li>
-					<li>
-					    <a href="<c:url value="/mypage/wishlist" />">찜목록</a>
-					</li>
-					<li>
-					    <a href="<c:url value="/mypage/watched" />">봤어요</a>
-					</li>
-					<li>
-					  	<a href="<c:url value="/mypage/alarm" />">알림함</a>
-					</li>
-					<li>
-					  	<a href="<c:url value="/mypage/message" />">쪽지함</a>
-					</li>
-				</ul>
-            </nav>
+		<%@ include file="../../fix/mnb.jsp" %>
 		</section>
 
       	<section class="sec02">
@@ -56,7 +38,7 @@
 		                	<a href="<c:url value="/mycommynity/postcommu" />">내가 쓴 게시글</a>
 		              	</li>
 		              	<li id="Llike">
-			                <img class="mimg" src="${path}/resources/images/img/free-icon-heart-6063477 2.png" alt="좋아요">
+			                <img class="mimg" src="${path}/resources/images/img/heart_on.png" alt="좋아요">
 			                <a href="<c:url value="/mycommynity/likecommunity" />">좋아요 누른 게시글</a>
 			            </li>
 		    	        <li id="Lcomments">
@@ -69,12 +51,12 @@
 
 	        <div class="main">
 	        	<div class="main-head">
-	        		<a href="<c:url value="/mypage/mydiary/create" />" class="write">글쓰기</a>
+	        		<a href="<c:url value="/mypage/mydiary/write?content=6" />" class="write">글쓰기</a>
 	          	</div>
 	          	
 	          	<c:forEach var="MydiaryDTO" items="${list }" >
 				
-					<a href="javascript:readDiary('${MydiaryDTO.content_no}', '${MydiaryDTO.user_no}')" class="mydiary">
+					<a href="<c:url value="/mypage/mydiary/diary${pr.sc.string}=${MydiaryDTO.content_no }&page=${pr.sc.page}"/>" class="mydiary">
 						<div class="post">					  	
 						    <div class="Lside">
 						      	<img class="poster" src="${MydiaryDTO.thumbnail}">
@@ -107,17 +89,17 @@
 				          	<ul class="pagination">				          		
 					            <c:if test="${pr.showPrev}">
 						            <li class="page-item">
-						            	<a class="page-link" href="<c:url value="/mypage/mydiary${pr.sc.getString(pr.beginPage-1) }" />">&lt;</a>
+						            	<a class="page-link" href="<c:url value="/mypage/mydiary${pr.sc.getList(pr.beginPage-1) }" />">&lt;</a>
 					            	</li>
 					            </c:if>
 					            <c:forEach var="i" begin="${pr.beginPage }" end="${pr.endPage }">
 					            	<li class="page-item">
-					            		<a class="page-link" href="<c:url value="/mypage/mydiary${pr.sc.getString(i) }" />">${i }</a>
+					            		<a class="page-link" href="<c:url value="/mypage/mydiary${pr.sc.getList(i) }" />">${i }</a>
 				            		</li>
 				            	</c:forEach>
 			            		<c:if test="${pr.showNext}">
 			            			<li class="page-item">
-			            				<a class="page-link" href="<c:url value="/mypage/mydiary${pr.sc.getString(pr.endPage+1) }" />" >&gt;</a>
+			            				<a class="page-link" href="<c:url value="/mypage/mydiary${pr.sc.getList(pr.endPage+1) }" />" >&gt;</a>
 		            				</li>
             					</c:if>
        						</ul>
@@ -137,6 +119,7 @@
    		let msg = "${msg}"
     	if(msg == "READ_ERR") alert("접근 권한이 없습니다")
     	if(msg == "DEL_OK") alert("다이어리 삭제에 성공했습니다")
+    	if(msg == "WRT_OK") alert("다이어리 등록에 성공했습니다")
     	
    		function readDiary(content_no, user_no) {
 
