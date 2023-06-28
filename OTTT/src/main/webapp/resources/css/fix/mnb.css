@@ -26,10 +26,6 @@
     font-size: 25px;
 }
 
-.mnb > ul > li:hover{
-    color: #33ff33 ;
-}
-
 .mnb > ul > li > a:hover{
     color: #33ff33 !important;
 }

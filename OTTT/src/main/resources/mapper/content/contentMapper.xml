@@ -83,7 +83,6 @@
   	
   	<select id="movieCount" parameterType="SearchItem" resultType="int">
   		select count(*) 
-		from tb_content a
 		FROM tb_content a JOIN tb_content_category b 
 		ON a.content_no = b.content_no 
 		where b.category_no = 1

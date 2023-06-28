@@ -7,12 +7,11 @@ import java.util.Objects;
  * message_no 			bigint 		  generated always as identity primary key
 	,send_user_no		bigint 		  not null
 	,receive_user_no	bigint 		  not null
-	,content 			varchar(2000) not null
+	,content 			varchar(500)  not null
 	,send_date			timestamptz	  not null
-	,read_yn			char(1)		  default '0'		--추가
+	,read_yn			boolean		  default false		--추가
 	,delete_by_sender	boolean		  default false
 	,delete_by_receiver	boolean	  	  default false
-	,image				text		  null
  */
 public class MessageDTO {
 
@@ -21,7 +20,7 @@ public class MessageDTO {
 	private Integer receive_user_no;
 	private String content;
 	private Date send_date;
-	private char read_yn;
+	private boolean read_yn;
 	private String user_nicknm;
 	private String image;
 	
@@ -39,43 +38,55 @@ public class MessageDTO {
 		this.receive_user_no = receive_user_no;
 		this.content = content;
 	}
+	
 	public Integer getMessage_no() {
 		return message_no;
 	}
+	
 	public void setMessage_no(Integer message_no) {
 		this.message_no = message_no;
 	}
+	
 	public Integer getSend_user_no() {
 		return send_user_no;
 	}
+	
 	public void setSend_user_no(Integer send_user_no) {
 		this.send_user_no = send_user_no;
 	}
+	
 	public Integer getReceive_user_no() {
 		return receive_user_no;
 	}
+	
 	public void setReceive_user_no(Integer receive_user_no) {
 		this.receive_user_no = receive_user_no;
 	}
+	
 	public String getContent() {
 		return content;
 	}
+	
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
 	public Date getSend_date() {
 		return send_date;
 	}
+	
 	public void setSend_date(Date send_date) {
 		this.send_date = send_date;
 	}
-	public char getRead_yn() {
+	
+	public boolean isRead_yn() {
 		return read_yn;
 	}
-	public void setRead_yn(char read_yn) {
+
+	public void setRead_yn(boolean read_yn) {
 		this.read_yn = read_yn;
 	}
-	
+
 	public String getUser_nicknm() {
 		return user_nicknm;
 	}

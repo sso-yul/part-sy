@@ -339,3 +339,7 @@ th, td {
 .page.active {
   color: #33ff33;
 }
+
+.selpage {
+	color:#33ff33; 
+}
