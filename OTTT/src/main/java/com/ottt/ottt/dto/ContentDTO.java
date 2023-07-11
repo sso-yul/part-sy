@@ -1,5 +1,6 @@
 package com.ottt.ottt.dto;
 
+import java.util.List;
 import java.util.Objects;
 
 /*
@@ -24,9 +25,6 @@ public class ContentDTO {
 	private String category_nm;
 	private Float  rating;
 	private String main_img;
-
-	public ContentDTO() {}
-	
 	
 
 	public Integer getContent_no() {

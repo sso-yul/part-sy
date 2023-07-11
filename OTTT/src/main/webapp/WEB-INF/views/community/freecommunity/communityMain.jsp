@@ -30,13 +30,7 @@
       		<%@ include file="../../fix/header.jsp" %>
       		<!--meun bar Start-->  
         	<div id="line-1" >
-          		<nav class="nav">
-          			<a class="nav-link1" href="<c:url value='/community/freecommunity' />" style="color: #33ff33;">자유게시판</a>
-          			<a class="nav-link1" href="<c:url value='/community/endmovie' />">종료예정작</a>
-          			<a class="nav-link1" href="<c:url value='/community/priceInfoTving' />">가격정보</a>
-          			<a class="nav-link1" href="<c:url value='/community/QnA' />">Q&A</a>
-          			<a class="nav-link1" href="<c:url value='/community/notice' />">공지사항</a>
-        		</nav>
+          		<%@ include file="../../fix/nav.jsp" %>
         	</div>
         	<div id="line-2">
           		<div class="Lcontent">
@@ -212,42 +206,43 @@
 				/********************************************************************************/
 				/*	스크롤 Event정의 영역															*/
 				/********************************************************************************/
-				$(window).scroll(function() {
-
-      				// 현재 스크롤 위치
-			        let scrollTop = $(window).scrollTop();
-			        // 창의 높이
-			        let windowHeight = $(window).height();
-			        // 문서 전체의 높이
-			        let documentHeight = $(document).height();
-			
-			        // 스크롤 위치가 문서 전체의 높이에서 창의 높이를 뺀 값(바닥 영역)에 도달하면 이벤트 발생
-			        if (scrollTop + windowHeight >= documentHeight) {
-		          		
-		          		console.log("스크롤이 바닥에 도달했습니다.");
-		          		
-			        	// 이벤트 처리 코드를 여기에 작성하세요
-						let ulLength = $("#post_list > ul").length;
-
-						console.log("개시물 총개수(TOTAL_COUNT) : "+TOTAL_COUNT+ "    ul의 개수(ulLength) : "+ulLength);
-						
-						//총건수가 ul의 개수보다 같거나 작으면 스크롤 호출 중단
-						if(TOTAL_COUNT <= ulLength){
-							return;
-						}
-						
-						OFFSET += 10;
-
-						//아티클 목록을 불러오는 ajax 함수 호출
-						fnCallAjaxSelectArticleList({
-							"offset": OFFSET
-							, "category": CATEGORY
-							, "user" : USER
-							, "schText" : $("#schText").val()
-						});
-
-			        }
-	      		});
+				function checkIfScrolledToBottom() {
+				    // 현재 스크롤 위치
+				    let scrollTop = $(window).scrollTop();
+				    // 창의 높이
+				    let windowHeight = window.innerHeight;
+				    // 문서 전체의 높이
+				    let documentHeight = $(document).height();
+				
+				    // 스크롤 위치가 문서 전체의 높이에서 창의 높이를 뺀 값(바닥 영역)에 도달하면 이벤트 처리
+				    if (scrollTop + windowHeight >= documentHeight) {
+				        console.log("스크롤이 바닥에 도달했습니다.");
+				
+				        // 이벤트 처리 코드를 여기에 작성하세요
+				        let ulLength = $("#post_list > ul").length;
+				
+				        console.log("개시물 총개수(TOTAL_COUNT): " + TOTAL_COUNT + "    ul의 개수(ulLength): " + ulLength);
+				
+				        // 총 건수가 ul의 개수보다 같거나 작으면 스크롤 호출 중단
+				        if (TOTAL_COUNT <= ulLength) {
+				            $(window).off("scroll", checkIfScrolledToBottom);
+				            return;
+				        }
+				
+				        OFFSET += 10;
+				
+				        // 아티클 목록을 불러오는 ajax 함수 호출
+				        fnCallAjaxSelectArticleList({
+				            "offset": OFFSET,
+				            "category": CATEGORY,
+				            "user": USER,
+				            "schText": $("#schText").val()
+				        });
+				    }
+				}
+				
+				// 스크롤 이벤트 핸들러 등록
+				$(window).on("scroll", checkIfScrolledToBottom);
 				
 				/********************************************************************************/
 				/*	요소 Event정의 영역																*/
@@ -386,14 +381,14 @@
 						createHtml += 		'<div class="post_info">';
 						if(v.writer_chk == "Y"){
 							createHtml +=			'<div style="display: flex;">';
-							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="usur_img" src="'+ v.image +'" alt="profile"></a>';
+							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="user_img" src="'+ v.image +'" alt="profile"></a>';
 							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><span class="nickname">'+ v.user_nicknm +'</span></a>';
 							createHtml +=				'<span id="current_date" >'+ formattedDate +'</span>';
 							createHtml +=			'</div>';
 							createHtml +=		'</div>'										
 						}else {
 							createHtml +=			'<div style="display: flex;">';
-							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="usur_img" src="'+ v.image +'" alt="profile"></a>';
+							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><img class="user_img" src="'+ v.image +'" alt="profile"></a>';
 							createHtml +=				'<a href="javascript:goProfile('+v.user_no +',\''+v.user_nicknm+'\')"><span class="nickname">'+ v.user_nicknm +'</span></a>';
 							createHtml +=				'<span id="current_date" >'+ formattedDate +'</span>';
 							createHtml +=			'</div>';

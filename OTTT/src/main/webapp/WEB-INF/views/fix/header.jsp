@@ -44,37 +44,37 @@
       <nav class="gnb">
          <ul>
          	<li>
-				<a class="movie" href="<c:url value="/genre/movie" />">영화</a>
+				<a class="movie" href="<c:url value="/genre/content?category=movie" />">영화</a>
              </li>
              <li>
-                 <a class="drama" href="<c:url value="/genre/drama" />">드라마</a>
+                 <a class="drama" href="<c:url value="/genre/content?category=drama" />">드라마</a>
              </li>
              <li>
-                 <a class="inter" href="<c:url value="/genre/interest" />">예능</a>
+                 <a class="interest" href="<c:url value="/genre/content?category=interest" />">예능</a>
              </li>
              <li>
-                 <a class="ani" href="<c:url value="/genre/animation" />">애니</a>
+                 <a class="animation" href="<c:url value="/genre/content?category=animation" />">애니</a>
              </li>
              <li>
                  <a class="community" href="<c:url value="/community/freecommunity" />">게시판</a>
              </li>
           </ul>
-	  </nav>
-      <div class="h-icon">
-		<ul>
-			<li>
-				<a href="<c:url value='/search' />" class="searchnav"></a>
-			</li>                  
-			<li>
-				<a href="javascript:goLogin()" class="${loginout}" >
-					<c:if test="${sessionScope.id != null}">
-						<img src="${user_img }" id="profile" class="${loginout}">
-					</c:if>
-				</a>
-			</li>
-		</ul>
-      </div>
-      <div id="socketAlert" style="border: 3px solid #33ff33;"></div>
+		</nav>
+           <div class="h-icon">
+              <ul>
+                 <li>
+                    <a href="<c:url value='/search' />" class="searchnav"></a>
+                  </li>                  
+               <li>
+                  <a href="javascript:goLogin()" class="${loginout}" >
+                     <c:if test="${sessionScope.id != null}">
+                        <img src="${user_img }" id="profile" class="${loginout}">
+                     </c:if>
+                  </a>
+               </li>
+            </ul>
+         </div>
+        <div id="socketAlert" style="border: 3px solid red; padding: 5px 5px; display: none;"></div>
       </header>
       
       <script type="text/javascript">

@@ -83,7 +83,7 @@
       </div>      
       
       <div class="main-img">
-        <img src="${path}/resources/images/서부 전선 이상 없다.png" alt="서부 전선 이상 없다 이미지">
+        <img src="${contentDTO.main_img }" >
       </div>
 
       <div class="info">
@@ -136,7 +136,7 @@
    <section class="myReview" id="myReview">
    
            <div class="left-score">
-          <h2>이 영화의 평균 별점</h2>
+          <span class="star-text">평균 별점</span>
                              
         <p class="mytextReview" style="font-style: oblique; font-size: 20px;">리뷰</p>
         <div class="asdasd" style="border-top: 3px solid #33ff33;">
@@ -148,10 +148,11 @@
 		  <button id="wishlist-button">
 			  <img id="wishlist-image" class="mark" src="${path}/resources/images/img/mark.png" alt="찜하기">
 		  </button>
-		  <button id="diary-button">
+		  <button id="diary-button" onclick="location.href='/ottt/mypage/mydiary/write?content=${contentDTO.content_no }'">
 			  <img id="diary-image" class="mark" src="${path}/resources/images/img/diary1.png" alt="찜하기">
 		  </button>
           <button id="reply-button"><img class="review-icon" src="${path}/resources/images/img/addcomment.png" alt="봣어요"></button>
+         <div style="border-top: 4px solid #33ff33; margin-top: 20px;"></div>
         <div class="smr">
 
           <div class="reply-back">1</div>
@@ -159,6 +160,7 @@
           <div id="reply-popup" class="popup11">         
               <label for="reply-text" style="background-color: #202020;">댓글을 작성해주세요</label>
               <input type="hidden" name="user_no" value="${sessionScope.user_no}" >
+              <input type="hidden" name="review_user_no" value="${Review.user_no}" >
               <input type="hidden" name="user_nicknm" value="${userDTO.user_nicknm }">
               <input type="hidden" name="content_no" value="${Review.content_no}">
    			  <input type="hidden" name="review_no" value="${Review.review_no}">             
@@ -244,7 +246,8 @@
 	                      	<input class="LikeBtn" id="heart-on" type="image" src="${path}/resources/images/img/heart_on.png" width="35" height="80%"  data-review-no="${Review.review_no}" >
 	                    </c:when>
 					<c:otherwise>
-						<input class="LikeBtn" id="heart-off" type="image" src="${path}/resources/images/img/heart_off.png" width="35" height="80%"  data-review-no="${Review.review_no}" >
+						<input class="LikeBtn" id="heart-off" type="image" src="${path}/resources/images/img/heart_off.png"
+						width="35" height="80%" data-review-user-no="${Review.user_no }" data-review-no="${Review.review_no}" >
 					</c:otherwise>
 					</c:choose>		
                     </div>             
@@ -383,33 +386,13 @@
               <p class="reply-date-insert" name="cmt_dt"><fmt:formatDate pattern="yy-MM-dd hh:mm" value="${CommentDTO.cmt_dt}"/></p>
              <input type="hidden" name="review_no" value="${CommentDTO.review_no }"> 
              <input type="hidden" name="cmt_no" value ="${CommentDTO.cmt_no }">
-            </div>           
-                <div class="heart">        
-                    <div>
-                 <button onclick="changeImage()">
-                         <img id="myImage" src="${path}/resources/images/img/heart_off.png" width="35" height="80%">
-                      </button>               
-                    </div>             
-                </div>                       
+            </div>                               
           </div>          
           <div class="reply-box-body">            
             <p class="reply-box-text review_content">${CommentDTO.cmt_content }</p>
           </div>
           <div class="reply-box-footer">
-            <div>
-              <ul>
-                <li>
-                  <div class="like">
-                    <img src="${path}/resources/images/img/좋아요.png" alt="좋아요아이콘">
-                  </div>
-                  <div class="like-count">
-                    <p>
-                      9999개
-                    </p>
-                  </div>
-                </li>
-              </ul>
-            </div>
+
 				<div class="report">
 				  <img src="${path}/resources/images/img/신고하기.png" alt="신고" class="reportBtn">
 				  <button class="report-text" >신고</button>
@@ -872,7 +855,8 @@
 
 	        $.post(
 	            '/ottt/reply/selectLikeCount',
-	            { 'user_no': '${user_no}', 'review_no': review_no },
+	            { 'user_no': '${user_no}',
+	            	'review_no': review_no},
 	            function(data) {
 	                let result = data.result;
 
@@ -890,6 +874,7 @@
 	    $(".LikeBtn").click(function() {
 	        let btn = $(this);
 	        const review_no = $(this).data('review-no');
+	        const review_user_no = $(this).data('review-user-no');
 	        $('input[name="review_no"]').val(review_no);
 	        var likeCount = btn.closest('.review-box1').find(".review-box-footer #likeCount");
 
@@ -911,7 +896,9 @@
 	                    // 저장하는 post ajax
 	                    $.post(
 	                        "/ottt/reply/insertLike",
-	                        { "user_no": "${user_no}", "review_no": review_no },
+	                        { "user_no": "${user_no}",
+	                        	"review_no": review_no,
+	        	            	"review_user_no": review_user_no },
 	                        function(data) {
 	                            btn.attr("src", PATH + "/resources/images/img/heart_on.png");
 	                            likeCount.text(parseInt(likeCount.text()) + 1 + '개');

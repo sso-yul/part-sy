@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,9 +13,10 @@
 </head>
 <body>
 	<section class="sec00">
-		<form action="">
+		<form action="<c:url value='/genre/content' />" method="get">
+		<input type="hidden" name="category" value="${category}"/>
         <div class="ott-logo-box">
-        	<input type="checkbox" id="ott1"  name="ott" value="1" />
+        	<input type="checkbox" id="ott1" name="ott" value="1" />
         		<img class="ott-logo-img"
         			src="https://myottt.s3.ap-northeast-2.amazonaws.com/ott/tving.png"/>
         			
@@ -36,92 +39,106 @@
             <input type="checkbox" id="ott6" name="ott" value="6"/>
             	<img class="ott-logo-img"
               		src="https://myottt.s3.ap-northeast-2.amazonaws.com/ott/disney.png"/>
-        </div>
-        <hr class="ott-logo-divider" />
-        <ul class="ott-logo-text">
-          <li>
-            <input id="movie" type="checkbox" value="movie">
-            <a href="#"><label for="movie">액션</label></a>
-          </li>
-          <li>
-            <input id="movie1" type="checkbox" value="movie">
-            <a href="#"><label for="movie1">어드벤쳐</label></a>
-          </li>
-          <li>
-            <input id="movie2" type="checkbox" value="movie">
-            <a href="#"><label for="movie2">SF</label></a>
-          </li>
-          <li>
-            <input id="movie3" type="checkbox" value="movie">
-            <a href="#"><label for="movie3">판타지</label></a>
-          </li>
-          <li>
-            <input id="movie4" type="checkbox" value="movie">
-            <a href="#"><label for="movie4">드라마</label></a>
-          </li>
-          <li>
-            <input id="movie5" type="checkbox" value="movie">
-            <a href="#"><label for="movie5">코미디</label></a>
-          </li>
-          <li>
-            <input id="movie6" type="checkbox" value="movie">
-            <a href="#"><label for="movie6">시대극</label></a>
-          </li>
-          <li>
-            <input id="movie7" type="checkbox" value="movie">
-            <a href="#"><label for="movie7">로맨스/멜로</label></a>
-          </li>
-          <li>
-            <input id="movie8" type="checkbox" value="movie">
-            <a href="#"><label for="movie8">공포/스릴러</label></a>
-          </li>
-          <li>
-            <input id="movie9" type="checkbox" value="movie">
-            <a href="#"><label for="movie9">미스터리</label></a>
-          </li>
-          <li>
-            <input id="movie10" type="checkbox" value="movie">
-            <a href="#"><label for="movie10">범죄</label></a>
-          </li>
-          <li>
-            <input id="movie11" type="checkbox" value="movie">
-            <a href="#"><label for="movie11">음악/뮤지컬</label></a>
-          </li>
-          <li>
-            <input id="movie12" type="checkbox" value="movie">
-            <a href="#"><label for="movie12">스포츠</label></a>
-          </li>
-          <li>
-            <input id="movie13" type="checkbox" value="movie">
-            <a href="#"><label for="movie13">다큐멘터리</label></a>
-          </li>
-          <li>
-            <input id="movie14" type="checkbox" value="movie">
-            <a href="#"><label for="movie14">가족</label></a>
-          </li>
-          <li>
-            <input id="movie15" type="checkbox" value="movie">
-            <a href="#"><label for="movie15">역사</label></a>
-          </li>
-        </ul>
-        </form>
-                  <button class="submit">Click</button>
+        </div>       
+        
+	        <hr class="ott-logo-divider" />
+	        
+	        <c:if test="${category ne 'interest' }">
+	        <ul class="ott-logo-text">
+	        	<li>
+	        		<input id="genre1" type="checkbox" name="genre" value="1">
+	        		<label for="genre1">액션</label>
+	       		</li>
+	      		<li>
+	      			<input id="genre2" type="checkbox" name="genre" value="2">
+	      			<label for="genre2">어드벤쳐</label>
+	   			</li>
+				<li>
+					<input id="genre3" type="checkbox" name="genre" value="3">
+					<label for="genre3">SF</label>
+				</li>
+				<li>
+					<input id="genre4" type="checkbox" name="genre" value="4">
+	            	<label for="genre4">판타지</label>
+	           	</li>
+	           	<li>
+	           		<input id="genre5" type="checkbox" name="genre" value="5">
+	            	<label for="genre5">드라마</label>
+	           	</li>
+	           	<li>
+	           		<input id="genre6" type="checkbox" name="genre" value="6">
+	            	<label for="genre6">코미디</label>
+	           	</li>
+	           	<li>
+	           		<input id="genre7" type="checkbox" name="genre" value="7">
+	           		<label for="genre7">시대극</label>
+	       		</li>
+	       		<li>
+	       			<input id="genre8" type="checkbox" name="genre" value="8">
+	            	<label for="genre8">로맨스/멜로</label>
+				</li>
+				<li>
+					<input id="genre9" type="checkbox" name="genre" value="9">
+					<label for="genre9">공포/스릴러</label>
+				</li>
+				<li>
+					<input id="genre10" type="checkbox" name="genre" value="10">
+	            	<label for="genre10">미스터리</label>
+	           	</li>
+	           	<li>
+	           		<input id="genre11" type="checkbox" name="genre" value="11">
+	            	<label for="genre11">범죄</label>
+	           	</li>
+	           	<li>
+	           		<input id="genre12" type="checkbox" name="genre" value="12">
+	            	<label for="genre12">음악/뮤지컬</label>
+	           	</li>
+	           	 <li>
+	           	 	<input id="genre13" type="checkbox" name="genre" value="13">
+	            	<label for="genre13">스포츠</label>
+	           	</li>
+	           	<li>
+	           		<input id="genre14" type="checkbox" name="genre" value="14">
+	           		<label for="genre14">다큐멘터리</label>
+	       		</li>
+	       		<li>
+	       			<input id="genre15" type="checkbox" name="genre" value="15">
+	            	<label for="genre15">가족</label>
+	           	</li>
+	           	<li>
+	           		<input id="genre16" type="checkbox" name="genre" value="16">
+	            	<label for="genre16">역사</label>
+	           	</li>
+	       	</ul>
+       	</c:if>
+       	<button type="submit" class="subBtn">검색</button>
+       	       	
+        </form>		
+
       </section>
       
 	<script type="text/javascript">
       	$(document).ready(function() {
       		$('.ott-logo-img').click(function() {
-  			    var checkbox = $(this).prev('input[type="checkbox"]');
-  			    checkbox.prop('checked', !checkbox.prop('checked'));
-  			});
-      		
-  			
-      		$('.ott-logo-box input:checked').siblings('img').css({
-    			  'outline': '3px solid #33ff33',
-    			  'border-radius': '10px'
-    			});
+      		    let checkboxId = $(this).prev('input[type="checkbox"]').attr('id');
+      		    let checkbox = $('#' + checkboxId);
 
-			})
+      		    // 체크박스가 체크되어 있는지 확인
+      		    if (checkbox.is(':checked')) {
+      		      checkbox.prop('checked', false); // 체크 해제
+      		      checkbox.next('img').css({
+      		        'outline': 'none',
+      		        'border-radius': '0'
+      		      });
+      		    } else {
+      		      checkbox.prop('checked', true); // 체크 설정
+      		      checkbox.next('img').css({
+      		        'outline': '3px solid #33ff33',
+      		        'border-radius': '10px'
+      		      });
+      		    }
+      		  });
+		})
 		
     </script>
     

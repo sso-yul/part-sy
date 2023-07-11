@@ -82,7 +82,7 @@
       </div>      
       
       <div class="main-img">
-        <img src="${path}/resources/images/서부 전선 이상 없다.png" alt="서부 전선 이상 없다 이미지">
+        <img src="${contentDTO.main_img }" >
       </div>
 
       <div class="info">
@@ -134,9 +134,11 @@
     </section>
    <section class="myReview" id="myReview">
    
+           
            <div class="left-score">
-          <h2>이 영화의 평균 별점</h2>
-                             
+           
+          <span class="star-text">평균 별점</span>
+           
         <p class="mytextReview" style="font-style: oblique; font-size: 20px;">내가 작성한 리뷰</p>
         <div class="asdasd" style="border-top: 3px solid #33ff33;">
         </div>
@@ -147,19 +149,20 @@
 			<button id="wishlist-button">
 			  <img id="wishlist-image" class="mark" src="${path}/resources/images/img/mark.png" alt="찜하기">
 			</button>
-          <button id="diary-button">
+          <button id="diary-button" onclick="location.href='/ottt/mypage/mydiary/write?content=${contentDTO.content_no }'">
 			  <img id="diary-image" class="mark" src="${path}/resources/images/img/diary1.png" alt="찜하기">
 			</button>
           <button id="review-button">
             <img class="review-icon" src="${path }/resources/images/img/review.png" alt="봣어요">
           </button>
+          <div style="border-top: 4px solid #33ff33; margin-top: 20px;"></div>
         <div class="smr">
 
           <div class="review-back">1</div>
           <form id="review-form">
           <div id="review-popup" class="popup11">         
               <label for="review-text" style="background-color: #202020;">리뷰를 작성해주세요</label>
-              <input type="hidden" name="user_no" value="${sessionScope.user_no}" > 
+              <input type="hidden" name="user_no" value="${sessionScope.user_no}" >
               <input type="hidden" name="content_no" value="${content_no }">                
               <textarea id="review-text" name="review_content"></textarea>
               <div class="reveiw-star-footer">
@@ -411,10 +414,12 @@
                     <div>
                     <c:choose>
 						<c:when test="${ReviewDTO.check_like_count == 1}">
-	                      	<input class="LikeBtn" id="heart-on" type="image" src="${path}/resources/images/img/heart_on.png" width="35" height="80%"  data-review-no="${ReviewDTO.review_no}" >
+	                      	<input class="LikeBtn" id="heart-on" type="image" src="${path}/resources/images/img/heart_on.png" 
+	                      	width="35" height="80%" data-review-no="${ReviewDTO.review_no}" >
 	                    </c:when>
 					<c:otherwise>
-						<input class="LikeBtn" id="heart-off" type="image" src="${path}/resources/images/img/heart_off.png" width="35" height="80%"  data-review-no="${ReviewDTO.review_no}" >
+						<input class="LikeBtn" id="heart-off" type="image" src="${path}/resources/images/img/heart_off.png" 
+						width="35" height="80%" data-review-user-no="${ReviewDTO.user_no }" data-review-no="${ReviewDTO.review_no}" >
 					</c:otherwise>
 					</c:choose>		
                     </div>             
@@ -758,6 +763,8 @@
 	    $(".LikeBtn").click(function() {
 	        let btn = $(this);
 	        const review_no = $(this).data('review-no');
+	        const review_user_no = $(this).data('review-user-no');
+	       
 	        $('input[name="review_no"]').val(review_no);
 	        var likeCount = btn.closest('.review-box').find(".review-box-footer #likeCount");
 	        var likeCount1 = btn.closest('.review-box1').find(".review-box-footer #likeCount");
@@ -779,7 +786,9 @@
 	                    // 저장하는 post ajax
 	                    $.post(
 	                        "/ottt/review/insertLike",
-	                        { "user_no": "${user_no}", "review_no": review_no },
+	                        { "user_no": "${user_no}"
+	                        	, "review_no": review_no
+	                        	, "review_user_no": review_user_no},
 	                        function(data) {
 	                            btn.attr("src", PATH + "/resources/images/img/heart_on.png");
 	                            likeCount.text(parseInt(likeCount.text()) + 1 + '개');

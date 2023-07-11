@@ -18,7 +18,6 @@ public class WishlistDTO {
 	private String thumbnail;
 	private Integer	category_no;	
 	
-	
 
 	public Float getRating() {
 		return rating;
