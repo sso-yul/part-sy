@@ -1,0 +1,296 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+
+*{margin: 0;padding: 0;font-family: 'Noto Sans KR', sans-serif;}
+
+a{text-decoration: none;color: inherit;display: block;}
+
+ul,li,ol{list-style: none;}
+
+body{background-color: #202020;color: #fff;}
+
+.wrap{width: 100%;height: 100%;position: relative;}
+
+header{ width: 1200px; height: 130px;box-sizing: border-box;margin: 0 auto;position: relative;display: flex;}
+
+.logo{    width: 230px;
+    height : 95px;   
+    margin-top: 30px;}
+
+.logo > a > img{margin-top: 2.5px;width: 200px;}
+
+.gnb > ul{
+    display: flex;
+    padding: 0px 0px 0px 32px;
+}
+
+.gnb > ul > li{
+    width: 70px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    margin-top: 30px;
+    margin-right:5px;
+}
+
+.gnb a{
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.gnb > ul > li:hover{
+    color: #33ff33;
+}
+
+
+.mnb2 {
+    width: 1200px;
+    margin: 20px auto;
+    border-top: 3px solid #33ff33;
+}
+
+.h-icon{
+    width: 120px;
+    height: 58px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.h-icon > ul{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 12px;
+    padding-left: 2rem;
+}
+
+#line-1 {
+    width: 1200px;
+    background-color: transparent;
+    border: none;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-top-color:#33ff33;
+    border-top-width:3pxw ;
+    border-bottom-width: 3px;
+    border-bottom-color: #33FF33; 
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    margin-bottom: 40px;
+    
+}
+
+.nav-link1{
+    color: #ffffff; 
+    font-size: 25px; 
+    padding:2px;
+    text-decoration-line: none;
+    margin-left: 140px;
+}
+.nav-link1:hover{color: #33FF33;}
+
+.nav a:nth-child(1){margin-left: 3.5vw;}
+
+#line-2 {
+    width:1200px;
+    display: flex;
+    position:relative;
+    margin: 0 auto;
+    
+}
+#line-2:after{
+    content:""; 
+    clear:both; 
+    display:block;}
+
+.set-img {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    border: none;
+}
+
+.sec01{
+    width: 1200px;
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+    /* border: 1px solid #33ff33; */
+    box-sizing: border-box;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #33ff33;
+}
+
+.sec02{
+    width: 1000px;
+    height: auto;
+    margin: 0 auto;
+    margin-top: 25px;
+    text-align: center;
+    /* background-color: #0B0C0B; */
+}
+
+.mypage-info {
+    display: flex;
+    width: 1200px;
+    height: 130px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    position: relative;
+    display: flex;
+}
+
+.user{
+    margin-left: 5px;
+}
+
+.user > ul {
+    padding-left: 1rem !important;
+}
+
+.user-name {
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 30px;
+}
+
+.user-follow {
+    margin-top: 35px;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+.user-follow > span {
+    cursor: pointer;
+}
+
+.porfile > img {
+    width: 125px;
+    height: 125px;
+
+}
+
+.profile{
+    border-radius: 10px
+}
+
+.btn_more_div{
+    display: inline-block;
+    position: relative;
+    left: 846px;
+    top: 10px;
+}
+
+.btn_more{
+    width: 0 auto;
+    height: 25px;
+    display: flex;
+    background-color: transparent;
+    border: none;
+    background-color: #fff;
+}
+
+.follow{
+    width: 800px;
+    height: auto;
+    margin: auto;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.follow-nm{
+    /* border: 1px solid red; */
+    font-size: 23px;
+    margin-left: 40px;
+}
+
+.alarm-1-1 {
+    color: white;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.alarm-1-1 > img {
+    width: 76px;
+    height: 67px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.user-follow {
+    margin-top: 35px;
+    margin-left: 10px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.fol-pro {
+	height: 75px;
+	width: 75px; 
+}
+
+.nofollow {
+	width: 100%;
+	font-size: 22px;
+}
+
+.checkfollow {
+	width:13px;
+	height: 13px;
+	display: none;
+	position: absolute;
+    right: 5px;
+}
+
+.labelfollow {
+	width: 80px;
+	height: 40px;
+	padding: 6px 12px;
+	color: black;
+	border-radius: 5px;
+	background-color: #33ff33;
+    font-weight: bold;
+    position: absolute;
+    right: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.labelCxlfollow {
+	width: 80px;
+	height: 40px;
+	padding: 6px 12px;
+	color: #fff;
+	border: 1px solid #33ff33;
+	border-radius: 5px;
+	background-color: #202020;
+    font-weight: bold;
+    position: absolute;
+    right: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.labelCxlfollow:hover {
+	color: #33ff33;
+}
+
+.btn_check_div {
+	position: absolute;
+	right: 0px;
+	top: 60%;
+}
+
+.user-follow > span {
+	cursor: pointer;
+}
