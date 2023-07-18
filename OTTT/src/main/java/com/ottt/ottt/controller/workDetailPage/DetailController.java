@@ -19,7 +19,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ottt.ottt.dao.login.LoginUserDao;
 import com.ottt.ottt.dto.ContentDTO;
+import com.ottt.ottt.dto.ContentDirectorDTO;
 import com.ottt.ottt.dto.ContentOTTDTO;
+import com.ottt.ottt.dto.ContentPosterDTO;
+import com.ottt.ottt.dto.ContentTrailerDTO;
+import com.ottt.ottt.dto.DirectorDTO;
+import com.ottt.ottt.dto.EntertainerDTO;
 import com.ottt.ottt.dto.GenreDTO;
 import com.ottt.ottt.dto.ReportDTO;
 import com.ottt.ottt.dto.ReviewDTO;
@@ -64,23 +69,28 @@ public class DetailController {
 			
 			int count = reviewService.getCount(content_no);
 			 double rating = reviewService.getRatingAvg(content_no);
-			
+			List<ContentPosterDTO> posterlist = reviewService.getPoster(content_no); 
+			List<ContentTrailerDTO> trailerlist = reviewService.getTrailer(content_no);
 			 m.addAttribute("rating", rating);
-	       
-	        
+	        List<EntertainerDTO> entertainerlist = reviewService.getEntertainer(content_no);
+	        DirectorDTO directorDTO = reviewService.getDirector(content_no);
 			ReviewDTO myReview = reviewService.getReviewNo(content_no, user_no);
 			
 			
 			ContentDTO contentDTO = contentService.getContent(content_no);
 			List<GenreDTO> genreDTO = contentService.getGenrenm(content_no);
 			List<ContentOTTDTO> contentOTTlist = contentService.getOTT(content_no);
+			
 			m.addAttribute("contentOTTlist", contentOTTlist);
 			m.addAttribute("genrenmlist", genreDTO);
 			m.addAttribute("contentDTO", contentDTO);
 			m.addAttribute("list", list);
 			m.addAttribute("count", count);
 			m.addAttribute("myReview", myReview);
-			
+			m.addAttribute("posterlist", posterlist);
+			m.addAttribute("trailerlist", trailerlist);
+			m.addAttribute("directorDTO", directorDTO);
+			m.addAttribute("entertainerlist", entertainerlist);
 		} catch (Exception e) {
 			
 			e.printStackTrace();

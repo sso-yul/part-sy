@@ -108,27 +108,18 @@
           <li class="info-director">
             <span>감독 :&nbsp;</span>
             <span>
-              에드워드 버거
+              ${directorDTO.director_nm}
             </span>
           </li>
-          <li class="info-main_actor">
-            <span>주연 :&nbsp;</span>
-            <span>
-              펠릭스 카머러,&nbsp;
-            </span>
-            <span>
-              알브레히트 슈흐
-            </span>
-          </li>
-          <li class="info-supporting_actor">
-            <span>조연 :&nbsp;</span>
-            <span>
-             데비트 슈트리조,&nbsp;                      
-            </span>            
-            <span>
-              아드리안 그뤼
-            </span>
-          </li>
+<li class="info-main_actor">
+  <span>출연 :&nbsp;</span>
+  <span id="entertainerNames">
+    <c:forEach items="${entertainerlist}" var="EntertainerDTO">
+      ${delimiter}${EntertainerDTO.entertainer_nm}
+      <c:set var="delimiter" value=", " />
+    </c:forEach>&nbsp;
+  </span>
+</li>
         </ul>
       </div>
     </section>
@@ -162,7 +153,7 @@
           <form id="review-form">
           <div id="review-popup" class="popup11">         
               <label for="review-text" style="background-color: #202020;">리뷰를 작성해주세요</label>
-              <input type="hidden" name="user_no" value="${sessionScope.user_no}" >
+              <input type="hidden" name="user_no" value="${sessionScope.user_no}" > 
               <input type="hidden" name="content_no" value="${content_no }">                
               <textarea id="review-text" name="review_content"></textarea>
               <div class="reveiw-star-footer">
@@ -414,12 +405,10 @@
                     <div>
                     <c:choose>
 						<c:when test="${ReviewDTO.check_like_count == 1}">
-	                      	<input class="LikeBtn" id="heart-on" type="image" src="${path}/resources/images/img/heart_on.png" 
-	                      	width="35" height="80%" data-review-no="${ReviewDTO.review_no}" >
+	                      	<input class="LikeBtn" id="heart-on" type="image" src="${path}/resources/images/img/heart_on.png" width="35" height="80%"  data-review-no="${ReviewDTO.review_no}" >
 	                    </c:when>
 					<c:otherwise>
-						<input class="LikeBtn" id="heart-off" type="image" src="${path}/resources/images/img/heart_off.png" 
-						width="35" height="80%" data-review-user-no="${ReviewDTO.user_no }" data-review-no="${ReviewDTO.review_no}" >
+						<input class="LikeBtn" id="heart-off" type="image" src="${path}/resources/images/img/heart_off.png" width="35" height="80%"  data-review-no="${ReviewDTO.review_no}" >
 					</c:otherwise>
 					</c:choose>		
                     </div>             
@@ -763,8 +752,6 @@
 	    $(".LikeBtn").click(function() {
 	        let btn = $(this);
 	        const review_no = $(this).data('review-no');
-	        const review_user_no = $(this).data('review-user-no');
-	       
 	        $('input[name="review_no"]').val(review_no);
 	        var likeCount = btn.closest('.review-box').find(".review-box-footer #likeCount");
 	        var likeCount1 = btn.closest('.review-box1').find(".review-box-footer #likeCount");
@@ -786,9 +773,7 @@
 	                    // 저장하는 post ajax
 	                    $.post(
 	                        "/ottt/review/insertLike",
-	                        { "user_no": "${user_no}"
-	                        	, "review_no": review_no
-	                        	, "review_user_no": review_user_no},
+	                        { "user_no": "${user_no}", "review_no": review_no },
 	                        function(data) {
 	                            btn.attr("src", PATH + "/resources/images/img/heart_on.png");
 	                            likeCount.text(parseInt(likeCount.text()) + 1 + '개');
@@ -1049,7 +1034,21 @@
     });
   }
 </script>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    var entertainerNames = document.getElementById('entertainerNames');
+    var names = entertainerNames.innerHTML.split(', ');
 
+    entertainerNames.innerHTML = '';
+
+    for (var i = 0; i < names.length; i++) {
+      if (i > 0) {
+        entertainerNames.innerHTML += '<br>';
+      }
+      entertainerNames.innerHTML += names[i];
+    }
+  });
+</script>
     <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"

@@ -79,6 +79,31 @@
 		insert into tb_report (user_no, target_user_no , review_no, report_type)
 		values (#{user_no}, #{target_user_no} ,#{review_no}, #{report_type})
 	</insert>
+	
+	  <select id="getPostersByContentNo" parameterType="int" resultType="ContentPosterDTO">
+	    SELECT * FROM tb_content_poster WHERE content_no = #{content_no}
+	  </select>
+  
+  	  <select id="getTrailerByContentNo" parameterType="int" resultType="ContentTrailerDTO">
+	    SELECT * FROM tb_content_trailer WHERE content_no = #{content_no}
+	  </select>
+	  
+	  
+	  <select id="getDirectorNM" resultType="DirectorDTO" parameterType="int">
+	    SELECT a.content_no, a.director_no, b.director_nm
+	    FROM tb_content_director a
+	    JOIN tb_director b ON a.director_no = b.director_no
+	    WHERE a.content_no = #{content_no}
+	  </select>
+	  
+	  
+	  	  <select id="getEntertainerNM" resultType="EntertainerDTO" parameterType="int">
+	    SELECT a.content_no, a.entertainer_no, b.entertainer_nm
+	    FROM tb_content_entertainer a
+	    JOIN tb_entertainer b ON a.entertainer_no = b.entertainer_no
+	    WHERE a.content_no = #{content_no}
+	  </select>
+  
   
 	<!-- 리플 페이지  -->
 	<select id="selectReply" parameterType="Integer" resultType="CommentDTO">

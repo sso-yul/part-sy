@@ -46,6 +46,7 @@ public class UserDTO {
 	private String 	image;
 	private Integer following;
 	private Integer followers;
+	private String 	kakao_no;
 	
 	public UserDTO() {}
 	
@@ -165,6 +166,16 @@ public class UserDTO {
 		this.followers = followers;
 	}
 
+	public String getKakao_no() {
+		return kakao_no;
+	}
+
+
+	public void setKakao_no(String kakao_no) {
+		this.kakao_no = kakao_no;
+	}
+
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(user_email, user_gen, user_id, user_nicknm, user_nm, user_no, user_pwd);
@@ -190,7 +201,7 @@ public class UserDTO {
 		return "UserDTO [user_no=" + user_no + ", gr_no=" + gr_no + ", user_id=" + user_id + ", user_pwd=" + user_pwd
 				+ ", user_nm=" + user_nm + ", user_nicknm=" + user_nicknm + ", user_gen=" + user_gen + ", user_email="
 				+ user_email + ", reg_date=" + reg_date + ", admin=" + admin + ", image=" + image + ", following="
-				+ following + ", followers=" + followers + "]";
+				+ following + ", followers=" + followers + ", kakao_no=" + kakao_no + "]";
 	}
 	
 	

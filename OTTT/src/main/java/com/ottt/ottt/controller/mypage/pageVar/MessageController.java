@@ -56,7 +56,9 @@ public class MessageController {
 			
 			int startIndex = ((msc.getPage() - 1) * msc.getPageSize()) < 0 ? 0 : (msc.getPage() - 1) * msc.getPageSize();
 	        int endIndex = Math.min(startIndex + msc.getPageSize(), msgList.size());
-	        List<MessageDTO> list = msgList.subList(startIndex, endIndex);     
+	        List<MessageDTO> list = msgList.subList(startIndex, endIndex);
+			
+	        System.out.println("-------------list.size()--------------" +list.size());	        
 	        
 			m.addAttribute("list", list);
 			m.addAttribute("mpr", msgPageResolver);

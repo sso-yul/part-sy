@@ -20,18 +20,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ottt.ottt.dao.login.LoginUserDao;
 import com.ottt.ottt.dao.review.ReviewDao;
-import com.ottt.ottt.dto.ArticleDTO;
 import com.ottt.ottt.dto.CommentDTO;
 import com.ottt.ottt.dto.ContentDTO;
 import com.ottt.ottt.dto.ContentOTTDTO;
+import com.ottt.ottt.dto.DirectorDTO;
+import com.ottt.ottt.dto.EntertainerDTO;
 import com.ottt.ottt.dto.GenreDTO;
-import com.ottt.ottt.dto.NotificationDTO;
 import com.ottt.ottt.dto.ReportDTO;
 import com.ottt.ottt.dto.ReviewDTO;
 import com.ottt.ottt.dto.ReviewLikeDTO;
 import com.ottt.ottt.dto.UserDTO;
 import com.ottt.ottt.service.content.ContentService;
-import com.ottt.ottt.service.mypage.NotificationService;
 import com.ottt.ottt.service.mypage.WatchedService;
 import com.ottt.ottt.service.mypage.WishlistService;
 import com.ottt.ottt.service.review.ReviewService;
@@ -57,9 +56,6 @@ public class DetailReplyController {
 	@Autowired
 	WishlistService wishlistService;
 	
-	@Autowired
-	NotificationService notificationService;
-	
 	@GetMapping(value = "/detailPage/reply")
 	public String reviewReply(Model m, HttpServletRequest request, HttpSession session,
 			@RequestParam("content_no") int content_no, @RequestParam("review_no") int review_no) {
@@ -75,6 +71,8 @@ public class DetailReplyController {
 				ContentDTO contentDTO = contentService.getContent(content_no);
 				List<GenreDTO> genreDTO = contentService.getGenrenm(content_no);
 				List<ContentOTTDTO> contentOTTlist = contentService.getOTT(content_no);
+				List<EntertainerDTO> entertainerlist = reviewService.getEntertainer(content_no);
+		        DirectorDTO directorDTO = reviewService.getDirector(content_no);
 				m.addAttribute("contentOTTlist", contentOTTlist);
 				m.addAttribute("genrenmlist", genreDTO);
 				m.addAttribute("contentDTO", contentDTO);
@@ -82,7 +80,9 @@ public class DetailReplyController {
 			m.addAttribute("Review", Review);
 			m.addAttribute("list", list);
 			m.addAttribute("count", count);
-			m.addAttribute(userDTO);
+			
+			m.addAttribute("directorDTO", directorDTO);
+			m.addAttribute("entertainerlist", entertainerlist);
 			request.setAttribute("rating", rating);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,26 +92,14 @@ public class DetailReplyController {
 	
 	   @PostMapping("/detailPage/reply/write")
 	   public String writeReply(CommentDTO commentDTO, RedirectAttributes attr,
-	                     Model m, HttpSession session, ReviewDTO reviewDTO
-	                     	, Integer review_user_no) {
+	                     Model m, HttpSession session, ReviewDTO reviewDTO) {
 		   
 	      try {
 	         if(reviewService.writeReply(commentDTO) != 1) {
 	            throw new Exception("Write failed");
+	            
 	         }
-	         
 	         attr.addFlashAttribute("msg", "ok");
-
-	 		//알림함에 알림 집어넣기
- 			NotificationDTO notificationDTO = new NotificationDTO();
- 			notificationDTO.setUser_no(commentDTO.getUser_no());
- 			notificationDTO.setReview_no(reviewDTO.getReview_no());
- 			
- 			notificationDTO.setTarget_user_no(review_user_no);
- 			System.out.println("================== review_user_no : " +review_user_no);
- 			//jsp단에서 <div id="reply-popup" class="popup11"> 이 부분에 인풋 태그 추가 후 불러옴
- 			
- 			notificationService.putReviewCmt(notificationDTO);
 	         return "redirect:/detailPage/reply?content_no=" + reviewDTO.getContent_no() + "&review_no=" + commentDTO.getReview_no();
 	      } catch (Exception e) {
 	         e.printStackTrace();
@@ -236,7 +224,7 @@ public class DetailReplyController {
 		//좋아요 시작
 		@PostMapping("/reply/selectLikeCount")
 		@ResponseBody
-		public Map<String,Object> selectLikeCount(ReviewLikeDTO dto, HttpSession session ) throws Exception {
+		public Map<String,Object> selectLikeCount(ReviewLikeDTO dto, HttpSession session) throws Exception {
 				
 		
 				Map<String, Object> result = new HashMap<String,Object>();
@@ -253,6 +241,7 @@ public class DetailReplyController {
 				result.put("result", reviewService.selectLikeCount(dto));
 				
 				return result;
+		
 			}
 		
 		
@@ -261,8 +250,7 @@ public class DetailReplyController {
 		
 			@PostMapping("/reply/insertLike")
 			@ResponseBody
-			public Map<String,Object> insertLike(ReviewLikeDTO dto, HttpSession session
-													, Integer review_user_no) throws Exception {
+			public Map<String,Object> insertLike(ReviewLikeDTO dto, HttpSession session) throws Exception {
 				
 				
 
@@ -278,16 +266,6 @@ public class DetailReplyController {
 				result.put("message", "success");
 				result.put("success", reviewService.insertLike(dto));
 				
-		 		//알림함에 알림 집어넣기
-	 			NotificationDTO notificationDTO = new NotificationDTO();
-	 			notificationDTO.setUser_no(dto.getUser_no());
-	 			notificationDTO.setReview_no(dto.getReview_no());
-	 			
-	 			notificationDTO.setTarget_user_no(review_user_no);
-	 			System.out.println("================== review_user_no : " +review_user_no);
-	 			//jsp단에서 <div id="reply-popup" class="popup11"> 이 부분에 인풋 태그 추가 후 불러옴
-	 			
-	 			notificationService.putReviewLike(notificationDTO);
 				
 				return result;
 

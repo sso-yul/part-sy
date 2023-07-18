@@ -60,7 +60,7 @@
 
 	<body>
 		<script type="text/javascript">
-			
+			connectWS();
 			var socket = null;
 			
 			function connectWS() {
@@ -91,7 +91,6 @@
 			}
 	
 			$(document).ready(function() {
-				connectWS();
 				//쪽지 전송
 				$("#writeBtn").on("click", function(evt) {
 					//url에서 send_user_no 추출

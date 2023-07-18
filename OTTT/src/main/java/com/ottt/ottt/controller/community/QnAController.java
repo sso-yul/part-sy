@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ottt.ottt.dto.CommentDTO;
-import com.ottt.ottt.dto.NotificationDTO;
 import com.ottt.ottt.dao.login.LoginUserDao;
 import com.ottt.ottt.domain.PageResolver;
 import com.ottt.ottt.domain.SearchItem;
@@ -30,7 +29,6 @@ import com.ottt.ottt.dto.ArticleDTO;
 import com.ottt.ottt.dto.UserDTO;
 import com.ottt.ottt.service.community.QnA.QnACommentService;
 import com.ottt.ottt.service.community.QnA.QnAServiceImpl;
-import com.ottt.ottt.service.mypage.NotificationService;
 
 @Controller
 @RequestMapping("/community")
@@ -42,8 +40,6 @@ public class QnAController {
 	LoginUserDao loginUserDao;
 	@Autowired
 	QnACommentService qnACommentService;
-	@Autowired
-	NotificationService notificationService;
 	
 	//QnA
 		@GetMapping(value = "/QnA")
@@ -205,20 +201,6 @@ public class QnAController {
 				if(qnACommentService.write(commentDTO) != 1) {
 					throw new Exception("Comment_wrtie Failed");
 				}
-				
-				ArticleDTO articleDTO = new ArticleDTO();
-				articleDTO.setArticle_no(commentDTO.getArticle_no());
-
-				ArticleDTO articleNo = serviceImpl.getArticle(article_no);
-				if(articleDTO != null) {
-					NotificationDTO notificationDTO = new NotificationDTO();
-					notificationDTO.setUser_no(commentDTO.getUser_no());
-					notificationDTO.setQna_no(commentDTO.getArticle_no());
-					notificationDTO.setTarget_user_no(articleNo.getUser_no());
-					
-					notificationService.putQna(notificationDTO);
-				}
-								
 				return new ResponseEntity<String>("WRT_OK", HttpStatus.OK);
 			} catch (Exception e) {
 				e.printStackTrace();

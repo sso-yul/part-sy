@@ -36,16 +36,13 @@
       <div class="popup-video">
         <ul>
           <li>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/qFqgmaO15x4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            ${trailerlist[0].trailer}
           </li>
           <li>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/qFqgmaO15x4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            ${trailerlist[1].trailer}
           </li>
           <li>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/qFqgmaO15x4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </li>
-          <li>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/qFqgmaO15x4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            ${trailerlist[2].trailer}
           </li>
         </ul>
       </div>
@@ -53,23 +50,19 @@
       <div class="popup-photo">
         <ul>
           <li>
-            <img src="${path }/resources/images/서부전선 포토/1.png" alt="포토1">
+            <img src="${posterlist[0].poster}" alt="포토1">
           </li>
           <li>
-            <img src="${path }/resources/images/서부전선 포토/2.png" alt="포토1">
+            <img src="${posterlist[1].poster}" alt="포토1">
           </li>
           <li>
-            <img src="${path }/resources/images/서부전선 포토/3.png" alt="포토1">
+            <img src="${posterlist[2].poster}" alt="포토1">
           </li>
           <li>
-            <img src="${path }/resources/images/서부전선 포토/4.png" alt="포토1">
+            <img src="${posterlist[3].poster}" alt="포토1">
           </li>
           <li>
-            <img src="${path }/resources/images/서부전선 포토/5.png" alt="포토1">
-          </li>
-          <li>
-            <img src="${path }/resources/images/서부전선 포토/6.png" alt="포토1">
-
+            <img src="${posterlist[4].poster}" alt="포토1">
           </li>
 
         </ul>
@@ -100,124 +93,39 @@
         <img src="${path}/resources/images/img/filmside02.png" alt="필름테두리">
         <div class="fs_video">
           <div class="fs_p1">
-            <img src="${path}/resources/images/서부전선 예고1.png" alt="예고1">
+            <img src="${trailerlist[0].thumbnail}" alt="예고1">
             <div class="p-btn">
               <img src="${path}/resources/images/img/button01.png" alt="재생버튼">
             </div>
           </div>
           <div class="fs_p2">
-            <img src="${path}/resources/images/서부전선 예고2.png" alt="예고2">
+            <img src="${trailerlist[1].thumbnail}" alt="예고2">
             <div class="p-btn">
               <img src="${path}/resources/images/img/button01.png" alt="재생버튼">
             </div>
           </div>
 
           <div class="fs_p3">
-            <img src="${path}/resources/images/서부전선 예고1.png" alt="예고2">
+            <img src="${trailerlist[2].thumbnail}" alt="예고2">
             <div class="p-btn">
               <img src="${path}/resources/images/img/button01.png" alt="재생버튼">
             </div>
           </div>
 
-          <div class="fs_p4">
-            <img src="${path}/resources/images/서부전선 예고2.png" alt="예고2">
-            <div class="p-btn">
-              <img src="${path}/resources/images/img/button01.png" alt="재생버튼">
-            </div>
-          </div>
+
         </div>
       </div>
-      <div class="button1">
-        <img src="${path }/resources/images/img/버튼.png" alt="버튼">
-      </div>
+
       </div>
       <div class="main-p">
         <div class="t-text1">
           <div>포토</div>
-          
         </div>
         <div class="phozip">
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/1.png" alt="포토1">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/2.png" alt="포토2">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/3.png" alt="포토3">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/4.png" alt="포토3">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/5.png" alt="포토3">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/6.png" alt="포토3">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/7.png" alt="포토3">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/8.png" alt="포토3">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/9.png" alt="포토3">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/10.png" alt="포토3">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/11.png" alt="포토3">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/12.png" alt="포토3">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/13.png" alt="포토3">
-          </div>
-          <div class="photo">
-              <img src="${path }/resources/images/서부전선 포토/14.png" alt="포토3">
-          </div>
-          <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/15.png" alt="포토1">
-	        </div>
-	        <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/16.png" alt="포토2">
-	        </div>
-	        <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/17.png" alt="포토3">
-	        </div>
-	        <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/18.png" alt="포토3">
-	        </div>
-	        <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/19.png" alt="포토3">
-	        </div>
-	        <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/20.png" alt="포토3">
-	        </div>
-	        <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/21.png" alt="포토3">
-	        </div>
-	        <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/22.png" alt="포토3">
-	        </div>
-	        <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/23.png" alt="포토3">
-	        </div>
-	        <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/25.png" alt="포토3">
-	        </div>
-	        <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/26.png" alt="포토3">
-	        </div>
-	        <div class="photo">
-	            <img src="${path }/resources/images/서부전선 포토/27.png" alt="포토3">
-	        </div>
-
-
-
+           
+            <c:forEach items="${posterlist}" var="ContentPosterDTO">
+ 				 <img src="${ContentPosterDTO.poster}" alt="Poster Image" class="poster-image" style="margin-right: 10px; width: 400px; height: 226px;">
+			</c:forEach>
 
         </div>
         <div class="button3">
@@ -411,11 +319,16 @@
             <span class="runtime">· ${contentDTO.content_runtime }분 ·</span>
             <span class="age">${contentDTO.age }세</span>
               <br/>
-            <span class="director">감독 : 에드워드 버거</span>
+            <span class="director">감독 : ${directorDTO.director_nm}</span>
               <br/>
-            <span class="mainact">주연 : 펠릭스 카머러, 알브레히트 슈흐, 아론 힐머, 에딘 하사노비치</span>
+            <span class="mainact">출연 : 
+            <c:forEach items="${entertainerlist}" var="EntertainerDTO">
+ 				  ${delimiter}${EntertainerDTO.entertainer_nm}
+ 				      <c:set var="delimiter" value=", " />
+			</c:forEach>
+			</span>
               <br/>
-            <span  class="subact">조연 : 데비트 슈트리조, 아드리안 그뤼네발트, 안드레아스 돌러</span>
+            <br/>
       <section class="myReview" style="font-size: 15px;">
         	<div class="asdasd" style="border-top: 3px solid #33ff33;">
         <p class="mytextReview" style="font-style: oblique; font-size: 20px;">내가 작성한 리뷰</p>
@@ -683,54 +596,12 @@
       
         </c:forEach>
   </div>
-            <div class="b-text">
-              <div>동일한 장르의 작품</div>
-              <div><a href="#">더보기</a></div>
-            </div>
-            <div class="same-movie">
-              <button class="left-button"><img src="${path }/resources/images/img/왼쪽 화살표.png" /></button>
-              <div class="cont01">
-                  <div class="posterzip">
-                      
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/고지전.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/덩케르크.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/인천상륙작전.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/태극기.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/헥소고지.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/고지전.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/덩케르크.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/인천상륙작전.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/태극기.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/헥소고지.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/고지전.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/덩케르크.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/인천상륙작전.jpg" class="poster"/></a>
-                      <a href="#"><img src="${path }/resources/images/서부전선 동일장르/태극기.jpg" class="poster"/></a>
-                  </div>
-                  
-              </div>
-              <button class="right-button"><img src="${path }/resources/images/img/오른쪽화살표.png"/></button>
-              
-          </div>
-          </div>
-          </section>
-      </div>
-                          <!-- Modal -->
-           <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 9999;">
-             <div class="modal-dialog modal-dialog-centered">
-               <div class="modal-content">
-                 <div class="modal-header">
-                   <h1 class="modal-title fs-5" id="exampleModalLabel">알림</h1>
-                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                 </div>
-                 <div class="modal-body body">
-                 </div>
-                 <div class="modal-footer">
-                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
-                 </div>
-               </div>
-             </div>
-           </div>  
+    
+  
+  
+  
+  
+  
   </div>
   
   

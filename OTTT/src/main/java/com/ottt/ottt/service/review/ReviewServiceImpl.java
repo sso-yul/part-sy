@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 import com.ottt.ottt.dao.review.ReviewDao;
 import com.ottt.ottt.domain.SearchItem;
 import com.ottt.ottt.dto.CommentDTO;
+import com.ottt.ottt.dto.ContentDirectorDTO;
+import com.ottt.ottt.dto.ContentPosterDTO;
+import com.ottt.ottt.dto.ContentTrailerDTO;
+import com.ottt.ottt.dto.DirectorDTO;
+import com.ottt.ottt.dto.EntertainerDTO;
 import com.ottt.ottt.dto.ReportDTO;
 import com.ottt.ottt.dto.ReviewDTO;
 import com.ottt.ottt.dto.ReviewLikeDTO;
@@ -179,6 +184,30 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int cmtReviewCnt(SearchItem sc) throws Exception {
 		return reviewDao.cmtReviewCnt(sc);
+	}
+
+	@Override
+	public List<ContentPosterDTO> getPoster(int content_no) throws Exception {
+		
+		return reviewDao.selectPoster(content_no);
+	}
+
+	@Override
+	public List<ContentTrailerDTO> getTrailer(int content_no) throws Exception {
+		// TODO Auto-generated method stub
+		return reviewDao.selectTrailer(content_no);
+	}
+
+	@Override
+	public DirectorDTO getDirector(int content_no) throws Exception {
+		
+		return reviewDao.selectDirector(content_no);
+	}
+
+	@Override
+	public List<EntertainerDTO> getEntertainer(int content_no) throws Exception {
+		
+		return reviewDao.selectEntertainer(content_no);
 	} 
 
 }

@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>movie</title>
+    <title>컨텐츠</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <link rel="stylesheet" href="${path}/resources/css/content/main.css" >
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -25,9 +25,9 @@
 				<div class="dropdown-filter">
 					<ul>
 						<li>
-							<select name="button" id="button">
-								<option value="최신순" ><a class="dropdown-itemtemp" href="#">최신순</a></option>
-								<option value="별점순" ><a class="dropdown-itemtemp" href="#">별점순</a></option>
+							<select name="option" id="sorting" onchange="fnSorting()">
+								<option value="date" >최신순</option>
+								<option value="rating" >별점순</option>
 							</select>
 						</li>
 					</ul>
@@ -144,7 +144,24 @@
 	</script>
   
  	<script type="text/javascript">
+		let CATEGORY = '${category}'
+		let OPTION = '${pr.sc.option}'
+ 		
+		function fnSorting() {
+			location.href = "/ottt/genre/content?category="+CATEGORY+"&option="+$("#sorting option:selected").val()
+		}
+		
+		function fnSelectBtn() {
+			if(OPTION == 'rating')
+				$('#sorting').val('rating').attr('selected', 'selected')
+			else
+				$('#sorting').val('date').attr('selected', 'selected')
+		}
+		
+ 	
  		$(document).ready(function() {
+ 			
+ 			fnSelectBtn()
 	  		
 			$(document).on("click", "#tonojjim", function(event) {
 				event.preventDefault();
@@ -204,6 +221,8 @@
 			
 			
 			$(`.${category}`).css('color', '#33ff33');
+			
+			
 			
 
 		});	

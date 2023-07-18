@@ -74,46 +74,7 @@
 </head>
 <body style="background-color: #202020;">
 	<div class="wrap">
-		<header>
-			<div class="logo">
-				 <a href="<c:url value="/" />">
-            <img src="${path}/resources/images/logo/OTTT.png" alt="로고">
-          </a>
-        </div>
-        <nav class="gnb">
-          <ul>
-            <li>
-              <a href="<c:url value="/genre/movie" />">영화</a>
-            </li>
-            <li>
-              <a href="<c:url value="/genre/drama" />">드라마</a>
-            </li>
-            <li>
-              <a href="<c:url value="/genre/interest" />">예능</a>
-            </li>
-            <li>
-              <a href="<c:url value="/genre/animation" />">애니</a>
-            </li>
-            <li>
-              <a href="<c:url value="/community" />">게시판</a>
-            </li>
-          </ul>
-        </nav>
-        <div class="h-icon">
-          <ul>
-            <li>
-              <a href="<c:url value='/search' />">
-                <!-- <img src="./images/icon/search02.png" alt="검색"> -->
-              </a>
-            </li>
-            <li>
-              <a href="<c:url value='/mypage' />">
-                <!-- <img src="./images/icon/user01.png" alt="내 정보"> -->
-              </a>
-            </li>
-          </ul>
-        	</div>
-		</header>
+		<%@ include file="../fix/header.jsp" %>
 
 				<script>
 				
@@ -377,6 +338,10 @@
 						  $(".body").html("이미 사용중인 닉네임입니다.");
 					   	  $('#Modal').modal('show');
 					   	  return false;
+					  }}else if(!$('.agreeBox').prop('checked')){
+						  $(".body").html("약관에 동의해주세요.");
+					   	  $('#Modal').modal('show');
+					   	  return false;
 					  }
 					  return true;
 				}
@@ -452,6 +417,13 @@
 		          		<input type="text" id="Certification" title="인증번호" maxlength="6"  placeholder="인증번호" pattern="\d{6}" required>
 			          	<button id="completion" type="button">인증확인</button>
 		          	</div>
+		          	
+		          	<div style="margin: 15px 0">
+					  <label for="agreeCheckbox" style="cursor: pointer;">
+					    <input type="checkbox" id="agreeCheckbox" class="agreeBox">
+					    회원가입 정보제공에 동의합니다.
+					  </label>
+					</div>
 		          	
 		          	<div class="back">
 		          		<input type="button" value="이전" onClick="location.href='<c:url value="/login" />'">
