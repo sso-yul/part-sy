@@ -2,6 +2,7 @@ package com.ottt.ottt.service.mypage;
 
 import java.util.List;
 
+import com.ottt.ottt.domain.SearchItem;
 import com.ottt.ottt.dto.NotificationDTO;
 
 public interface NotificationService {
@@ -15,4 +16,8 @@ public interface NotificationService {
 	int putMessage(NotificationDTO notificationDTO) throws Exception;
 	int putQna(NotificationDTO notificationDTO) throws Exception;
 	int removeNoti(Integer noti_no, Integer target_user_no) throws Exception;
+	int notificationCnt(Integer target_user_no) throws Exception;
+	int getSelectCheck(SearchItem sc) throws Exception;
+	int checkYes(NotificationDTO notificationDTO) throws Exception;
+	NotificationDTO pickOneNoti(Integer noti_no) throws Exception;
 }

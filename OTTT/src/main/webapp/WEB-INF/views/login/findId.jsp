@@ -146,7 +146,7 @@
 	  
 	  	$.ajax({
 	  		type : "post",
-		    url : "/ottt/signin/emailChk",
+		    url : "/signin/emailChk",
 		    data : data,
 		    success : function(result){
 		    	
@@ -184,7 +184,7 @@
 	            $('#Modal').modal('show');
 	            $.ajax({
 	                type: "GET",
-	                url: "/ottt/signin/mailCheck?email=" + email,
+	                url: "/signin/mailCheck?email=" + email,
 	                success: function(data) {
 	                    code = data;
 	                }

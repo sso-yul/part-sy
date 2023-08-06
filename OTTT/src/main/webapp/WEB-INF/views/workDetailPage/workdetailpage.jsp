@@ -129,10 +129,10 @@
 
         </div>
         <div class="button3">
-          <img src="${path }/resources/images/img/왼쪽 화살표.png" alt="버튼">
+          <img src="https://myottt.s3.ap-northeast-2.amazonaws.com/img/%EC%99%BC%EC%AA%BD+%ED%99%94%EC%82%B4%ED%91%9C.png" alt="버튼">
         </div>
         <div class="button2">
-          <img src="${path }/resources/images/img/오른쪽화살표.png" alt="버튼">
+          <img src="https://myottt.s3.ap-northeast-2.amazonaws.com/img/%EC%98%A4%EB%A5%B8%EC%AA%BD%ED%99%94%EC%82%B4%ED%91%9C.png" alt="버튼">
         </div>
       </div>
       </div>
@@ -202,7 +202,7 @@
 			<button id="wishlist-button">
 			  <img id="wishlist-image" class="mark" src="${path}/resources/images/img/mark.png" alt="찜하기">
 			</button>
-          <button id="diary-button" onclick="location.href='/ottt/mypage/mydiary/write?content=${contentDTO.content_no }'">
+          <button id="diary-button" onclick="location.href='/mypage/mydiary/write?content=${contentDTO.content_no }'">
 			  <img id="diary-image" class="mark" src="${path}/resources/images/img/diary1.png" alt="찜하기">			  
 			</button>
           <button id="review-button">
@@ -341,6 +341,7 @@
 			<c:if test="${myReview != null || myReview.user_nicknm != null}">
         	<input type="hidden" name="user_no" value="${myReview.user_no }">
     		<input type="hidden" name="review_no" value="${myReview.review_no }"  />
+        <input type="hidden" name="review_user_no" value="${Review.user_no}" >
     		
         <div class="review-box">      
           <div class="review-box-header">
@@ -350,7 +351,7 @@
             <div class="user-name1">
               <a href="javascript:goProfile('${ReviewDTO.user_no }', '${ReviewDTO.user_nicknm}')">
                 <p class="user_nicknm"> ${myReview.user_nicknm} </p></a>
-                <p class="date-insert1" name="review_create_dt"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${myReview.review_create_dt}"/></p>
+                <p class="date-insert1" name="review_create_dt"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${myReview.review_create_dt}"/></p>
               
             </div>
             <ul>
@@ -363,14 +364,16 @@
               <li>
                 <div class="heart1">        
                     <div>
-                    <c:choose>
-						<c:when test="${myReview.check_like_count == 1}">
-	                      	<input class="LikeBtn" id="heart-on" type="image" src="${path}/resources/images/img/heart_on.png" width="35" height="80%"  data-review-no="${myReview.review_no}" >
-	                    </c:when>
-					<c:otherwise>
-						<input class="LikeBtn" id="heart-off" type="image" src="${path}/resources/images/img/heart_off.png" width="35" height="80%"  data-review-no="${myReview.review_no}" >
-					</c:otherwise>
-					</c:choose>		
+                      <c:choose>
+                        <c:when test="${myReview.check_like_count == 1}">
+                                      <input class="LikeBtn" id="heart-on" type="image" src="${path}/resources/images/img/heart_on.png" width="35" height="80%"
+                                      data-review-no="${myReview.review_no}" data-review-user-no="${myReview.user_no }" data-content-no=${myReview.content_no } >
+                                  </c:when>
+                      <c:otherwise>
+                        <input class="LikeBtn" id="heart-off" type="image" src="${path}/resources/images/img/heart_off.png" width="35" height="80%"
+                        data-review-no="${myReview.review_no}" data-review-user-no="${myReview.user_no }" data-content-no=${myReview.content_no } >
+                      </c:otherwise>
+                      </c:choose>		
                     </div>             
                 </div>
               </li>
@@ -386,7 +389,7 @@
               <ul>
                 <li>
                   <div class="like">
-                    <img src="${path}/resources/images/img/좋아요.png" alt="좋아요아이콘">
+                    <img src="https://myottt.s3.ap-northeast-2.amazonaws.com/img/%EC%A2%8B%EC%95%84%EC%9A%94.png" alt="좋아요아이콘">
                   </div>
 				<div class="like-count">
                     <p id="likeCount">
@@ -398,7 +401,7 @@
                 </li>
                 <li>
                   <div class="footer-comment">
-                    <img src="${path}/resources/images/img/댓글.png" alt="댓글아이콘">
+                    <img src="https://myottt.s3.ap-northeast-2.amazonaws.com/img/%EB%8C%93%EA%B8%80.png" alt="댓글아이콘">
                   </div>
                   <div class="comment-count">
                     <p>
@@ -519,7 +522,7 @@
             <div class="user-name">
               <a href="javascript:goProfile('${ReviewDTO.user_no }', '${ReviewDTO.user_nicknm}')">
                 <p class="user_nicknm"> ${ReviewDTO.user_nicknm} </p></a>
-                <p class="date-insert" name="review_create_dt"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${ReviewDTO.review_create_dt}"/></p>
+                <p class="date-insert" name="review_create_dt"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${ReviewDTO.review_create_dt}"/></p>
               
             </div>
             <ul>
@@ -530,14 +533,16 @@
               <li>
                 <div class="heart">        
                     <div>
-                    <c:choose>
-						<c:when test="${ReviewDTO.check_like_count == 1}">
-	                      	<input class="LikeBtn" id="heart-on" type="image" src="${path}/resources/images/img/heart_on.png" width="35" height="80%"  data-review-no="${ReviewDTO.review_no}" >
-	                    </c:when>
-					<c:otherwise>
-						<input class="LikeBtn" id="heart-off" type="image" src="${path}/resources/images/img/heart_off.png" width="35" height="80%"  data-review-no="${ReviewDTO.review_no}" >
-					</c:otherwise>
-					</c:choose>		
+                      <c:choose>
+                        <c:when test="${ReviewDTO.check_like_count == 1}">
+                                      <input class="LikeBtn" id="heart-on" type="image" src="${path}/resources/images/img/heart_on.png" width="35" height="80%"
+                                      data-review-no="${ReviewDTO.review_no}" data-review-user-no="${ReviewDTO.user_no }" data-content-no=${ReviewDTO.content_no } >
+                                  </c:when>
+                      <c:otherwise>
+                        <input class="LikeBtn" id="heart-off" type="image" src="${path}/resources/images/img/heart_off.png" width="35" height="80%"
+                        data-review-no="${ReviewDTO.review_no}" data-review-user-no="${ReviewDTO.user_no }" data-content-no=${ReviewDTO.content_no } >
+                      </c:otherwise>
+                      </c:choose>		
                     </div>             
                 </div>
               </li>
@@ -558,7 +563,7 @@
               <ul>
                 <li>
                   <div class="like">
-                    <img src="${path}/resources/images/img/좋아요.png" alt="좋아요아이콘">
+                    <img src="https://myottt.s3.ap-northeast-2.amazonaws.com/img/%EC%A2%8B%EC%95%84%EC%9A%94.png" alt="좋아요아이콘">
                   </div>
                   <div class="like-count">
                     <p id="likeCount">
@@ -570,7 +575,7 @@
                 </li>
                 <li>
                   <div class="footer-comment">
-                    <img src="${path}/resources/images/img/댓글.png" alt="댓글아이콘">
+                    <img src="https://myottt.s3.ap-northeast-2.amazonaws.com/img/%EB%8C%93%EA%B8%80.png" alt="댓글아이콘">
                   </div>
                   <div class="comment-count">
                     <p>
@@ -581,7 +586,7 @@
               </ul>
             </div>
 			<div class="report">
-			  <img src="${path}/resources/images/img/신고하기.png" alt="신고" class="reportBtn">
+			  <img src="https://myottt.s3.ap-northeast-2.amazonaws.com/img/%EC%8B%A0%EA%B3%A0%ED%95%98%EA%B8%B0.png" alt="신고" class="reportBtn">
 			  <button class="report-text" >신고</button>
 			  <div class="dropdown-menu">
 			    <button class="dropdown-item" type="button" value="1" name="report_type">욕설/비방</button>
@@ -809,7 +814,7 @@
 	        var likeCount = btn.closest('.review-box').find('.review-box-footer #likeCount');
 
 	        $.post(
-	            '/ottt/selectLikeCount',
+	            '/selectLikeCount',
 	            { 'user_no': '${user_no}', 'review_no': review_no },
 	            function(data) {
 	                let result = data.result;
@@ -826,21 +831,25 @@
 	    });
 
 	    $(".LikeBtn").click(function() {
-	        let btn = $(this);
+          let btn = $(this);
 	        const review_no = $(this).data('review-no');
 	        $('input[name="review_no"]').val(review_no);
+	        
+	        const review_user_no = $(this).data('review-user-no');
+	        const content_no = $(this).data('content-no');
+	        
 	        var likeCount = btn.closest('.review-box').find(".review-box-footer #likeCount");
 	        var likeCount1 = btn.closest('.review-box1').find(".review-box-footer #likeCount");
 	        if (LOGIN_YN == null || LOGIN_YN == "") {
 	            $(".body").html("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
 		        $('#Modal').modal('show').on('hidden.bs.modal', function() {
-		            window.location.href = "/ottt/login";
+		            window.location.href = "/login";
 		          });
 	            return;
 	        }
 
 	        $.post(
-	            "/ottt/selectLikeCount",
+	            "/selectLikeCount",
 	            { "user_no": "${user_no}", "review_no": review_no },
 	            function(data) {
 	                let result = data.result;
@@ -848,8 +857,11 @@
 	                if (result == 0) {
 	                    // 저장하는 post ajax
 	                    $.post(
-	                        "/ottt/insertLike",
-	                        { "user_no": "${user_no}", "review_no": review_no },
+	                        "/insertLike",
+                          { "user_no": "${user_no}",
+	                        	"review_no": review_no,
+	                        	"review_user_no": review_user_no,
+	                        	"content_no": content_no },
 	                        function(data) {
 	                            btn.attr("src", PATH + "/resources/images/img/heart_on.png");
 	                            likeCount.text(parseInt(likeCount.text()) + 1 + '개');
@@ -860,7 +872,7 @@
 	                } else {
 	                    // 삭제하는 post ajax
 	                    $.post(
-	                        "/ottt/deleteLike",
+	                        "/deleteLike",
 	                        { "user_no": "${user_no}", "review_no": review_no },
 	                        function(data) {
 	                            btn.attr("src", PATH + "/resources/images/img/heart_off.png");
@@ -898,7 +910,7 @@
 	  
 	        $(".body").html("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
 	        $('#Modal').modal('show').on('hidden.bs.modal', function() {
-	            window.location.href = "/ottt/login";
+	            window.location.href = "/login";
 	          });
 	      } else {
 	    	  
@@ -911,7 +923,7 @@
   function getWishlistStatus(user_no, content_no) {
 	  // AJAX 요청을 통해 서버에서 찜 상태 가져오기
 	  $.ajax({
-	    url: '/ottt/getWishStatus', // 적절한 URL로 변경해야 합니다.
+	    url: '/getWishStatus', // 적절한 URL로 변경해야 합니다.
 	    type: 'POST',
 	    data: {
 	      user_no: user_no,
@@ -939,7 +951,7 @@
   function addToWishlist(user_no, content_no) {
     
     $.ajax({
-      url: '/ottt/addWish',
+      url: '/addWish',
       type: 'POST',
       data: {
         user_no: user_no,
@@ -962,7 +974,7 @@
   function removeFromWishlist(user_no, content_no) {
   
     $.ajax({
-      url: '/ottt/removeWish',
+      url: '/removeWish',
       type: 'POST',
       data: {
         user_no: user_no,
@@ -1025,7 +1037,7 @@
 	  
 	        $(".body").html("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
 	        $('#Modal').modal('show').on('hidden.bs.modal', function() {
-	            window.location.href = "/ottt/login";
+	            window.location.href = "/login";
 	          });
 	      } else {
 	    	  
@@ -1038,7 +1050,7 @@
   function getWatchedStatus(user_no, content_no) {
 	  // AJAX 요청을 통해 서버에서 찜 상태 가져오기
 	  $.ajax({
-	    url: '/ottt/getWatchedStatus', // 적절한 URL로 변경해야 합니다.
+	    url: '/getWatchedStatus', // 적절한 URL로 변경해야 합니다.
 	    type: 'POST',
 	    data: {
 	      user_no: user_no,
@@ -1066,7 +1078,7 @@
   function addToWatched(user_no, content_no) {
     
     $.ajax({
-      url: '/ottt/addWatched',
+      url: '/addWatched',
       type: 'POST',
       data: {
         user_no: user_no,
@@ -1089,7 +1101,7 @@
   function removeFromWatched(user_no, content_no) {
   
     $.ajax({
-      url: '/ottt/removeWatched',
+      url: '/removeWatched',
       type: 'POST',
       data: {
         user_no: user_no,

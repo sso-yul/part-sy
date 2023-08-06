@@ -13,7 +13,7 @@
   	<!-- 유저 id로 유저 찾기 -->
   	<select id="select" parameterType="String" resultType="UserDTO">
   		SELECT user_no, gr_no, user_id, user_pwd, user_nm, user_nicknm, user_gen
-		, user_email, image, following, followers
+		, user_email, image, following, followers, admin
 		FROM tb_user
 		where user_id = #{user_id}
   	</select>

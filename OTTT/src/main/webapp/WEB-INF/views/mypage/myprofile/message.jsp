@@ -100,9 +100,9 @@
 			 }			
 			
 		    if($('button[name="deleteBtn"]').attr("class") == 'delrecvBtn')
-		    	form.setAttribute("action", '/ottt/mypage/message/remove');
+		    	form.setAttribute("action", '/mypage/message/remove');
 		    if($('button[name="deleteBtn"]').attr("class") == 'delsendBtn')
-		    	form.setAttribute("action", '/ottt/mypage/message/send/remove');
+		    	form.setAttribute("action", '/mypage/message/send/remove');
 		    
 		    form.setAttribute("method", "post");
 		    
@@ -131,7 +131,7 @@
 		    }
 			
 			form.setAttribute('method','post')
-			form.setAttribute('action','/ottt/profile?user=' +user_nicknm)
+			form.setAttribute('action','/profile?user=' +user_nicknm)
 							
 			document.body.appendChild(form)
 			form.submit()
@@ -200,7 +200,12 @@
 								</td>
 								<td class="msg-nicknm">${messageDTO.user_nicknm }</td>
 								<td class="msg-sort" style="display: none; ">${(messageDTO.send_user_no != sessionScope.user_no) ? messageDTO.send_user_no : messageDTO.receive_user_no}</td>
-								<td class="msg-content" style="cursor: pointer;"><c:out value="${messageDTO.content }"></c:out></td>
+								<c:if test="${messageDTO.read_yn == true }">
+									<td class="msg-content" style="cursor: pointer; color: rgb(138, 138, 138);"><c:out value="${messageDTO.content }"></c:out></td>
+								</c:if>
+								<c:if test="${messageDTO.read_yn == false }">
+									<td class="msg-content" style="cursor: pointer;"><c:out value="${messageDTO.content }"></c:out></td>
+								</c:if>
 								<td class="msg-time"><fmt:formatDate value="${messageDTO.send_date}" pattern="yyyy-MM-dd HH:mm" type="date" /></td>
 								<td class="msg-del"><button class="delBtn" name="deleteBtn" style="border: none; color: red;" id="del" data-bs-toggle="modal" data-bs-target="#exampleModa2"><i class="fas fa-times"></i></button></td>
 							</tr>			            

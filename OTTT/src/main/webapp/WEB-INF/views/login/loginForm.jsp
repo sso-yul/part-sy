@@ -84,7 +84,7 @@
 				
 				<input type="text" name="user_id" placeholder="ID를 입력해주세요" value="${cookie.id.value}" autofocus="autofocus" style="border:0 solid black" />
 				<input type="password" name="user_pwd" style="border:0 solid black" placeholder="비밀번호를 입력해주세요" />
-				<input type="hidden" name="toURL" value= "${param.toURL }" />
+				<input type="hidden" name="toURL" value= "${param.toURL }" class="toURL" />
 				
 				<button>로그인</button>
 				         
@@ -97,14 +97,15 @@
 					<input type="button" value="비밀번호 찾기" onClick="location.href='<c:url value="/login/findPwd" />'" class="join">
 				</a>
 				<a href="<c:url value='/naver/login' />">
-					<img src="${path}/resources/images/img/ㄴㅂ.png" width="290" height="40" class="naver">
+					<img src="https://myottt.s3.ap-northeast-2.amazonaws.com/img/%EB%84%A4%EC%9D%B4%EB%B2%84.png" width="290" height="40" class="naver">
 				</a>
 				<a href="javascript:loginWithKakao();" >
-					<img src = "${path}/resources/images/img/카톡.png" width="290" height="40" class="kakao">
+					<img src = "https://myottt.s3.ap-northeast-2.amazonaws.com/img/%EC%B9%B4%ED%86%A1.png" width="290" height="40" class="kakao">
 				</a>
-				<a href= "#">
-					<img src = "${path}/resources/images/img/구글로그인.png" width="290" height="40" class="google">
-            	</a>
+				<%-- <a href= "#">
+					<img src = "https://myottt.s3.ap-northeast-2.amazonaws.com/img/%EA%B5%AC%EA%B8%80%EB%A1%9C%EA%B7%B8%EC%9D%B8.png" width="290" height="40" class="google">
+            	</a> --%>
+            	
            	</div>
 		</form>
 	</div>
@@ -146,7 +147,7 @@
 	//카카오 로그인화면 요청
     function loginWithKakao() {
     	Kakao.Auth.authorize({ 
-        	redirectUri: 'http://localhost:8080/ottt/kakao_callback' // 등록한 리다이렉트uri 입력
+        	redirectUri: 'http://ottt.ap-northeast-2.elasticbeanstalk.com/kakao_callback' // 등록한 리다이렉트uri 입력
         	, prompts : 'login'	//기존 로그인 여부와 상관없이 로그인하기
         });
     }

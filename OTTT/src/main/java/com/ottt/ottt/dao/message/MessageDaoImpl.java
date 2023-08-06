@@ -90,16 +90,24 @@ public class MessageDaoImpl implements MessageDao {
 		return session.update(namespace + "deleteBySender", messageDTO);
 	}
 
-
 	@Override
 	public List<MessageDTO> selectRecvAll(MessageSearchItem msc) throws Exception {
 		return session.selectList(namespace + "selectRecvAll", msc);
 	}
 
-
 	@Override
 	public List<MessageDTO> selectSendAll(MessageSearchItem msc) throws Exception {
 		return session.selectList(namespace + "selectSendAll", msc);
+	}
+
+	@Override
+	public int readCnt() throws Exception {
+		return session.selectOne(namespace + "readCnt");
+	}
+
+	@Override
+	public int updateRead(MessageDTO messageDTO) throws Exception {
+		return session.update(namespace + "updateRead", messageDTO);
 	}
 
 

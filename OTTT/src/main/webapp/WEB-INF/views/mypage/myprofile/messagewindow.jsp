@@ -60,11 +60,11 @@
 
 	<body>
 		<script type="text/javascript">
-			connectWS();
+			
 			var socket = null;
 			
 			function connectWS() {
-				var ws = new WebSocket("ws://localhost:/ottt/replyEcho");	//포트 번호 확인
+				var ws = new WebSocket("ws://localhost:/replyEcho");	//포트 번호 확인
 				socket = ws;
 				
 				ws.onopen = function () {
@@ -91,6 +91,7 @@
 			}
 	
 			$(document).ready(function() {
+				connectWS();
 				//쪽지 전송
 				$("#writeBtn").on("click", function(evt) {
 					//url에서 send_user_no 추출
@@ -99,14 +100,16 @@
 			        let sendUserNo = searchParams.get("send_user_no")
 			        let userNo = searchParams.get("user_no")
 			        
+			        const recvUserNo = $(this).data('receive-user-no')
+
 			        var content = $("#messageContent").val()
 			        
 			        //쪽지 내용이 비어있는지 아닌지 체크
 					if(formCheck()) {
 						$.ajax({
 							type: "POST",
-							url: (sendUserNo != null) ? "/ottt/messagewindow/send" : "/ottt/messagewindow/send2",
-							data: (sendUserNo != null) ? {sendUserNo: sendUserNo, content: content }: {userNo: userNo, content: content },
+							url: (sendUserNo != null) ? "/messagewindow/send" : "/messagewindow/send2",
+							data: (sendUserNo != null) ? {sendUserNo: sendUserNo, recvUserNo: recvUserNo, content: content }: {userNo: userNo, recvUserNo: recvUserNo, content: content },
 							success: function(response) {
 								$(".modal-body.body").html("쪽지가 전송되었습니다.");
 						        $('#Modal').modal('show');
@@ -116,8 +119,9 @@
 						        
 						        //소켓 연결
 				                if (socket) {
-				                    let socketMsg = "sendmsg," + sendUserNo + "," + recvUserNo + "," + msgNo;
+				                    let socketMsg = "sendmsg" + sendUserNo + ", " + recvUserNo;
 				                    socket.send(socketMsg);
+				                    console.log("====================sendUserNo: " + sendUserNo + " recvUserNo: " + recvUserNo);
 				                }
 							},
 							error: function() {
@@ -185,7 +189,11 @@
 				</div>
 				
 				<div class="sec03">
-					<button type="button" id="writeBtn" class="btn btn-write" style="color: black; background-color: #33ff33; border: 3px; width: 70px; height: 40px; border-radius: 10px; font-weight: 600; font-size: 16px; font-weight: 600; position: relative; top: 50%; left: 43%; transform: translate(0, -50%);">보내기</button>
+					<button type="button" id="writeBtn" class="btn btn-write" data-receive-user-no="${MessageDTO.receive_user_no }"
+					style="color: black; background-color: #33ff33; border: 3px; width: 70px; height: 40px; border-radius: 10px; font-weight: 600; font-size: 16px;
+					font-weight: 600; position: relative; top: 50%; left: 43%; transform: translate(0, -50%);">
+						보내기
+					</button>
 				</div>
 			</form>
 		</div>

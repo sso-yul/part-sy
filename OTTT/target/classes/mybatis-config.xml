@@ -33,6 +33,7 @@
   		<typeAlias type="com.ottt.ottt.dto.ContentTrailerDTO" alias="ContentTrailerDTO"/>
   		<typeAlias type="com.ottt.ottt.dto.DirectorDTO" alias="DirectorDTO"/>
   		<typeAlias type="com.ottt.ottt.dto.EntertainerDTO" alias="EntertainerDTO"/>
+  		<typeAlias type="com.ottt.ottt.dto.NotificationDTO" alias="NotificationDTO"/>
   	</typeAliases>
   </configuration>
   

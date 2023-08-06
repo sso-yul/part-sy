@@ -44,11 +44,19 @@ public interface MessageDao {
 	//받은 메시지 중 삭제할 메시지 하나 고르기
 	MessageDTO selectOneRecv(Integer message_no) throws Exception;
 	
+	//보낸 메시지 중 삭제할 메시지 하나 고르기
 	MessageDTO selectOneSend(Integer message_no) throws Exception;
 	
+	//받은 메시지함에서 삭제 상태로 변경
 	int deleteByReceiver(MessageDTO messageDTO) throws Exception;
 	
+	//보낸 메시지함에서 삭제 상태로 변경
 	int deleteBySender(MessageDTO messageDTO) throws Exception;
 	
+	//읽음 유무 개수 조회
+	int readCnt() throws Exception;
+	
+	//읽음 유무를 true로 수정
+	int updateRead(MessageDTO messageDTO) throws Exception;
 	
 }

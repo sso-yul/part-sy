@@ -79,4 +79,14 @@ public class MessageServiceImpl implements MessageService{
 		return messageDao.selectSendAll(msc);
 	}
 
+	@Override
+	public int getReadCnt(MessageSearchItem msc) throws Exception {
+		return messageDao.readCnt();
+	}
+
+	@Override
+	public int readYes(MessageDTO messageDTO) throws Exception {
+		return messageDao.updateRead(messageDTO);
+	}
+
 }

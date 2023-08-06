@@ -38,5 +38,9 @@ public interface MessageService {
 	int removeByReceiver(MessageDTO messageDTO) throws Exception;
 	
 	int removeBySender(MessageDTO messageDTO) throws Exception;
+	
+	int getReadCnt(MessageSearchItem msc) throws Exception;
+	
+	int readYes(MessageDTO messageDTO) throws Exception;
 
 }

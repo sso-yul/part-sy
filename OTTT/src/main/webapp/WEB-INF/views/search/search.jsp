@@ -45,7 +45,7 @@
 			    if (content_nm !== "") {
 			      $.ajax({
 			        type: "GET",
-			        url: "/ottt/search/auto?content_nm=" + encodeURIComponent(content_nm),
+			        url: "/search/auto?content_nm=" + encodeURIComponent(content_nm),
 			        success: function(result) {
 			          $(".autocomplete").html(toHtml(result));
 			        },

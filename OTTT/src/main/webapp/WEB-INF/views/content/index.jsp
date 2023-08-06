@@ -37,7 +37,7 @@
     			let user_no = '${sessionScope.user_no}'
         	    $.ajax({
         	      type: 'DELETE',
-        	      url: '/ottt/searchjjim?content_no=' + content_no + '&user_no=' + user_no,
+        	      url: '/searchjjim?content_no=' + content_no + '&user_no=' + user_no,
         	      headers: {"content-type":"application/json"},
         	      data: JSON.stringify({content_no:content_no, user_no:user_no}),
         	      success: function(result){
@@ -61,7 +61,7 @@
     			let user_no = '${sessionScope.user_no}'
         	    $.ajax({
         	      type: 'PATCH',
-        	      url: '/ottt/searchjjim?content_no=' + content_no + '&user_no=' + user_no,
+        	      url: '/searchjjim?content_no=' + content_no + '&user_no=' + user_no,
         	      headers: {"content-type":"application/json"},
         	      data: JSON.stringify({content_no:content_no, user_no:user_no}),
         	      success: function(result){

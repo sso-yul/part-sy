@@ -7,11 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ottt.ottt.dao.login.LoginUserDao;
 import com.ottt.ottt.dao.user.UserDao;
@@ -143,7 +146,7 @@ public class MessageController {
 		Integer user_no = (Integer)session.getAttribute("user_no");		
 		
 		try {
-			MessageDTO messageDTO = messageService.pickOneSend(message_no);		
+			MessageDTO messageDTO = messageService.pickOneSend(message_no);
 			
 			//맞다면
 			if(user_no.equals(messageDTO.getSend_user_no())) {
@@ -162,7 +165,48 @@ public class MessageController {
 		
 		return "redirect:/mypage/message/send?page=" + msc.getPage();
 	}
+	
 
+//	//읽은 메시지로 수정하기
+//	@PostMapping ("/mesage/updateReadCheck")
+//	public String updateReadCheck(HttpSession session, Integer message_no) {
+//		//현재 내 유저번호
+//		Integer user_no = (Integer)session.getAttribute("user_no");
+//		
+//		try {
+//			MessageDTO messageDTO = messageService.pickOneRecv(message_no);
+//			if(user_no.equals(messageDTO.getReceive_user_no())) {
+//				messageService.readYes(messageDTO);				
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}		
+//		return "/mypage/myprofile/message";
+//		
+//	}
+
+	//읽은 메시지로 수정하기 - 받은 쪽지함에서만 작동
+	@PostMapping ("/mesage/updateReadCheck")
+	public ResponseEntity<String> updateReadCheck(HttpSession session, Integer message_no) {
+	    Integer user_no = (Integer) session.getAttribute("user_no");
+	    try {
+	        MessageDTO messageDTO = messageService.pickOneRecv(message_no);
+	        if (messageDTO.isRead_yn() == true) {
+	        	System.out.println("==================이미 읽은 쪽지입니다");
+	            return ResponseEntity.ok("already_read");
+	        }
+	        if (user_no.equals(messageDTO.getReceive_user_no())) {
+	        	System.out.println("==================쪽지를 읽어들였습니다");
+	            messageService.readYes(messageDTO);
+	            return ResponseEntity.ok("success");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	}
+	
+	
 	//쪽지함 환경설정
 	@GetMapping(value = "/messagesetting")
 	public String messagesetting() {

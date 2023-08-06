@@ -25,8 +25,8 @@
   	
   	<insert id="insert" parameterType="UserDTO" >
   		INSERT INTO tb_user
-		(user_id, user_pwd, user_nm, user_nicknm, user_gen, user_email, reg_date)
-		VALUES(#{user_id}, #{user_pwd}, #{user_nm}, #{user_nicknm}, #{user_gen}, #{user_email}, now())
+		(user_id, user_pwd, user_nm, user_nicknm, user_gen, user_email, reg_date, kakao_no)
+		VALUES(#{user_id}, #{user_pwd}, #{user_nm}, #{user_nicknm}, #{user_gen}, #{user_email}, now(), #{kakao_no})
   	</insert>
   	
   	

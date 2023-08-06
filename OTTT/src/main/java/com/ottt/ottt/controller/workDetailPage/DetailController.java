@@ -26,12 +26,13 @@ import com.ottt.ottt.dto.ContentTrailerDTO;
 import com.ottt.ottt.dto.DirectorDTO;
 import com.ottt.ottt.dto.EntertainerDTO;
 import com.ottt.ottt.dto.GenreDTO;
+import com.ottt.ottt.dto.NotificationDTO;
 import com.ottt.ottt.dto.ReportDTO;
 import com.ottt.ottt.dto.ReviewDTO;
 import com.ottt.ottt.dto.ReviewLikeDTO;
 import com.ottt.ottt.dto.UserDTO;
 import com.ottt.ottt.service.content.ContentService;
-
+import com.ottt.ottt.service.mypage.NotificationService;
 import com.ottt.ottt.service.mypage.WatchedService;
 import com.ottt.ottt.service.mypage.WishlistService;
 import com.ottt.ottt.service.review.ReviewService;
@@ -52,6 +53,9 @@ public class DetailController {
 	@Autowired
 	WatchedService watchedService;
 	
+	@Autowired
+	NotificationService notificationService;
+	
 	
 	@GetMapping(value = "/detailPage")
 	public String workDetailPage(Model m, HttpServletRequest request, HttpSession session, @RequestParam("content_no") int content_no) {         //, Integer content_no) 
@@ -68,7 +72,7 @@ public class DetailController {
 			List<ReviewDTO> list = reviewService.getReview(content_no);
 			
 			int count = reviewService.getCount(content_no);
-			 double rating = reviewService.getRatingAvg(content_no);
+			double rating = reviewService.getRatingAvg(content_no);
 			List<ContentPosterDTO> posterlist = reviewService.getPoster(content_no); 
 			List<ContentTrailerDTO> trailerlist = reviewService.getTrailer(content_no);
 			 m.addAttribute("rating", rating);
@@ -221,9 +225,7 @@ public class DetailController {
 	
 		@PostMapping("/insertLike")
 		@ResponseBody
-		public Map<String,Object> insertLike(ReviewLikeDTO dto, HttpSession session) throws Exception {
-			
-			
+		public Map<String,Object> insertLike(ReviewLikeDTO dto, HttpSession session, Integer review_user_no, ReviewDTO reviewDTO) throws Exception {
 
 			Map<String, Object> result = new HashMap<String,Object>();
 			
@@ -237,7 +239,21 @@ public class DetailController {
 			result.put("message", "success");
 			result.put("success", reviewService.insertLike(dto));
 			
-			
+			//알림함에 알림 집어넣기
+ 			if(!review_user_no.equals(session.getAttribute("user_no"))) {
+				NotificationDTO notificationDTO = new NotificationDTO();
+	 			notificationDTO.setUser_no(dto.getUser_no());
+	 			notificationDTO.setReview_no(dto.getReview_no());
+	 			
+	 			notificationDTO.setTarget_user_no(review_user_no);
+	 			System.out.println("================== review_user_no : " +review_user_no);
+	 			//jsp단에서 <div id="reply-popup" class="popup11"> 이 부분에 인풋 태그 추가 후 불러옴
+	 			
+	 			String currentURL = "/detailPage/reply?content_no=" + reviewDTO.getContent_no() + "&review_no=" + reviewDTO.getReview_no();
+				notificationDTO.setNoti_url(currentURL);
+	 			
+	 			notificationService.putReviewLike(notificationDTO);
+ 			}
 			return result;
 
 		}

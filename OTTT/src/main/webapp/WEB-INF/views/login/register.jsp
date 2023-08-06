@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <link rel="stylesheet" href="${path}/resources/css/login/register.css" >
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <style>
     	.ott-logo-img:hover,
 		.ott-logo-img.active {
@@ -76,7 +76,7 @@
 	<div class="wrap">
 		<%@ include file="../fix/header.jsp" %>
 
-				<script>
+				<script type="text/javascript">
 				
 				var code = "";		// 이메일 전송 인증번호 저장위한 코드
 				
@@ -95,7 +95,7 @@
 					  
 					  	$.ajax({
 					  		type : "post",
-						    url : "/ottt/signin/memberIdChk",
+						    url : "/signin/memberIdChk",
 						    data : data,
 						    success : function(result){
 						    	
@@ -189,7 +189,7 @@
 					  
 					  	$.ajax({
 					  		type : "post",
-						    url : "/ottt/signin/nnameIdChk",
+						    url : "/signin/nnameIdChk",
 						    data : data,
 						    success : function(result){
 						    	
@@ -250,7 +250,7 @@
 				  
 				  	$.ajax({
 				  		type : "post",
-					    url : "/ottt/signin/emailChk",
+					    url : "/signin/emailChk",
 					    data : data,
 					    success : function(result){
 					    	
@@ -285,7 +285,7 @@
 				   	    $('#Modal').modal('show');
 						$.ajax({
 							type: "GET",
-							url: "/ottt/signin/mailCheck?email="+email,
+							url: "/signin/mailCheck?email="+email,
 							success:function(data){
 								code=data
 							}							
@@ -338,7 +338,7 @@
 						  $(".body").html("이미 사용중인 닉네임입니다.");
 					   	  $('#Modal').modal('show');
 					   	  return false;
-					  }}else if(!$('.agreeBox').prop('checked')){
+					  }else if(!$('.agreeBox').prop('checked')){
 						  $(".body").html("약관에 동의해주세요.");
 					   	  $('#Modal').modal('show');
 					   	  return false;
@@ -346,7 +346,7 @@
 					  return true;
 				}
 		    	
-		        </script>		
+		        </script>
         
 		<section class="sec00">
 		    <form action='<c:url value="/signin/register" />' method="post" id="form" onsubmit="return check_register()">

@@ -23,14 +23,14 @@
 		let path = window.location.href;
 	
 		function goLogin() {
-		    let toURL = '';
-
+			let toURL = '';
+			
 		    if ('${sessionScope.id}' === '') {
 		        toURL = encodeURIComponent(path);
-		        location.href = "/ottt/mypage?toURL=" + toURL;
+		        location.href = "/mypage?toURL=" + toURL;
 		    } else {
 		        console.log(toURL);
-		        location.href = "/ottt/mypage?user=" + '${sessionScope.user_nicknm}';
+		        location.href = "/mypage?user=" + '${sessionScope.user_nicknm}';
 		    }
 		}
 			
@@ -79,10 +79,9 @@
       
       <script type="text/javascript">
       	var socket = null;
-      	connectWS();
 
 		function connectWS() {
-			var ws = new WebSocket("ws://localhost:/ottt/replyEcho");	//포트 번호 확인
+			var ws = new WebSocket("ws://localhost:/replyEcho");	//포트 번호 확인
 			socket = ws;
 			
 			ws.onopen = function () {
@@ -107,6 +106,55 @@
 			
 			ws.onerror = function (err) { console.log('Info: connection error.', err); };		
 		}
+		
+		
+		
+		$(document).ready(function() {
+			connectWS();
+			//쪽지 전송
+			$("#writeBtn").on("click", function(evt) {
+				//url에서 send_user_no 추출
+		        let url = new URL(window.location.href)
+		        let searchParams = new URLSearchParams(url.search)
+		        let sendUserNo = searchParams.get("send_user_no")
+		        let userNo = searchParams.get("user_no")
+		        
+		        let recvUserNo = $(this).data('receive-user-no')
+
+		        var content = $("#messageContent").val()
+		        
+		        //쪽지 내용이 비어있는지 아닌지 체크
+				if(formCheck()) {
+					$.ajax({
+						type: "POST",
+						url: (sendUserNo != null) ? "/messagewindow/send" : "/messagewindow/send2",
+						data: (sendUserNo != null) ? {sendUserNo: sendUserNo, recvUserNo: recvUserNo, content: content }: {userNo: userNo, recvUserNo: recvUserNo, content: content },
+						success: function(response) {
+							$(".modal-body.body").html("쪽지가 전송되었습니다.");
+							$('#Modal').modal('show');
+					        $("#checkBtn").on("click", function() {
+					            window.close();
+					        });
+					        
+					        //소켓 연결
+			                if (socket) {
+			                    let socketMsg = "sendmsg," + sendUserNo + "," + recvUserNo;
+			                    socket.send(socketMsg);
+			                    console.log("====================sendUserNo: " + sendUserNo + " recvUserNo: " + recvUserNo);
+			                }
+						},
+						error: function() {
+							$(".modal-body.body").html("쪽지 전송에 실패했습니다. 다시 시도해주세요.");
+					        $('#Modal').modal('show');
+						}
+					})
+					
+				} else {
+					$(".modal-body.body").html("내용을 입력하세요.");
+				    $('#Modal').modal('show');
+				}
+			})
+		})
 	</script>
       
 </body>

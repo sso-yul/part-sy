@@ -20,17 +20,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ottt.ottt.dao.login.LoginUserDao;
 import com.ottt.ottt.dao.review.ReviewDao;
+import com.ottt.ottt.dto.ArticleDTO;
 import com.ottt.ottt.dto.CommentDTO;
 import com.ottt.ottt.dto.ContentDTO;
 import com.ottt.ottt.dto.ContentOTTDTO;
 import com.ottt.ottt.dto.DirectorDTO;
 import com.ottt.ottt.dto.EntertainerDTO;
 import com.ottt.ottt.dto.GenreDTO;
+import com.ottt.ottt.dto.NotificationDTO;
 import com.ottt.ottt.dto.ReportDTO;
 import com.ottt.ottt.dto.ReviewDTO;
 import com.ottt.ottt.dto.ReviewLikeDTO;
 import com.ottt.ottt.dto.UserDTO;
 import com.ottt.ottt.service.content.ContentService;
+import com.ottt.ottt.service.mypage.NotificationService;
 import com.ottt.ottt.service.mypage.WatchedService;
 import com.ottt.ottt.service.mypage.WishlistService;
 import com.ottt.ottt.service.review.ReviewService;
@@ -56,6 +59,9 @@ public class DetailReplyController {
 	@Autowired
 	WishlistService wishlistService;
 	
+	@Autowired
+	NotificationService notificationService;
+
 	@GetMapping(value = "/detailPage/reply")
 	public String reviewReply(Model m, HttpServletRequest request, HttpSession session,
 			@RequestParam("content_no") int content_no, @RequestParam("review_no") int review_no) {
@@ -92,14 +98,32 @@ public class DetailReplyController {
 	
 	   @PostMapping("/detailPage/reply/write")
 	   public String writeReply(CommentDTO commentDTO, RedirectAttributes attr,
-	                     Model m, HttpSession session, ReviewDTO reviewDTO) {
+	                     Model m, HttpSession session, ReviewDTO reviewDTO
+	                     	, Integer review_user_no) {
 		   
 	      try {
 	         if(reviewService.writeReply(commentDTO) != 1) {
 	            throw new Exception("Write failed");
-	            
 	         }
+			 
 	         attr.addFlashAttribute("msg", "ok");
+
+			//알림함에 알림 집어넣기
+	 		if(!review_user_no.equals(session.getAttribute("user_no"))) {
+	 			NotificationDTO notificationDTO = new NotificationDTO();
+	 			notificationDTO.setUser_no(commentDTO.getUser_no());
+	 			notificationDTO.setReview_no(reviewDTO.getReview_no());
+	 			
+	 			notificationDTO.setTarget_user_no(review_user_no);
+	 			System.out.println("================== review_user_no : " +review_user_no);
+	 			//jsp단에서 <div id="reply-popup" class="popup11"> 이 부분에 인풋 태그 추가 후 불러옴
+	 			
+	 			String currentURL = "/detailPage/reply?content_no=" + reviewDTO.getContent_no() + "&review_no=" + reviewDTO.getReview_no();
+				notificationDTO.setNoti_url(currentURL);
+				
+	 			notificationService.putReviewCmt(notificationDTO);
+	 		}
+
 	         return "redirect:/detailPage/reply?content_no=" + reviewDTO.getContent_no() + "&review_no=" + commentDTO.getReview_no();
 	      } catch (Exception e) {
 	         e.printStackTrace();
@@ -230,15 +254,19 @@ public class DetailReplyController {
 				Map<String, Object> result = new HashMap<String,Object>();
 				
 				UserDTO userDTO = loginUserDao.select((String)session.getAttribute("id"));
+				
 		    	if (userDTO == null) {	   
 		    		result.put("message", "로그인이 필요합니다.");
+		    		result.put("result", 0);
 		    		return result;
 		        }
 		
 		    	dto.setUser_no(userDTO.getUser_no());
+		    	
+		    	System.out.println("========================== reviewService.selectLikeCount(dto) : " + reviewService.selectLikeCount(dto));
 		
 				result.put("message", "success");
-				result.put("result", reviewService.selectLikeCount(dto));
+				result.put("result", reviewService.selectLikeCount(dto));				
 				
 				return result;
 		
@@ -250,9 +278,8 @@ public class DetailReplyController {
 		
 			@PostMapping("/reply/insertLike")
 			@ResponseBody
-			public Map<String,Object> insertLike(ReviewLikeDTO dto, HttpSession session) throws Exception {
-				
-				
+			public Map<String,Object> insertLike(ReviewLikeDTO dto, HttpSession session
+													, Integer review_user_no, ReviewDTO reviewDTO, Integer content_no) throws Exception {
 
 				Map<String, Object> result = new HashMap<String,Object>();
 				
@@ -266,6 +293,21 @@ public class DetailReplyController {
 				result.put("message", "success");
 				result.put("success", reviewService.insertLike(dto));
 				
+				//알림함에 알림 집어넣기
+	 			if(!review_user_no.equals(session.getAttribute("user_no"))) {
+		 			NotificationDTO notificationDTO = new NotificationDTO();
+		 			notificationDTO.setUser_no(dto.getUser_no());
+		 			notificationDTO.setReview_no(dto.getReview_no());
+		 			
+		 			notificationDTO.setTarget_user_no(review_user_no);
+		 			System.out.println("================== content_no : " +content_no);
+		 			//jsp단에서 <div id="reply-popup" class="popup11"> 이 부분에 인풋 태그 추가 후 불러옴
+		 			
+		 			String currentURL = "/detailPage/reply?content_no=" + content_no + "&review_no=" + reviewDTO.getReview_no();
+					notificationDTO.setNoti_url(currentURL);
+		 			
+		 			notificationService.putReviewLike(notificationDTO);
+	 			}
 				
 				return result;
 

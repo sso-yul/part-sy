@@ -86,19 +86,16 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public int getReplyCount(Integer review_no) throws Exception {
-		// TODO Auto-generated method stub
 		return reviewDao.replyCount(review_no);
 	}
 
 	@Override
 	public int writeReply(CommentDTO commentDTO) throws Exception {
-		reviewDao.updateCommentCnt(commentDTO.getReview_no(), 1);	//댓글 insert시 review테이블의 comment_cnt 1 증가
 		return reviewDao.insertReply(commentDTO);
 	}
 
 	@Override
 	public int removeReply(Integer cmt_no, Integer user_no) throws Exception {
-		
 		return reviewDao.deleteReply(cmt_no, user_no);
 	}
 

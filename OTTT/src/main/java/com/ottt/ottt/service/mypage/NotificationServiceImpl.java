@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ottt.ottt.dao.mypage.NotificationDao;
+import com.ottt.ottt.domain.SearchItem;
 import com.ottt.ottt.dto.NotificationDTO;
 
 @Service
@@ -52,6 +53,26 @@ public class NotificationServiceImpl implements NotificationService {
 	@Override
 	public int removeNoti(Integer noti_no, Integer target_user_no) throws Exception {
 		return notificationDao.deleteNoti(noti_no, target_user_no);
+	}
+
+	@Override
+	public int notificationCnt(Integer target_user_no) throws Exception {
+		return notificationDao.notiCnt(target_user_no);
+	}
+
+	@Override
+	public int getSelectCheck(SearchItem sc) throws Exception {
+		return notificationDao.selectCheck();
+	}
+
+	@Override
+	public int checkYes(NotificationDTO notificationDTO) throws Exception {
+		return notificationDao.updateCheck(notificationDTO);
+	}
+
+	@Override
+	public NotificationDTO pickOneNoti(Integer noti_no) throws Exception {
+		return notificationDao.selectOneNoti(noti_no);
 	}
 
 }

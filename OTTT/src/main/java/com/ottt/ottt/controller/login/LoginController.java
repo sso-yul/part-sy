@@ -30,6 +30,7 @@ import com.google.gson.JsonParser;
 import com.ottt.ottt.dao.login.LoginUserDao;
 import com.ottt.ottt.domain.NaverLoginBO;
 import com.ottt.ottt.dto.UserDTO;
+import com.ottt.ottt.handler.KakaoApiHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,10 @@ public class LoginController {
 	/* NaverLoginBO */
 	private NaverLoginBO naverLoginBO;
 	private String apiResult = null;
+	
+	/* KakaoHandler*/
+	@Autowired
+	private KakaoApiHandler kakaoApiHandler;	
 	
 	@Autowired
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
@@ -67,6 +72,11 @@ public class LoginController {
 			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 
 		if(!loginCheck(user_id, user_pwd)) {
+		UserDTO user = userDao.select(user_id);
+		if (user != null && user.getBlock_yn()) {
+			String msg = URLEncoder.encode("정지된 회원입니다.", "utf-8");
+			return "redirect:/login?msg=" + msg;
+		}
 		String msg = URLEncoder.encode("id 또는 pwd가 일치하지 않습니다", "utf-8");
 		return "redirect:/login?msg="+msg;
 		}
@@ -97,6 +107,7 @@ public class LoginController {
 				.replace("%2F", "/")
 				.replace("%3A", ":")
 				.replace("%3F", "?")
+				.replace("%26", "&")
 		        .replace("%3D", "=");
 		
 		System.out.println("==========encode=============== toURL : " + toURL);
@@ -106,6 +117,7 @@ public class LoginController {
 	private boolean loginCheck(String id, String pwd) {
 		UserDTO user = userDao.select(id);
 		if(user == null) return false;
+		if (user.getBlock_yn()) return false; 
 		return user.getUser_pwd().equals(pwd);
 	}
 	
@@ -162,10 +174,10 @@ public class LoginController {
 		logger.info("code :: {}", code);
 
 		// 접속토큰 get
-		String kakaoToken = getKakaoReturnAccessToken(code);
+		String kakaoToken = kakaoApiHandler.getKakaoReturnAccessToken(code);
 
 		// 접속자 정보 get
-		Map<String, Object> result = getKakaoUserInfo(kakaoToken);
+		Map<String, Object> result = kakaoApiHandler.getKakaoUserInfo(kakaoToken);
 
 		logger.info("result :: {}", result);
 
@@ -232,101 +244,7 @@ public class LoginController {
 
 	}
 
-	// 4.
-	// 카카오 회원정보 요청을 위한 access_token키 발급
-	private String getKakaoReturnAccessToken(String code) {
-		String access_token = "";
-		String reqURL = "https://kauth.kakao.com/oauth/token";
 
-		try {
-			URL url = new URL(reqURL);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-			// HttpURLConnection 설정 값 셋팅
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-
-			// POST 파라미터 설정 rest key 입력
-			String clientId = "edf32697ba157c14f56289b28f1bf6c3";
-			String redirectUri = "http://localhost:8080/ottt/kakao_callback";
-			String parameters = String.format(
-					"grant_type=authorization_code&client_id=" + clientId + "&redirect_uri=" + redirectUri + "&code=%s",
-					code);
-
-			// 요청 전송
-			conn.getOutputStream().write(parameters.getBytes());
-			conn.getOutputStream().flush();
-			conn.getOutputStream().close();
-
-			// 응답 받기
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String result = br.lines().collect(Collectors.joining());
-			br.close();
-
-			// 토큰 값 저장 및 리턴
-			JsonElement element = JsonParser.parseString(result);
-			access_token = element.getAsJsonObject().get("access_token").getAsString();
-
-			logger.info(" ■■■kakao■■■ access_token : {}", access_token);
-
-			conn.disconnect();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return access_token;
-	}
-
-	// 5.
-	// access_token키로 회원정보 요청
-	private Map<String, Object> getKakaoUserInfo(String access_token) {
-		Map<String, Object> resultMap = new HashMap<>();
-
-		String reqURL = "https://kapi.kakao.com/v2/user/me";
-
-		try {
-			URL url = new URL(reqURL);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-
-			// 요청에 필요한 Header에 포함될 내용
-			conn.setRequestProperty("Authorization", "Bearer " + access_token);
-
-			int responseCode = conn.getResponseCode();
-			logger.info(" ■■■kakao■■■ responseCode : {} ", responseCode);
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-
-			String result = br.lines().collect(Collectors.joining());
-			logger.info("response : {}", result);
-
-			JsonElement element = JsonParser.parseString(result);
-			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
-			JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-
-			String id = element.getAsJsonObject().get("id").getAsString();
-			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-			String email = kakao_account.getAsJsonObject().get("email").getAsString();
-			// String profileImageUrl =
-			// properties.getAsJsonObject().get("profile_image").getAsString();
-
-			logger.info(" ■■■kakao■■■ id : {}", id);
-			logger.info(" ■■■kakao■■■ email : {}", email);
-			logger.info(" ■■■kakao■■■ nickname : {}", nickname);
-			// logger.info(" ■■■kakao■■■ profileImageUrl : {}", profileImageUrl);
-
-			resultMap.put("id", id);
-			resultMap.put("email", email);
-			resultMap.put("nickname", nickname);
-			// resultMap.put("profileImage", profileImageUrl);
-
-			conn.disconnect();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return resultMap;
-	}
 
 	/*
 	 * //로그인 첫 화면 요청 메소드

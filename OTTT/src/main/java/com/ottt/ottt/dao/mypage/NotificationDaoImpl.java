@@ -59,5 +59,25 @@ public class NotificationDaoImpl implements NotificationDao {
 		map.put("target_user_no", target_user_no);
 		return session.delete(namespace  + "deleteNoti" , map);
 	}
+
+	@Override
+	public int notiCnt(Integer target_user_no) throws Exception {
+		return session.selectOne(namespace + "notiCnt", target_user_no);
+	}
+
+	@Override
+	public int selectCheck() throws Exception {
+		return session.selectOne(namespace + "selectCheck");
+	}
+
+	@Override
+	public int updateCheck(NotificationDTO notificationDTO) throws Exception {
+		return session.update(namespace + "updateCheck", notificationDTO);
+	}
+
+	@Override
+	public NotificationDTO selectOneNoti(Integer noti_no) throws Exception {
+		return session.selectOne(namespace + "selectOneNoti", noti_no);
+	}
 	
 }

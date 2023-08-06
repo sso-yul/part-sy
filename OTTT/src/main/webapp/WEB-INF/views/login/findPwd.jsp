@@ -145,7 +145,7 @@
 				  
 				  	$.ajax({
 				  		type : "post",
-					    url : "/ottt/signin/memberIdChk",
+					    url : "/signin/memberIdChk",
 					    data : data,
 					    success : function(result){
 					    	
@@ -174,7 +174,7 @@
 	  		  
 	  		  	$.ajax({
 	  		  		type : "post",
-	  			    url : "/ottt/signin/emailChk",
+	  			    url : "/signin/emailChk",
 	  			    data : data,
 	  			    success : function(result){
 	  			    	
@@ -203,7 +203,7 @@
 	  		    
 	  		    $.ajax({
 	  		    	type: "post",
-	  		    	url:"/ottt/login/findUser?user_id="+user_id+"&user_email="+user_email,
+	  		    	url:"/login/findUser?user_id="+user_id+"&user_email="+user_email,
 	  		    	headers: {"content_type":"application/json"},
 	  		    	data: JSON.stringify({user_id:user_id, user_email:user_email}),
 	  		    	success: function(result){
@@ -216,7 +216,7 @@
 		  		            $('#Modal').modal('show');
 		  		            $.ajax({
 		  		                type: "GET",
-		  		                url: "/ottt/signin/mailCheck?email=" + user_email,
+		  		                url: "/signin/mailCheck?email=" + user_email,
 		  		                success: function(data) {
 		  		                    code = data;	  		                
 		  		    		}    	
